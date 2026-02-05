@@ -65,7 +65,11 @@ const Settings = () => {
             </div>
 
             <div className="settings-grid">
-                <motion.div variants={itemVariants}>
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.1 }}
+                >
                     <Card className="settings-card">
                         <div className="settings-header">
                             <div className="settings-icon"><User size={24} /></div>
@@ -87,7 +91,11 @@ const Settings = () => {
                     </Card>
                 </motion.div>
 
-                <motion.div variants={itemVariants}>
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.2 }}
+                >
                     <Card className="settings-card">
                         <div className="settings-header">
                             <div className="settings-icon theme"><Palette size={24} /></div>
@@ -111,7 +119,12 @@ const Settings = () => {
                 </motion.div>
 
                 {user?.role?.toLowerCase() === 'admin' && (
-                    <motion.div variants={itemVariants} className="full-width-card">
+                    <motion.div
+                        className="full-width-card"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3, delay: 0.3 }}
+                    >
                         <Card className="settings-card">
                             <div className="settings-header">
                                 <div className="settings-icon staff"><Users size={24} /></div>
@@ -155,7 +168,11 @@ const Settings = () => {
                     </motion.div>
                 )}
 
-                <motion.div variants={itemVariants}>
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.4 }}
+                >
                     <Card className="settings-card">
                         <div className="settings-header">
                             <div className="settings-icon notifications"><Bell size={24} /></div>
@@ -177,7 +194,11 @@ const Settings = () => {
                     </Card>
                 </motion.div>
 
-                <motion.div variants={itemVariants}>
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.5 }}
+                >
                     <Card className="settings-card">
                         <div className="settings-header">
                             <div className="settings-icon security"><Shield size={24} /></div>

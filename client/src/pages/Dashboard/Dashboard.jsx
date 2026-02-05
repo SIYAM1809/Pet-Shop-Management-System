@@ -116,7 +116,12 @@ const Dashboard = () => {
             {/* Stats Cards */}
             <motion.div className="stats-grid" variants={containerVariants}>
                 {statsCards.map((stat, index) => (
-                    <motion.div key={stat.title} variants={itemVariants}>
+                    <motion.div
+                        key={stat.title}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3, delay: index * 0.1 }}
+                    >
                         <div className="stats-card">
                             <div className={`stats-icon stats-icon-${stat.color}`}>
                                 <stat.icon size={24} />
@@ -136,7 +141,11 @@ const Dashboard = () => {
 
             {/* Charts Section */}
             <div className="charts-grid">
-                <motion.div variants={itemVariants}>
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.2 }}
+                >
                     <Card className="chart-card">
                         <h3 className="chart-title">Revenue Overview</h3>
                         <div className="chart-container">
@@ -227,7 +236,11 @@ const Dashboard = () => {
 
             {/* Recent Activity */}
             <div className="activity-grid">
-                <motion.div variants={itemVariants}>
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.4 }}
+                >
                     <Card className="activity-card">
                         <h3 className="activity-title">Recent Orders</h3>
                         <div className="activity-list">

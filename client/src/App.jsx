@@ -41,6 +41,12 @@ const PublicRoute = ({ children }) => {
   return isAuthenticated ? <Navigate to="/" replace /> : children;
 };
 
+import PublicLayout from './components/layout/PublicLayout';
+import Home from './pages/Public/Home';
+import BrowsePets from './pages/Public/BrowsePets';
+
+// ... (imports)
+
 const AppRoutes = () => {
   return (
     <Routes>
@@ -52,8 +58,16 @@ const AppRoutes = () => {
           </PublicRoute>
         }
       />
+
+      {/* Public Storefront Routes */}
+      <Route element={<PublicLayout />}>
+        <Route index element={<Home />} />
+        <Route path="browse" element={<BrowsePets />} />
+      </Route>
+
+      {/* Admin Dashboard Routes */}
       <Route
-        path="/"
+        path="/dashboard"
         element={
           <ProtectedRoute>
             <MainLayout />

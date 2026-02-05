@@ -11,16 +11,16 @@ import { protect } from '../middleware/auth.js';
 
 const router = express.Router();
 
-router.use(protect);
+router.get('/stats', protect, getPetStats);
 
-router.get('/stats', getPetStats);
+// Public Routes
 router.route('/')
     .get(getPets)
-    .post(createPet);
+    .post(protect, createPet);
 
 router.route('/:id')
     .get(getPet)
-    .put(updatePet)
-    .delete(deletePet);
+    .put(protect, updatePet)
+    .delete(protect, deletePet);
 
 export default router;

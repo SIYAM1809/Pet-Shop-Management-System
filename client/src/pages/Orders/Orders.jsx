@@ -166,8 +166,13 @@ const Orders = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {filteredOrders.map((order) => (
-                                <motion.tr key={order._id} variants={itemVariants}>
+                            {filteredOrders.map((order, index) => (
+                                <motion.tr
+                                    key={order._id}
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.3, delay: index * 0.05 }}
+                                >
                                     <td><span className="order-number">{order.orderNumber}</span></td>
                                     <td>{order.customer?.name || 'N/A'}</td>
                                     <td>{order.items?.length || 0} pet(s)</td>

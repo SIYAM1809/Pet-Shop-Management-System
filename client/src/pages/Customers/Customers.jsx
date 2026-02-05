@@ -158,7 +158,7 @@ const Customers = () => {
                         </thead>
                         <tbody>
                             {filteredCustomers.map((customer) => (
-                                <motion.tr key={customer._id} variants={itemVariants}>
+                                <tr key={customer._id}>
                                     <td>
                                         <div className="customer-name">
                                             <div className="avatar avatar-sm">{customer.name.charAt(0)}</div>
@@ -188,7 +188,7 @@ const Customers = () => {
                                             </button>
                                         </div>
                                     </td>
-                                </motion.tr>
+                                </tr>
                             ))}
                         </tbody>
                     </table>

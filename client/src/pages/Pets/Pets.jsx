@@ -52,6 +52,7 @@ const Pets = () => {
     const [submitting, setSubmitting] = useState(false);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
     const [petToDelete, setPetToDelete] = useState(null);
+    const [imageError, setImageError] = useState({});
 
     useEffect(() => {
         fetchPets();
@@ -59,12 +60,19 @@ const Pets = () => {
 
     const fetchPets = async () => {
         try {
+            console.log("Fetching pets...");
             const params = {};
             if (filterSpecies) params.species = filterSpecies;
             if (filterStatus) params.status = filterStatus;
+            console.log("Params:", params);
+
             const response = await petAPI.getAll(params);
+            console.log("API Response:", response);
+
             setPets(response.data);
+            console.log("Pets set to:", response.data);
         } catch (error) {
+            console.error('Failed to fetch pets:', error);
             toast.error('Failed to fetch pets');
         } finally {
             setLoading(false);
@@ -181,6 +189,8 @@ const Pets = () => {
                 </Button>
             </div>
 
+
+
             {/* Filters */}
             <Card className="filters-card">
                 <div className="filters-row">
@@ -253,63 +263,58 @@ const Pets = () => {
                     </Button>
                 </div>
             ) : (
-                <motion.div
-                    className={view === 'grid' ? 'pets-grid' : 'pets-list'}
-                    variants={containerVariants}
-                >
-                    <AnimatePresence>
-                        {filteredPets.map((pet, index) => (
-                            <motion.div
-                                key={pet._id}
-                                variants={itemVariants}
-                                layout
-                            >
-                                <Card hover className="pet-card">
-                                    <div className="pet-image">
-                                        {pet.image ? (
-                                            <img src={pet.image} alt={pet.name} />
-                                        ) : (
-                                            <div className="pet-image-placeholder">
-                                                <PawPrint size={32} />
-                                            </div>
-                                        )}
-                                        <span className={`badge badge-${getStatusBadge(pet.status)}`}>
-                                            {pet.status}
-                                        </span>
-                                    </div>
-                                    <div className="pet-info">
-                                        <h3 className="pet-name">{pet.name}</h3>
-                                        <p className="pet-breed">{pet.species} • {pet.breed}</p>
-                                        <div className="pet-details">
-                                            <span>{pet.age.value} {pet.age.unit}</span>
-                                            <span>{pet.gender}</span>
+                <div className={view === 'grid' ? 'pets-grid' : 'pets-list'}>
+                    {filteredPets.map((pet, index) => (
+                        <div key={pet._id} className="pet-item-wrapper">
+                            <Card hover className="pet-card">
+                                <div className="pet-image">
+                                    {pet.image && !imageError[pet._id] ? (
+                                        <img
+                                            src={pet.image}
+                                            alt={pet.name}
+                                            onError={() => setImageError(prev => ({ ...prev, [pet._id]: true }))}
+                                        />
+                                    ) : (
+                                        <div className="pet-image-placeholder">
+                                            <PawPrint size={32} />
                                         </div>
-                                        <div className="pet-footer">
-                                            <span className="pet-price">${pet.price}</span>
-                                            <div className="pet-actions">
-                                                <button
-                                                    className="action-btn edit"
-                                                    onClick={() => handleOpenModal(pet)}
-                                                >
-                                                    <Edit2 size={16} />
-                                                </button>
-                                                <button
-                                                    className="action-btn delete"
-                                                    onClick={() => {
-                                                        setPetToDelete(pet);
-                                                        setDeleteModalOpen(true);
-                                                    }}
-                                                >
-                                                    <Trash2 size={16} />
-                                                </button>
-                                            </div>
+                                    )}
+                                    <span className={`badge badge-${getStatusBadge(pet.status)}`}>
+                                        {pet.status}
+                                    </span>
+                                </div>
+                                <div className="pet-info">
+                                    <h3 className="pet-name">{pet.name}</h3>
+                                    <p className="pet-breed">{pet.species} • {pet.breed}</p>
+                                    <div className="pet-details">
+                                        <span>{pet.age.value} {pet.age.unit}</span>
+                                        <span>{pet.gender}</span>
+                                    </div>
+                                    <div className="pet-footer">
+                                        <span className="pet-price">${pet.price}</span>
+                                        <div className="pet-actions">
+                                            <button
+                                                className="action-btn edit"
+                                                onClick={() => handleOpenModal(pet)}
+                                            >
+                                                <Edit2 size={16} />
+                                            </button>
+                                            <button
+                                                className="action-btn delete"
+                                                onClick={() => {
+                                                    setPetToDelete(pet);
+                                                    setDeleteModalOpen(true);
+                                                }}
+                                            >
+                                                <Trash2 size={16} />
+                                            </button>
                                         </div>
                                     </div>
-                                </Card>
-                            </motion.div>
-                        ))}
-                    </AnimatePresence>
-                </motion.div>
+                                </div>
+                            </Card>
+                        </div>
+                    ))}
+                </div>
             )}
 
             {/* Add/Edit Modal */}

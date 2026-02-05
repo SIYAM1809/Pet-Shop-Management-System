@@ -20,13 +20,15 @@ h3,
 .home-page,
 .browse-page {
     padding-bottom: var(--space-20);
-    background-color: #f8fafc;
+    background-color: var(--bg-primary);
+    /* semantic */
 }
 
 /* --- HERO SECTION --- */
 .hero-section {
     position: relative;
-    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+    /* semantic */
     padding: var(--space-12) 0 var(--space-16);
     overflow: hidden;
 }
@@ -50,30 +52,36 @@ h3,
     align-items: center;
     gap: 8px;
     padding: 8px 16px;
-    background: #fffbeb;
-    color: #b45309;
+    background: var(--warning-light);
+    /* semantic */
+    color: var(--warning);
+    /* semantic */
     border-radius: 50px;
     font-weight: 600;
     font-size: 0.9rem;
     margin-bottom: var(--space-6);
-    border: 1px solid #fcd34d;
+    border: 1px solid var(--warning);
+    /* semantic */
 }
+
+
 
 .hero-title {
     font-size: 4rem;
     font-weight: 800;
     line-height: 1.1;
-    color: var(--gray-900);
+    color: var(--text-primary);
+    /* semantic */
     margin-bottom: var(--space-6);
 }
 
 .hero-subtitle {
     font-size: 1.25rem;
-    color: var(--gray-600);
+    color: var(--text-secondary);
+    /* semantic */
     line-height: 1.6;
     margin-bottom: var(--space-8);
     font-weight: 500;
-    /* Stroner font as requested */
 }
 
 /* CTA Button */
@@ -117,7 +125,8 @@ h3,
 
 .avatars .avatar {
     margin-left: -10px;
-    border: 2px solid white;
+    border: 2px solid var(--bg-primary);
+    /* semantic borders */
     border-radius: 50%;
     width: 40px;
     height: 40px;
@@ -132,11 +141,13 @@ h3,
 
 .hero-stat span {
     font-weight: 500;
-    color: var(--gray-700);
+    color: var(--text-secondary);
+    /* semantic */
 }
 
 .hero-stat strong {
-    color: var(--gray-900);
+    color: var(--text-primary);
+    /* semantic */
     font-weight: 800;
 }
 
@@ -168,7 +179,8 @@ h3,
 
 .floating-card {
     position: absolute;
-    background: white;
+    background: var(--surface);
+    /* semantic */
     padding: 12px 20px;
     border-radius: 16px;
     display: flex;
@@ -176,9 +188,12 @@ h3,
     gap: 10px;
     box-shadow: var(--shadow-lg);
     font-weight: 600;
-    color: var(--gray-800);
+    color: var(--text-primary);
+    /* semantic */
     z-index: 3;
     animation: float 3s ease-in-out infinite;
+    border: 1px solid var(--border-light);
+    /* semantic */
 }
 
 .top-right {
@@ -207,7 +222,8 @@ h3,
 /* --- FEATURES SECTION --- */
 .features-section {
     padding: var(--space-16) 0;
-    background: white;
+    background: var(--bg-secondary);
+    /* semantic */
 }
 
 .section-header {
@@ -219,12 +235,14 @@ h3,
     font-size: 2.5rem;
     font-weight: 800;
     margin-bottom: var(--space-4);
-    color: var(--gray-900);
+    color: var(--text-primary);
+    /* semantic */
 }
 
 .section-header p {
     font-size: 1.2rem;
-    color: var(--gray-500);
+    color: var(--text-secondary);
+    /* semantic */
 }
 
 .features-grid {
@@ -234,7 +252,8 @@ h3,
 }
 
 .premium-card {
-    background: var(--bg-primary);
+    background: var(--bg-tertiary);
+    /* semantic */
     padding: var(--space-8);
     border-radius: 24px;
     transition: all 0.3s ease;
@@ -242,11 +261,14 @@ h3,
 }
 
 .premium-card:hover {
-    background: white;
+    background: var(--surface);
+    /* semantic */
     transform: translateY(-8px);
     box-shadow: var(--shadow-xl);
     border-color: var(--primary-100);
 }
+
+
 
 .feature-icon-wrapper {
     width: 60px;
@@ -258,6 +280,7 @@ h3,
     margin-bottom: var(--space-6);
 }
 
+/* Icons need manual adaptation or semantic vars if strict */
 .icon-heart {
     background: #fee2e2;
     color: #ef4444;
@@ -273,16 +296,19 @@ h3,
     color: #f59e0b;
 }
 
+
 .premium-card h3 {
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: var(--space-3);
-    color: var(--gray-900);
+    color: var(--text-primary);
+    /* semantic */
 }
 
 .premium-card p {
     font-size: 1.05rem;
-    color: var(--gray-600);
+    color: var(--text-secondary);
+    /* semantic */
     line-height: 1.6;
     font-weight: 500;
 }
@@ -290,7 +316,8 @@ h3,
 /* Browse Page Header */
 .page-header-public {
     background-color: var(--primary-500);
-    color: white;
+    color: white !important;
+    /* Force white text on purple background */
     padding: var(--space-8) 0;
     margin-bottom: var(--space-6);
     border-radius: 0 0 32px 32px;
@@ -300,11 +327,15 @@ h3,
     font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: var(--space-2);
+    color: white !important;
+    /* Ensure heading is white */
 }
 
 .page-header-public p {
     opacity: 0.9;
     font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.9) !important;
+    /* Ensure subtitle is whiteish */
 }
 
 /* Browse Grid */
@@ -316,7 +347,8 @@ h3,
 }
 
 .public-pet-card {
-    background: white;
+    background: var(--surface);
+    /* semantic */
     border-radius: var(--radius-xl);
     overflow: hidden;
     box-shadow: var(--shadow-md);
@@ -324,6 +356,8 @@ h3,
     height: 100%;
     display: flex;
     flex-direction: column;
+    border: 1px solid var(--border-light);
+    /* semantic */
 }
 
 .public-pet-card:hover {
@@ -333,7 +367,8 @@ h3,
 
 .pet-image-container {
     height: 240px;
-    background-color: var(--background);
+    background-color: var(--bg-tertiary);
+    /* semantic */
     position: relative;
     overflow: hidden;
 }
@@ -355,7 +390,11 @@ h3,
     text-transform: uppercase;
     background: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(4px);
+    color: #10b981;
+    /* Default green */
 }
+
+
 
 .pet-content {
     padding: var(--space-5);
@@ -366,15 +405,22 @@ h3,
 
 .pet-title {
     font-size: 1.25rem;
-    font-weight: 700;
+    font-weight: 800;
+    /* Stronger weight */
     margin-bottom: var(--space-1);
-    color: var(--text-primary);
+    color: var(--gray-900);
+    /* Maximum contrast black */
+    font-family: 'Outfit', sans-serif;
+    /* Use premium font */
 }
 
 .pet-subtitle {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
+    font-size: 0.95rem;
+    /* Slightly larger */
+    color: var(--gray-600);
+    /* Darker gray for readability */
     margin-bottom: var(--space-4);
+    font-weight: 500;
 }
 
 .pet-attributes {
@@ -387,7 +433,9 @@ h3,
 .attribute {
     font-size: 0.85rem;
     color: var(--text-tertiary);
-    background: var(--background);
+    /* semantic */
+    background: var(--bg-tertiary);
+    /* semantic */
     padding: 6px 10px;
     border-radius: 6px;
     text-align: center;
@@ -400,6 +448,7 @@ h3,
     justify-content: space-between;
     padding-top: var(--space-4);
     border-top: 1px solid var(--border-light);
+    /* semantic */
 }
 
 .price {
@@ -407,6 +456,8 @@ h3,
     font-weight: 700;
     color: var(--primary-600);
 }
+
+
 
 /* --- MEDIA QUERIES --- */
 @media (max-width: 1024px) {

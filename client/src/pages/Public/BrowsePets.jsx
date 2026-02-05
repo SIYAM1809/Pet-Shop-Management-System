@@ -51,22 +51,23 @@ const BrowsePets = () => {
 
             <div className="container">
                 {/* Search & Filter Bar */}
-                <div className="filters-card-public" style={{ background: 'white', padding: '20px', borderRadius: '12px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)', marginBottom: '30px', display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-                    <div className="search-filter" style={{ flex: 1, minWidth: '250px', display: 'flex', alignItems: 'center', background: '#f8fafc', padding: '0 15px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-                        <Search size={18} color="#64748b" />
+                <div className="filters-card-public" style={{ background: 'var(--surface)', padding: '20px', borderRadius: '12px', boxShadow: 'var(--shadow-sm)', marginBottom: '30px', display: 'flex', gap: '15px', flexWrap: 'wrap', border: '1px solid var(--border-light)' }}>
+                    <div className="search-filter" style={{ flex: 1, minWidth: '250px', display: 'flex', alignItems: 'center', background: 'var(--bg-tertiary)', padding: '0 15px', borderRadius: '8px', border: '1px solid var(--border-light)' }}>
+                        <Search size={18} style={{ color: 'var(--text-secondary)' }} />
                         <input
                             type="text"
                             placeholder="Search by name or breed..."
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            style={{ border: 'none', background: 'transparent', padding: '12px', width: '100%', outline: 'none' }}
+                            className="text-primary placeholder:text-gray-500" // Added Tailwind-like classes or ensure global styles pick this up
+                            style={{ border: 'none', background: 'transparent', padding: '12px', width: '100%', outline: 'none', color: 'var(--gray-900)', fontSize: '1rem' }}
                         />
                     </div>
                     <div className="filter-group" style={{ minWidth: '200px' }}>
                         <select
                             value={filterSpecies}
                             onChange={(e) => setFilterSpecies(e.target.value)}
-                            style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #e2e8f0', background: 'white' }}
+                            style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid var(--border-light)', background: 'var(--surface)', color: 'var(--text-primary)' }}
                         >
                             <option value="">All Species</option>
                             {speciesList.map(s => <option key={s} value={s}>{s}</option>)}

@@ -1,5 +1,5 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { PawPrint, LogIn } from 'lucide-react';
+import { Cat, LogIn } from 'lucide-react'; // Changed import to Cat
 import Button from '../common/Button';
 import './PublicLayout.css';
 
@@ -11,10 +11,10 @@ const PublicLayout = () => {
             <nav className="public-navbar">
                 <div className="container navbar-content">
                     <Link to="/" className="navbar-brand">
-                        <div className="brand-icon">
-                            <PawPrint size={24} color="white" />
+                        <div className="brand-icon" style={{ background: 'linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%)', padding: '8px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <Cat size={24} color="white" />
                         </div>
-                        <span className="brand-text">PetShop</span>
+                        <span className="brand-text gradient-text" style={{ fontSize: '1.5rem', fontWeight: '800', marginLeft: '10px' }}>Praniseba</span>
                     </Link>
 
                     <div className="navbar-links">

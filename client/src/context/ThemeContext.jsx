@@ -11,18 +11,17 @@ export const useTheme = () => {
 };
 
 export const ThemeProvider = ({ children }) => {
-    const [theme, setTheme] = useState(() => {
-        const saved = localStorage.getItem('theme');
-        return saved || 'light';
-    });
+    const [theme, setTheme] = useState('light'); // Force light mode
 
+    // Legacy support: Clear any saved theme preference
     useEffect(() => {
-        document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
-    }, [theme]);
+        localStorage.removeItem('theme');
+        document.documentElement.setAttribute('data-theme', 'light');
+    }, []);
 
     const toggleTheme = () => {
-        setTheme(prev => prev === 'light' ? 'dark' : 'light');
+        // Disabled: Always stay in light mode
+        setTheme('light');
     };
 
     return (

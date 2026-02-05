@@ -212,10 +212,7 @@
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-[data-theme="dark"] .card-glass {
-    background: rgba(30, 41, 59, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
+
 
 /* ============================================
    BADGE COMPONENTS
@@ -256,26 +253,7 @@
     color: var(--gray-600);
 }
 
-[data-theme="dark"] .badge-success {
-    background: rgba(16, 185, 129, 0.2);
-}
 
-[data-theme="dark"] .badge-warning {
-    background: rgba(245, 158, 11, 0.2);
-}
-
-[data-theme="dark"] .badge-error {
-    background: rgba(239, 68, 68, 0.2);
-}
-
-[data-theme="dark"] .badge-info {
-    background: rgba(59, 130, 246, 0.2);
-}
-
-[data-theme="dark"] .badge-neutral {
-    background: var(--gray-700);
-    color: var(--gray-300);
-}
 
 /* ============================================
    TABLE COMPONENTS
@@ -444,13 +422,7 @@
     border-radius: var(--radius-md);
 }
 
-[data-theme="dark"] .skeleton {
-    background: linear-gradient(90deg,
-            var(--gray-700) 25%,
-            var(--gray-600) 50%,
-            var(--gray-700) 75%);
-    background-size: 200% 100%;
-}
+
 
 @keyframes skeleton-loading {
     0% {
@@ -593,25 +565,7 @@
     color: var(--accent-emerald);
 }
 
-[data-theme="dark"] .stats-icon-purple {
-    background: rgba(139, 92, 246, 0.2);
-}
 
-[data-theme="dark"] .stats-icon-cyan {
-    background: rgba(6, 182, 212, 0.2);
-}
-
-[data-theme="dark"] .stats-icon-pink {
-    background: rgba(236, 72, 153, 0.2);
-}
-
-[data-theme="dark"] .stats-icon-orange {
-    background: rgba(249, 115, 22, 0.2);
-}
-
-[data-theme="dark"] .stats-icon-emerald {
-    background: rgba(16, 185, 129, 0.2);
-}
 
 .stats-content {
     flex: 1;
@@ -746,10 +700,7 @@
     color: var(--primary-600);
 }
 
-[data-theme="dark"] .nav-item.active {
-    background: rgba(139, 92, 246, 0.15);
-    color: var(--primary-400);
-}
+
 
 .nav-item-icon {
     width: 20px;

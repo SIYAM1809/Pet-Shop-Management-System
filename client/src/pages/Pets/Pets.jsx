@@ -35,6 +35,7 @@ const initialFormData = {
     description: '',
     color: '',
     weight: '',
+    image: '',
     health: { vaccinated: false, neutered: false, microchipped: false }
 };
 
@@ -420,6 +421,13 @@ const Pets = () => {
                             onChange={handleChange}
                             min="0"
                             step="0.1"
+                        />
+                        <Input
+                            label="Image URL"
+                            name="image"
+                            value={formData.image}
+                            onChange={handleChange}
+                            placeholder="https://example.com/pet-image.jpg"
                         />
                     </div>
 

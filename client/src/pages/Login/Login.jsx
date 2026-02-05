@@ -8,14 +8,12 @@ import toast from 'react-hot-toast';
 import './Login.css';
 
 const Login = () => {
-    const [isLogin, setIsLogin] = useState(true);
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
-        name: '',
         email: '',
         password: ''
     });
-    const { login, register } = useAuth();
+    const { login } = useAuth();
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -26,13 +24,8 @@ const Login = () => {
         setLoading(true);
 
         try {
-            if (isLogin) {
-                await login(formData.email, formData.password);
-                toast.success('Welcome back!');
-            } else {
-                await register(formData.name, formData.email, formData.password);
-                toast.success('Account created successfully!');
-            }
+            await login(formData.email, formData.password);
+            toast.success('Welcome back!');
         } catch (error) {
             toast.error(error.message);
         } finally {
@@ -65,9 +58,7 @@ const Login = () => {
                             <PawPrint size={32} />
                         </div>
                         <h1 className="login-title">Pet Shop Manager</h1>
-                        <p className="login-subtitle">
-                            {isLogin ? 'Sign in to your account' : 'Create a new account'}
-                        </p>
+                        <p className="login-subtitle">Sign in to your account</p>
                     </motion.div>
 
                     <motion.form
@@ -77,16 +68,6 @@ const Login = () => {
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.3 }}
                     >
-                        {!isLogin && (
-                            <Input
-                                label="Full Name"
-                                name="name"
-                                value={formData.name}
-                                onChange={handleChange}
-                                placeholder="John Doe"
-                                required
-                            />
-                        )}
                         <Input
                             label="Email Address"
                             type="email"
@@ -108,15 +89,13 @@ const Login = () => {
                             required
                         />
 
-                        {isLogin && (
-                            <div className="login-options">
-                                <label className="remember-me">
-                                    <input type="checkbox" />
-                                    <span>Remember me</span>
-                                </label>
-                                <a href="#" className="forgot-link">Forgot password?</a>
-                            </div>
-                        )}
+                        <div className="login-options">
+                            <label className="remember-me">
+                                <input type="checkbox" />
+                                <span>Remember me</span>
+                            </label>
+                            <a href="#" className="forgot-link">Forgot password?</a>
+                        </div>
 
                         <Button
                             type="submit"
@@ -125,20 +104,14 @@ const Login = () => {
                             fullWidth
                             loading={loading}
                         >
-                            {isLogin ? 'Sign In' : 'Create Account'}
+                            Sign In
                         </Button>
                     </motion.form>
 
                     <div className="login-footer">
                         <span>
-                            {isLogin ? "Don't have an account?" : 'Already have an account?'}
+                            Don't have an account? Contact your administrator.
                         </span>
-                        <button
-                            className="switch-mode-btn"
-                            onClick={() => setIsLogin(!isLogin)}
-                        >
-                            {isLogin ? 'Sign up' : 'Sign in'}
-                        </button>
                     </div>
                 </div>
             </motion.div>

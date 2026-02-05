@@ -13,6 +13,28 @@ const handleResponse = async (response) => {
     return data;
 };
 
+// Auth API
+export const authAPI = {
+    register: async (userData) => {
+        const response = await fetch(`${API_URL}/auth/register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                ...getAuthHeader()
+            },
+            body: JSON.stringify(userData)
+        });
+        return handleResponse(response);
+    },
+
+    getUsers: async () => {
+        const response = await fetch(`${API_URL}/auth/users`, {
+            headers: getAuthHeader()
+        });
+        return handleResponse(response);
+    }
+};
+
 // Pet API
 export const petAPI = {
     getAll: async (params = {}) => {

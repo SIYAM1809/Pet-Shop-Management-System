@@ -9,9 +9,9 @@ const generateToken = (id) => {
     });
 };
 
-// @desc    Register user
+// @desc    Register user (Admin only)
 // @route   POST /api/auth/register
-// @access  Public
+// @access  Private/Admin
 export const register = asyncHandler(async (req, res) => {
     const { name, email, password, role } = req.body;
 
@@ -23,17 +23,26 @@ export const register = asyncHandler(async (req, res) => {
         role: role || 'staff'
     });
 
-    const token = generateToken(user._id);
-
     res.status(201).json({
         success: true,
-        token,
         user: {
             id: user._id,
             name: user.name,
             email: user.email,
             role: user.role
         }
+    });
+});
+
+// @desc    Get all users (Admin only)
+// @route   GET /api/auth/users
+// @access  Private/Admin
+export const getUsers = asyncHandler(async (req, res) => {
+    const users = await User.find({}).select('-password');
+    res.json({
+        success: true,
+        count: users.length,
+        data: users
     });
 });
 

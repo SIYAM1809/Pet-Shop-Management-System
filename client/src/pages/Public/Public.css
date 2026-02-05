@@ -169,55 +169,14 @@ h3,
     max-width: 500px;
     border-radius: 30px;
     box-shadow: var(--shadow-2xl);
-    transform: rotate(3deg);
     transition: transform 0.3s ease;
 }
 
 .hero-image-card:hover .hero-img {
-    transform: rotate(0deg) scale(1.02);
+    transform: scale(1.02);
 }
 
-.floating-card {
-    position: absolute;
-    background: var(--surface);
-    /* semantic */
-    padding: 12px 20px;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    box-shadow: var(--shadow-lg);
-    font-weight: 600;
-    color: var(--text-primary);
-    /* semantic */
-    z-index: 3;
-    animation: float 3s ease-in-out infinite;
-    border: 1px solid var(--border-light);
-    /* semantic */
-}
 
-.top-right {
-    top: 40px;
-    right: -20px;
-}
-
-.bottom-left {
-    bottom: 60px;
-    left: -30px;
-    animation-delay: 1.5s;
-}
-
-@keyframes float {
-
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-10px);
-    }
-}
 
 /* --- FEATURES SECTION --- */
 .features-section {

@@ -1,0 +1,19 @@
+.input-wrapper {
+    position: relative;
+}
+
+.input-with-icon .input {
+    padding-left: var(--space-10);
+}
+
+.input-icon {
+    position: absolute;
+    left: var(--space-4);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-tertiary);
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

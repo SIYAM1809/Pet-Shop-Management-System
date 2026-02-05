@@ -1,0 +1,111 @@
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
+import MainLayout from './components/layout/MainLayout';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import Pets from './pages/Pets';
+import Customers from './pages/Customers';
+import Orders from './pages/Orders';
+import Settings from './pages/Settings';
+import './styles/index.css';
+import './styles/components.css';
+
+const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="loading-screen">
+        <div className="spinner" />
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
+  return isAuthenticated ? children : <Navigate to="/login" replace />;
+};
+
+const PublicRoute = ({ children }) => {
+  const { isAuthenticated, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="loading-screen">
+        <div className="spinner" />
+      </div>
+    );
+  }
+
+  return isAuthenticated ? <Navigate to="/" replace /> : children;
+};
+
+const AppRoutes = () => {
+  return (
+    <Routes>
+      <Route
+        path="/login"
+        element={
+          <PublicRoute>
+            <Login />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <MainLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<Dashboard />} />
+        <Route path="pets" element={<Pets />} />
+        <Route path="customers" element={<Customers />} />
+        <Route path="orders" element={<Orders />} />
+        <Route path="settings" element={<Settings />} />
+      </Route>
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  );
+};
+
+function App() {
+  return (
+    <ThemeProvider>
+      <AuthProvider>
+        <Router>
+          <AppRoutes />
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              duration: 3000,
+              style: {
+                background: 'var(--surface)',
+                color: 'var(--text-primary)',
+                border: '1px solid var(--border-light)',
+                borderRadius: 'var(--radius-lg)',
+                boxShadow: 'var(--shadow-lg)'
+              },
+              success: {
+                iconTheme: {
+                  primary: 'var(--success)',
+                  secondary: 'white'
+                }
+              },
+              error: {
+                iconTheme: {
+                  primary: 'var(--error)',
+                  secondary: 'white'
+                }
+              }
+            }}
+          />
+        </Router>
+      </AuthProvider>
+    </ThemeProvider>
+  );
+}
+
+export default App;

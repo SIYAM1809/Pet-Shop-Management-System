@@ -1,6 +1,6 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import { errorHandler } from './middleware/error.js';
 
@@ -12,7 +12,7 @@ import orderRoutes from './routes/orderRoutes.js';
 import dashboardRoutes from './routes/dashboardRoutes.js';
 
 // Load env vars
-dotenv.config();
+// dotenv.config() - preloaded via import 'dotenv/config'
 
 // Connect to database
 connectDB();

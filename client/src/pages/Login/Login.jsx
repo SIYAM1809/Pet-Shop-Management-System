@@ -140,11 +140,6 @@ const Login = () => {
                             {isLogin ? 'Sign up' : 'Sign in'}
                         </button>
                     </div>
-
-                    <div className="demo-credentials">
-                        <p>Demo Credentials:</p>
-                        <code>admin@petshop.com / admin123</code>
-                    </div>
                 </div>
             </motion.div>
         </div>

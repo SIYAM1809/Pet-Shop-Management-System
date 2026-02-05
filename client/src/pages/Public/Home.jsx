@@ -32,7 +32,7 @@ const Home = () => {
                         <div className="hero-actions">
                             <Link to="/browse">
                                 <Button className="btn-premium-primary" size="lg">
-                                    Here is your Pets
+                                    Checkout your Companions
                                 </Button>
                             </Link>
                             <div className="hero-stat">

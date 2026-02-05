@@ -14,11 +14,11 @@ import { useAuth } from '../../../context/AuthContext';
 import './Sidebar.css';
 
 const navItems = [
-    { path: '/', icon: LayoutDashboard, label: 'Dashboard' },
-    { path: '/pets', icon: PawPrint, label: 'Pets' },
-    { path: '/customers', icon: Users, label: 'Customers' },
-    { path: '/orders', icon: ShoppingCart, label: 'Orders' },
-    { path: '/settings', icon: Settings, label: 'Settings' }
+    { path: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+    { path: '/dashboard/pets', icon: PawPrint, label: 'Pets' },
+    { path: '/dashboard/customers', icon: Users, label: 'Customers' },
+    { path: '/dashboard/orders', icon: ShoppingCart, label: 'Orders' },
+    { path: '/dashboard/settings', icon: Settings, label: 'Settings' }
 ];
 
 const Sidebar = ({ collapsed, onToggle }) => {

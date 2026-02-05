@@ -59,6 +59,9 @@ const AppRoutes = () => {
         }
       />
 
+      {/* Admin Redirect */}
+      <Route path="/admin" element={<Navigate to="/login" replace />} />
+
       {/* Public Storefront Routes */}
       <Route element={<PublicLayout />}>
         <Route index element={<Home />} />

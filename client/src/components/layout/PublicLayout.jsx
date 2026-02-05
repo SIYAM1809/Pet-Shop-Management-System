@@ -32,13 +32,6 @@ const PublicLayout = () => {
                         </Link>
                     </div>
 
-                    <div className="navbar-actions">
-                        <Link to="/login">
-                            <Button variant="secondary" size="sm" icon={<LogIn size={16} />}>
-                                Admin Login
-                            </Button>
-                        </Link>
-                    </div>
                 </div>
             </nav>
 

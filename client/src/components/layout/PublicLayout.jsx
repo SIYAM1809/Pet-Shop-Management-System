@@ -2,13 +2,32 @@ import { Outlet, Link, useLocation } from 'react-router-dom';
 import { Cat, LogIn } from 'lucide-react'; // Changed import to Cat
 import Button from '../common/Button';
 import './PublicLayout.css';
+import { useState, useEffect } from 'react';
 
 const PublicLayout = () => {
     const location = useLocation();
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 50) { // Adjust scroll threshold as needed
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
     return (
         <div className="public-layout">
-            <nav className="public-navbar">
+
+            <nav className={`public-navbar ${isScrolled ? 'scrolled' : ''}`}>
                 <div className="container navbar-content">
                     <Link to="/" className="navbar-brand">
                         <div className="brand-icon" style={{ background: 'linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%)', padding: '8px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

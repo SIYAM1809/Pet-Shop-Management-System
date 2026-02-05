@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Heart, Shield, Star, CheckCircle } from 'lucide-react';
+import { Heart, Shield, Star, CheckCircle } from 'lucide-react';
 import Button from '../../components/common/Button';
 import './Public.css';
 
@@ -32,8 +32,7 @@ const Home = () => {
                         <div className="hero-actions">
                             <Link to="/browse">
                                 <Button className="btn-premium-primary" size="lg">
-                                    Lets Checkout The Pets
-                                    <ArrowRight size={20} />
+                                    Here is your Pets
                                 </Button>
                             </Link>
                             <div className="hero-stat">

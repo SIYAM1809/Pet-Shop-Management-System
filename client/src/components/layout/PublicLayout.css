@@ -2,8 +2,12 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: var(--background);
+    background-color: var(--bg-primary);
+    position: relative;
+    z-index: 1;
 }
+
+
 
 .public-navbar {
     background-color: white;

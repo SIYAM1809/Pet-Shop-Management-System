@@ -140,7 +140,14 @@ body {
   font-size: var(--font-size-base);
   line-height: 1.6;
   color: var(--text-primary);
+  /* Premium Abstract Background */
+  background-image: url('https://images.unsplash.com/photo-1566041510394-cf7c8d96b055?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
   background-color: var(--bg-primary);
+  /* Fallback */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

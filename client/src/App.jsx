@@ -60,7 +60,7 @@ const AppRoutes = () => {
       />
 
       {/* Admin Redirect */}
-      <Route path="/admin" element={<Navigate to="/login" replace />} />
+      <Route path="/admin" element={<Navigate to="/dashboard" replace />} />
 
       {/* Public Storefront Routes */}
       <Route element={<PublicLayout />}>

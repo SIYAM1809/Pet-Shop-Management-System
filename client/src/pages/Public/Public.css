@@ -16,19 +16,18 @@ h3,
     letter-spacing: -0.02em;
 }
 
+/* Global Cloud Background for Public Facing Pages */
 /* Page Layouts */
 .home-page,
 .browse-page {
-    padding-bottom: var(--space-20);
     background-color: var(--bg-primary);
-    /* semantic */
+    min-height: 100vh;
 }
 
 /* --- HERO SECTION --- */
 .hero-section {
     position: relative;
     background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
-    /* semantic */
     padding: var(--space-12) 0 var(--space-16);
     overflow: hidden;
 }
@@ -97,8 +96,11 @@ h3,
     font-size: 1.1rem;
     transition: all 0.3s ease;
     border: none;
+    border: none;
     box-shadow: 0 10px 25px -5px rgba(124, 58, 237, 0.4);
 }
+
+
 
 .btn-premium-primary:hover {
     transform: translateY(-2px);
@@ -182,7 +184,6 @@ h3,
 .features-section {
     padding: var(--space-16) 0;
     background: var(--bg-secondary);
-    /* semantic */
 }
 
 .section-header {

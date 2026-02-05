@@ -49,24 +49,16 @@ const Home = () => {
 
                     <motion.div
                         className="hero-image-wrapper"
-                        initial={{ opacity: 0, scale: 0.9, rotate: 5 }}
-                        animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
                     >
                         <div className="hero-image-card">
                             <img
-                                src="https://images.unsplash.com/photo-1560743641-3914f2c45636?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                                alt="Happy Dog"
+                                src="https://images.unsplash.com/photo-1623387641168-d9803ddd3f35?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                alt="Cats and Dogs Playing"
                                 className="hero-img"
                             />
-                            <div className="floating-card top-right">
-                                <Heart size={20} fill="#ef4444" stroke="#ef4444" />
-                                <span>100% Health Guarantee</span>
-                            </div>
-                            <div className="floating-card bottom-left">
-                                <CheckCircle size={20} className="text-success" />
-                                <span>Vaccinated & Chipped</span>
-                            </div>
                         </div>
                     </motion.div>
                 </div>

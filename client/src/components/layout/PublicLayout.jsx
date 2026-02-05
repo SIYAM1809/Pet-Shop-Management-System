@@ -41,7 +41,37 @@ const PublicLayout = () => {
 
             <footer className="public-footer">
                 <div className="container">
-                    <p>&copy; {new Date().getFullYear()} PetShop Management System. All rights reserved.</p>
+                    <div className="footer-content">
+                        <div className="footer-brand-section">
+                            <div className="footer-brand">
+                                <Cat size={24} className="text-primary-600" />
+                                <span className="brand-text">Praniseba</span>
+                            </div>
+                            <p className="footer-tagline">
+                                Connecting pets with loving homes. We prioritize the well-being and happiness of every animal.
+                            </p>
+                        </div>
+
+                        <div className="footer-links">
+                            <div className="footer-column">
+                                <h4>Quick Links</h4>
+                                <Link to="/">Home</Link>
+                                <Link to="/browse">Browse Pets</Link>
+                                <Link to="/about">About Us</Link>
+                            </div>
+                            <div className="footer-column">
+                                <h4>Support</h4>
+                                <Link to="/contact">Contact</Link>
+                                <Link to="/faq">FAQ</Link>
+                                <Link to="/privacy">Privacy Policy</Link>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="footer-bottom">
+                        <p>&copy; {new Date().getFullYear()} Praniseba. All rights reserved.</p>
+                        <p className="footer-credit">Designed & Developed by <span className="credit-name">Siyam</span></p>
+                    </div>
                 </div>
             </footer>
         </div>

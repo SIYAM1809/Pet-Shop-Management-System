@@ -27,8 +27,11 @@ const ProtectedRoute = ({ children }) => {
   return isAuthenticated ? children : <Navigate to="/login" replace />;
 };
 
+import AdminRoute from './components/layout/AdminRoute';
+// ... imports
+
 const PublicRoute = ({ children }) => {
-  const { isAuthenticated, loading } = useAuth();
+  const { isAuthenticated, user, loading } = useAuth();
 
   if (loading) {
     return (
@@ -38,43 +41,29 @@ const PublicRoute = ({ children }) => {
     );
   }
 
-  return isAuthenticated ? <Navigate to="/" replace /> : children;
+  if (isAuthenticated) {
+    // Redirect admins/staff to dashboard, others to home
+    if (user?.role === 'admin' || user?.role === 'staff') {
+      return <Navigate to="/dashboard" replace />;
+    }
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
 };
 
 import PublicLayout from './components/layout/PublicLayout';
-import Home from './pages/Public/Home';
-import BrowsePets from './pages/Public/BrowsePets';
-
 // ... (imports)
 
-const AppRoutes = () => {
-  return (
-    <Routes>
-      <Route
-        path="/login"
-        element={
-          <PublicRoute>
-            <Login />
-          </PublicRoute>
-        }
-      />
+// ... inside AppRoutes ...
 
-      {/* Admin Redirect */}
-      <Route path="/admin" element={<Navigate to="/dashboard" replace />} />
-
-      {/* Public Storefront Routes */}
-      <Route element={<PublicLayout />}>
-        <Route index element={<Home />} />
-        <Route path="browse" element={<BrowsePets />} />
-      </Route>
-
-      {/* Admin Dashboard Routes */}
+{/* Admin Dashboard Routes */ }
       <Route
         path="/dashboard"
         element={
-          <ProtectedRoute>
+          <AdminRoute>
             <MainLayout />
-          </ProtectedRoute>
+          </AdminRoute>
         }
       >
         <Route index element={<Dashboard />} />
@@ -84,7 +73,7 @@ const AppRoutes = () => {
         <Route path="settings" element={<Settings />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+    </Routes >
   );
 };
 

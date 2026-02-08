@@ -112,10 +112,8 @@ export const createOrder = asyncHandler(async (req, res) => {
         processedBy: req.user.id
     });
 
-    // Update customer stats
-    await Customer.findByIdAndUpdate(customer, {
-        $inc: { totalPurchases: 1, totalSpent: totalAmount }
-    });
+    // NOTE: We do NOT update customer stats here anymore.
+    // Stats are updated only when order status becomes 'Completed'.
 
     const populatedOrder = await Order.findById(order._id)
         .populate('customer', 'name email phone')
@@ -140,6 +138,8 @@ export const updateOrder = asyncHandler(async (req, res) => {
         });
     }
 
+    const previousStatus = order.status;
+
     // Only allow status and payment status updates
     const { status, paymentStatus, notes } = req.body;
     const updateFields = {};
@@ -153,6 +153,20 @@ export const updateOrder = asyncHandler(async (req, res) => {
     })
         .populate('customer', 'name email phone')
         .populate('processedBy', 'name');
+
+    // Handle Customer Stats Update
+    // 1. If becoming Completed (from non-Completed) -> INCREASE stats
+    if (status === 'Completed' && previousStatus !== 'Completed') {
+        await Customer.findByIdAndUpdate(order.customer._id, {
+            $inc: { totalPurchases: 1, totalSpent: order.totalAmount }
+        });
+    }
+    // 2. If becoming non-Completed (from Completed) -> DECREASE stats
+    else if (previousStatus === 'Completed' && status && status !== 'Completed') {
+        await Customer.findByIdAndUpdate(order.customer._id, {
+            $inc: { totalPurchases: -1, totalSpent: -order.totalAmount }
+        });
+    }
 
     res.json({
         success: true,
@@ -178,10 +192,12 @@ export const deleteOrder = asyncHandler(async (req, res) => {
         await Pet.findByIdAndUpdate(item.pet, { status: 'Available' });
     }
 
-    // Update customer stats
-    await Customer.findByIdAndUpdate(order.customer, {
-        $inc: { totalPurchases: -1, totalSpent: -order.totalAmount }
-    });
+    // Update customer stats ONLY if the order was previously Completed
+    if (order.status === 'Completed') {
+        await Customer.findByIdAndUpdate(order.customer, {
+            $inc: { totalPurchases: -1, totalSpent: -order.totalAmount }
+        });
+    }
 
     await order.deleteOne();
 

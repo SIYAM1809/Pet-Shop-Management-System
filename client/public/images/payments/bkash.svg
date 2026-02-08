@@ -1,4 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 80">
-            <rect width="200" height="80" rx="10" fill="#e2136e"/>
-            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold" font-size="40" fill="white">bKash</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+            <!-- Authentic Pink Origami Bird (Butterfly) -->
+            <path d="M48 25 L85 10 L65 50 L48 25 Z" fill="#D81B60"/>
+            <path d="M48 25 L20 40 L48 55 L48 25 Z" fill="#E91E63"/>
+            <path d="M48 55 L20 70 L48 85 L48 55 Z" fill="#E91E63"/>
+            <path d="M48 55 L65 60 L85 100 L48 55 Z" fill="#C2185B"/>
+            <text x="50" y="98" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold" font-size="14" fill="#E91E63">bKash</text>
         </svg>

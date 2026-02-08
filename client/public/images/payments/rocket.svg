@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 80">
-            <rect width="200" height="80" rx="10" fill="#8c3494"/>
-            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold" font-size="40" fill="white">Rocket</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+            <!-- Authentic Purple Rocket -->
+             <path d="M50 10 L75 50 L60 50 L75 90 L50 70 L25 90 L40 50 L25 50 Z" fill="#8c3494"/>
+             <text x="50" y="98" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold" font-size="14" fill="#8c3494">Rocket</text>
         </svg>

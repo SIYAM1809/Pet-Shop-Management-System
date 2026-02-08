@@ -1,6 +1,7 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { Cat, LogIn } from 'lucide-react'; // Changed import to Cat
 import Button from '../common/Button';
+import WhatsAppButton from '../common/WhatsAppButton';
 import './PublicLayout.css';
 import { useState, useEffect } from 'react';
 
@@ -64,6 +65,8 @@ const PublicLayout = () => {
                 <Outlet />
             </main>
 
+            <WhatsAppButton />
+
             <footer className="public-footer">
                 <div className="container">
                     <div className="footer-content">
@@ -99,7 +102,7 @@ const PublicLayout = () => {
                     </div>
                 </div>
             </footer>
-        </div>
+        </div >
     );
 };
 

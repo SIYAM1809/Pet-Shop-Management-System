@@ -2,6 +2,7 @@ import Order from '../models/Order.js';
 import Pet from '../models/Pet.js';
 import Customer from '../models/Customer.js';
 import { asyncHandler } from '../middleware/error.js';
+import sendEmail from '../utils/sendEmail.js';
 
 // @desc    Get all orders
 // @route   GET /api/orders
@@ -160,6 +161,38 @@ export const updateOrder = asyncHandler(async (req, res) => {
         await Customer.findByIdAndUpdate(order.customer._id, {
             $inc: { totalPurchases: 1, totalSpent: order.totalAmount }
         });
+
+        // Send Invoice Email
+        try {
+            const itemsList = order.items.map(item => `<li>${item.petName} (${item.petSpecies}) - $${item.price}</li>`).join('');
+
+            await sendEmail({
+                email: order.customer.email,
+                subject: `Invoice #${order.orderNumber} - Siyam's Praniseba`,
+                html: `
+                    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                        <h1 style="color: #0ea5e9;">Payment Received</h1>
+                        <p>Hi ${order.customer.name},</p>
+                        <p>Your payment has been confirmed and your order is complete.</p>
+                        
+                        <div style="background: #f0f9ff; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                            <h2>Order Summary</h2>
+                            <p><strong>Order ID:</strong> ${order.orderNumber}</p>
+                            <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
+                            <p><strong>Payment Method:</strong> ${order.paymentMethod}</p>
+                            <ul>${itemsList}</ul>
+                            <hr style="border-color: #bae6fd;">
+                            <h3>Total Paid: $${order.totalAmount}</h3>
+                        </div>
+
+                        <p>Thank you for choosing Siyam's Praniseba!</p>
+                        <p>Need help? Call us at 01304054566</p>
+                    </div>
+                `
+            });
+        } catch (err) {
+            console.error('Invoice email failed:', err);
+        }
     }
     // 2. If becoming non-Completed (from Completed) -> DECREASE stats
     else if (previousStatus === 'Completed' && status && status !== 'Completed') {

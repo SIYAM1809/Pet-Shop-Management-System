@@ -7,10 +7,18 @@ import { useState, useEffect } from 'react';
 import { petAPI } from '../../services/api';
 import { PawPrint } from 'lucide-react';
 import InquiryModal from '../../components/common/InquiryModal';
+import TestimonialsSection from '../../components/home/TestimonialsSection';
+import AppointmentModal from '../../components/common/AppointmentModal';
 
 const Home = () => {
+    const [appointmentModalOpen, setAppointmentModalOpen] = useState(false);
+
     return (
         <div className="home-page">
+            <AppointmentModal
+                isOpen={appointmentModalOpen}
+                onClose={() => setAppointmentModalOpen(false)}
+            />
             {/* Premium Hero Section */}
             <section className="hero-section">
                 <div className="container hero-content">
@@ -119,6 +127,9 @@ const Home = () => {
                 </div>
             </section>
 
+            {/* Testimonials Section */}
+            <TestimonialsSection />
+
             {/* Location & Map Section */}
             <section className="location-section" style={{ padding: '80px 0', background: 'var(--bg-primary)' }}>
                 <div className="container">
@@ -147,7 +158,8 @@ const Home = () => {
                         <div className="location-card" style={{
                             position: 'absolute',
                             top: '30px',
-                            left: '30px',
+                            right: '30px',
+                            left: 'auto', // Ensure left is unset
                             background: 'rgba(255, 255, 255, 0.95)',
                             padding: '25px',
                             borderRadius: '16px',
@@ -158,7 +170,13 @@ const Home = () => {
                             <h3 style={{ margin: '0 0 10px 0', color: 'var(--primary-600)' }}>Siyam's Praniseba</h3>
                             <p style={{ margin: '0 0 5px 0', color: '#334155' }}><strong>Address:</strong><br />Prembagan, kosaibari, Uttrar, Dhaka-1230</p>
                             <p style={{ margin: '15px 0 5px 0', color: '#334155' }}><strong>Hours:</strong><br />Mon-Sat: 9am - 8pm<br />Sun: 10am - 6pm</p>
-                            <p style={{ margin: '15px 0 0 0', color: '#334155' }}><strong>Contact:</strong><br />01304050607</p>
+                            <p style={{ margin: '15px 0 0 0', color: '#334155' }}><strong>Contact:</strong><br />01304054566</p>
+
+                            <div style={{ marginTop: '20px' }}>
+                                <Button size="sm" fullWidth onClick={() => setAppointmentModalOpen(true)}>
+                                    Book a Visit
+                                </Button>
+                            </div>
                         </div>
                     </div>
                 </div>

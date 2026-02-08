@@ -12,8 +12,8 @@ import orderRoutes from './routes/orderRoutes.js';
 import dashboardRoutes from './routes/dashboardRoutes.js';
 import inquiryRoutes from './routes/inquiryRoutes.js';
 
-// Load env vars
-// dotenv.config() - preloaded via import 'dotenv/config'
+// Email Settings
+// Email Settings (Configured in .env or defaulting to Ethereal)
 
 // Connect to database
 connectDB();

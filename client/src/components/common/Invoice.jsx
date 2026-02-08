@@ -22,7 +22,7 @@ const Invoice = ({ order, customer, pet, onClose }) => {
                     <div className="shop-branding">
                         <h1>Siyam's Praniseba</h1>
                         <p>Prembagan, kosaibari, Uttrar, Dhaka-1230</p>
-                        <p>Tel: 01304050607</p>
+                        <p>Tel: 01304054566</p>
                     </div>
                     <div className="invoice-meta">
                         <h2>INVOICE</h2>

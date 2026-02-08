@@ -118,6 +118,51 @@ const Home = () => {
                     </div>
                 </div>
             </section>
+
+            {/* Location & Map Section */}
+            <section className="location-section" style={{ padding: '80px 0', background: 'var(--bg-primary)' }}>
+                <div className="container">
+                    <div className="section-header text-center">
+                        <h2 className="gradient-text">Visit Our Store</h2>
+                        <p>Come meet your new best friend in person</p>
+                    </div>
+
+                    <div className="map-container" style={{
+                        borderRadius: '24px',
+                        overflow: 'hidden',
+                        boxShadow: 'var(--shadow-lg)',
+                        height: '450px',
+                        position: 'relative',
+                        border: '1px solid var(--border-light)'
+                    }}>
+                        <iframe
+                            src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Prembagan,kosaibari,Uttrar,Dhaka-1230&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+                            width="100%"
+                            height="100%"
+                            style={{ border: 0 }}
+                            allowFullScreen=""
+                            loading="lazy"
+                        ></iframe>
+
+                        <div className="location-card" style={{
+                            position: 'absolute',
+                            top: '30px',
+                            left: '30px',
+                            background: 'rgba(255, 255, 255, 0.95)',
+                            padding: '25px',
+                            borderRadius: '16px',
+                            boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                            maxWidth: '300px',
+                            backdropFilter: 'blur(10px)'
+                        }}>
+                            <h3 style={{ margin: '0 0 10px 0', color: 'var(--primary-600)' }}>Siyam's Praniseba</h3>
+                            <p style={{ margin: '0 0 5px 0', color: '#334155' }}><strong>Address:</strong><br />Prembagan, kosaibari, Uttrar, Dhaka-1230</p>
+                            <p style={{ margin: '15px 0 5px 0', color: '#334155' }}><strong>Hours:</strong><br />Mon-Sat: 9am - 8pm<br />Sun: 10am - 6pm</p>
+                            <p style={{ margin: '15px 0 0 0', color: '#334155' }}><strong>Contact:</strong><br />01304050607</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
     );
 };

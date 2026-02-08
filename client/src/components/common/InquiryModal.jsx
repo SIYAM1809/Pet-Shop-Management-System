@@ -10,6 +10,10 @@ const InquiryModal = ({ isOpen, onClose, pet }) => {
         name: '',
         email: '',
         phone: '',
+        street: '',
+        city: '',
+        state: '',
+        zipCode: '',
         message: '',
         paymentMethod: 'Cash'
     });
@@ -88,6 +92,47 @@ const InquiryModal = ({ isOpen, onClose, pet }) => {
                         required
                         placeholder="+1 (555) 000-0000"
                     />
+                </div>
+
+                <div className="input-group" style={{ marginTop: '15px' }}>
+                    <label className="input-label" style={{ display: 'block', marginBottom: '8px', fontWeight: '500', color: 'var(--text-primary)' }}>Delivery Address</label>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                        <input
+                            name="street"
+                            className="input"
+                            value={formData.street}
+                            onChange={handleChange}
+                            placeholder="Street Address"
+                            required
+                            style={{ padding: '10px', borderRadius: '8px', border: '1px solid var(--border-light)', background: 'var(--surface)', color: 'var(--text-primary)' }}
+                        />
+                        <input
+                            name="city"
+                            className="input"
+                            value={formData.city}
+                            onChange={handleChange}
+                            placeholder="City"
+                            required
+                            style={{ padding: '10px', borderRadius: '8px', border: '1px solid var(--border-light)', background: 'var(--surface)', color: 'var(--text-primary)' }}
+                        />
+                        <input
+                            name="state"
+                            className="input"
+                            value={formData.state}
+                            onChange={handleChange}
+                            placeholder="State"
+                            style={{ padding: '10px', borderRadius: '8px', border: '1px solid var(--border-light)', background: 'var(--surface)', color: 'var(--text-primary)' }}
+                        />
+                        <input
+                            name="zipCode"
+                            className="input"
+                            value={formData.zipCode}
+                            onChange={handleChange}
+                            placeholder="ZIP Code"
+                            required
+                            style={{ padding: '10px', borderRadius: '8px', border: '1px solid var(--border-light)', background: 'var(--surface)', color: 'var(--text-primary)' }}
+                        />
+                    </div>
                 </div>
 
                 <div className="input-group" style={{ marginTop: '15px' }}>

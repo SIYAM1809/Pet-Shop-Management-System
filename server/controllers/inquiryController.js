@@ -7,7 +7,7 @@ import { asyncHandler } from '../middleware/error.js';
 // @route   POST /api/inquiries
 // @access  Public
 export const createInquiry = asyncHandler(async (req, res) => {
-    const { name, email, phone, message, petId } = req.body;
+    const { name, email, phone, message, petId, paymentMethod, street, city, state, zipCode } = req.body;
 
     // 1. Validate Input
     if (!name || !email || !phone || !petId) {
@@ -35,18 +35,35 @@ export const createInquiry = asyncHandler(async (req, res) => {
     // 3. Find or Create Customer
     let customer = await Customer.findOne({ email: email.toLowerCase() });
 
+    const addressData = {
+        street: street || '',
+        city: city || '',
+        state: state || '',
+        zipCode: zipCode || '',
+        country: 'USA'
+    };
+
     if (customer) {
         // Update phone/name if provided (optional, strategy: keep existing or update?)
         // For now, let's just use the existing customer record but maybe update phone if missing
+        let updated = false;
         if (!customer.phone) {
             customer.phone = phone;
-            await customer.save();
+            updated = true;
         }
+        // Update address if provided and currently empty
+        if (street || city) {
+            customer.address = { ...customer.address, ...addressData };
+            updated = true;
+        }
+
+        if (updated) await customer.save();
     } else {
         customer = await Customer.create({
             name,
             email: email.toLowerCase(),
             phone,
+            address: addressData,
             notes: 'Created via Inquiry' /* Optional initial note */
         });
     }

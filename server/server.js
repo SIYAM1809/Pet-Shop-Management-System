@@ -10,7 +10,8 @@ import petRoutes from './routes/petRoutes.js';
 import customerRoutes from './routes/customerRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import dashboardRoutes from './routes/dashboardRoutes.js';
-import inquiryRoutes from './routes/inquiryRoutes.js';
+import inquiryRoutes from './routes/inquiryRoutes.js'; // Restore this
+import appointmentRoutes from './routes/appointmentRoutes.js';
 
 // Email Settings
 // Email Settings (Configured in .env or defaulting to Ethereal)
@@ -38,6 +39,7 @@ app.use('/api/customers', customerRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/inquiries', inquiryRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/appointments', appointmentRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

@@ -1,10 +1,11 @@
 import Order from '../models/Order.js';
 import Customer from '../models/Customer.js';
 import Pet from '../models/Pet.js';
+import Appointment from '../models/Appointment.js'; // Import Appointment model
 import { asyncHandler } from '../middleware/error.js';
 import sendEmail from '../utils/sendEmail.js';
 
-// @desc    Submit a new inquiry (creates Customer + Order)
+// @desc    Submit a new inquiry (creates Customer + Order or Appointment)
 // @route   POST /api/inquiries
 // @access  Public
 export const createInquiry = asyncHandler(async (req, res) => {
@@ -34,6 +35,16 @@ export const createInquiry = asyncHandler(async (req, res) => {
                 notes: 'Created via Appointment Booking'
             });
         }
+
+        // Create Appointment Record
+        await Appointment.create({
+            customer: customer._id,
+            date,
+            time,
+            purpose,
+            notes,
+            status: 'Confirmed' // Auto-confirm for now or keep Pending logic
+        });
 
         // Send Confirmation Email
         try {

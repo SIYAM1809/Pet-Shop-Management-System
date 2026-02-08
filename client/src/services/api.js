@@ -229,3 +229,25 @@ export const inquiryAPI = {
         return handleResponse(response);
     }
 };
+
+// Appointment API
+export const appointmentAPI = {
+    getAll: async () => {
+        const response = await fetch(`${API_URL}/appointments`, {
+            headers: getAuthHeader()
+        });
+        return handleResponse(response);
+    },
+
+    updateStatus: async (id, status) => {
+        const response = await fetch(`${API_URL}/appointments/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                ...getAuthHeader()
+            },
+            body: JSON.stringify({ status })
+        });
+        return handleResponse(response);
+    }
+};

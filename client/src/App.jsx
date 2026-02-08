@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard';
 import Pets from './pages/Pets';
 import Customers from './pages/Customers';
 import Orders from './pages/Orders';
+import Appointments from './pages/Admin/Appointments'; // Import Appointments
 import Settings from './pages/Settings';
 import Home from './pages/Public/Home';
 import BrowsePets from './pages/Public/BrowsePets';
@@ -71,6 +72,7 @@ const AppRoutes = () => {
         }
       >
         <Route index element={<Dashboard />} />
+        <Route path="appointments" element={<Appointments />} /> {/* Add Route */}
         <Route path="pets" element={<Pets />} />
         <Route path="customers" element={<Customers />} />
         <Route path="orders" element={<Orders />} />

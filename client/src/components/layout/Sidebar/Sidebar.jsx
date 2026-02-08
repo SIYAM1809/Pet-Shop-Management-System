@@ -5,6 +5,7 @@ import {
     PawPrint,
     Users,
     ShoppingCart,
+    Calendar, // Import Calendar
     Settings,
     ChevronLeft,
     ChevronRight,
@@ -15,6 +16,7 @@ import './Sidebar.css';
 
 const navItems = [
     { path: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+    { path: '/dashboard/appointments', icon: Calendar, label: 'Appointments' }, // Add Appointments
     { path: '/dashboard/pets', icon: PawPrint, label: 'Pets' },
     { path: '/dashboard/customers', icon: Users, label: 'Customers' },
     { path: '/dashboard/orders', icon: ShoppingCart, label: 'Orders' },

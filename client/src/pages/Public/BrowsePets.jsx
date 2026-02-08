@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Search, Filter, PawPrint } from 'lucide-react';
 import { petAPI } from '../../services/api';
 import Button from '../../components/common/Button';
+import InquiryModal from '../../components/common/InquiryModal';
 import './Public.css';
 
 const BrowsePets = () => {
@@ -10,11 +11,18 @@ const BrowsePets = () => {
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
     const [filterSpecies, setFilterSpecies] = useState('');
+    const [inquiryPet, setInquiryPet] = useState(null);
+    const [inquiryModalOpen, setInquiryModalOpen] = useState(false);
+
+    const handleInquire = (pet) => {
+        setInquiryPet(pet);
+        setInquiryModalOpen(true);
+    };
 
     useEffect(() => {
         const fetchPets = async () => {
             try {
-                const response = await petAPI.getAll({ status: 'Available' });
+                const response = await petAPI.getAll({ status: 'Available', limit: 100 });
                 setPets(response.data);
             } catch (error) {
                 console.error("Failed to load pets");
@@ -59,7 +67,7 @@ const BrowsePets = () => {
                             placeholder="Search by name or breed..."
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            className="text-primary placeholder:text-gray-500" // Added Tailwind-like classes or ensure global styles pick this up
+                            className="text-primary placeholder:text-gray-500"
                             style={{ border: 'none', background: 'transparent', padding: '12px', width: '100%', outline: 'none', color: 'var(--gray-900)', fontSize: '1rem' }}
                         />
                     </div>
@@ -118,7 +126,7 @@ const BrowsePets = () => {
 
                                     <div className="pet-price-row">
                                         <span className="price">${pet.price}</span>
-                                        <Button size="sm" variant="primary">Inquire</Button>
+                                        <Button size="sm" variant="primary" onClick={() => handleInquire(pet)}>Inquire</Button>
                                     </div>
                                 </div>
                             </motion.div>
@@ -126,6 +134,12 @@ const BrowsePets = () => {
                     </div>
                 )}
             </div>
+
+            <InquiryModal
+                isOpen={inquiryModalOpen}
+                onClose={() => setInquiryModalOpen(false)}
+                pet={inquiryPet}
+            />
         </div>
     );
 };

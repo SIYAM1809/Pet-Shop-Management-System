@@ -10,6 +10,7 @@ import petRoutes from './routes/petRoutes.js';
 import customerRoutes from './routes/customerRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import dashboardRoutes from './routes/dashboardRoutes.js';
+import inquiryRoutes from './routes/inquiryRoutes.js';
 
 // Load env vars
 // dotenv.config() - preloaded via import 'dotenv/config'
@@ -35,6 +36,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/pets', petRoutes);
 app.use('/api/customers', customerRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/inquiries', inquiryRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 
 // Health check

@@ -1,8 +1,12 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Heart, Shield, Star, CheckCircle } from 'lucide-react';
+import { Heart, Shield, Star } from 'lucide-react';
 import Button from '../../components/common/Button';
 import './Public.css';
+import { useState, useEffect } from 'react';
+import { petAPI } from '../../services/api';
+import { PawPrint } from 'lucide-react';
+import InquiryModal from '../../components/common/InquiryModal';
 
 const Home = () => {
     return (
@@ -63,6 +67,24 @@ const Home = () => {
                 </div>
             </section>
 
+            {/* Featured Pets Section */}
+            <section className="featured-pets-section" style={{ padding: '80px 0', background: 'var(--bg-secondary)' }}>
+                <div className="container">
+                    <div className="section-header text-center">
+                        <h2 className="gradient-text">New Arrivals</h2>
+                        <p>Meet our newest companions looking for a home</p>
+                    </div>
+
+                    <FeaturedPetsList />
+
+                    <div className="text-center" style={{ marginTop: '40px' }}>
+                        <Link to="/browse">
+                            <Button variant="outline" size="lg">View All Pets</Button>
+                        </Link>
+                    </div>
+                </div>
+            </section>
+
             {/* Value Proposition */}
             <section className="features-section">
                 <div className="container">
@@ -97,6 +119,79 @@ const Home = () => {
                 </div>
             </section>
         </div>
+    );
+};
+
+const FeaturedPetsList = () => {
+    const [pets, setPets] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [inquiryPet, setInquiryPet] = useState(null);
+    const [inquiryModalOpen, setInquiryModalOpen] = useState(false);
+
+    useEffect(() => {
+        const fetchFeatured = async () => {
+            try {
+                const response = await petAPI.getAll({ limit: 3, status: 'Available' });
+                setPets(response.data);
+            } catch (error) {
+                console.error("Failed to fetch featured pets");
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchFeatured();
+    }, []);
+
+    const handleInquire = (pet) => {
+        setInquiryPet(pet);
+        setInquiryModalOpen(true);
+    };
+
+    if (loading) return <div className="text-center"><div className="spinner" /></div>;
+
+    if (pets.length === 0) return null;
+
+    return (
+        <>
+            <div className="featured-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
+                {pets.map((pet, index) => (
+                    <motion.div
+                        key={pet._id}
+                        className="public-pet-card"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3, delay: index * 0.1 }}
+                        style={{ background: 'var(--surface)', borderRadius: '16px', overflow: 'hidden', boxShadow: 'var(--shadow-md)' }}
+                    >
+                        <div className="pet-image-container" style={{ height: '240px', position: 'relative', overflow: 'hidden' }}>
+                            {pet.image ? (
+                                <img src={pet.image} alt={pet.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={(e) => e.target.style.display = 'none'} />
+                            ) : (
+                                <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f1f5f9' }}>
+                                    <PawPrint size={48} color="#cbd5e1" />
+                                </div>
+                            )}
+                            <div style={{ position: 'absolute', top: '15px', right: '15px', background: 'rgba(255,255,255,0.9)', padding: '5px 12px', borderRadius: '20px', fontSize: '0.85rem', fontWeight: '600', color: 'var(--primary-600)' }}>
+                                {pet.species}
+                            </div>
+                        </div>
+                        <div className="pet-content" style={{ padding: '20px' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                                <h3 style={{ fontSize: '1.25rem', fontWeight: '700', color: 'var(--text-primary)', margin: 0 }}>{pet.name}</h3>
+                                <span style={{ fontSize: '1.1rem', fontWeight: '700', color: 'var(--primary-600)' }}>${pet.price}</span>
+                            </div>
+                            <p style={{ color: 'var(--text-secondary)', marginBottom: '15px' }}>{pet.breed} • {pet.gender}</p>
+                            <Button size="sm" variant="primary" fullWidth onClick={() => handleInquire(pet)}>Inquire Now</Button>
+                        </div>
+                    </motion.div>
+                ))}
+            </div>
+            <InquiryModal
+                isOpen={inquiryModalOpen}
+                onClose={() => setInquiryModalOpen(false)}
+                pet={inquiryPet}
+            />
+        </>
     );
 };
 

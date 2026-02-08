@@ -208,3 +208,17 @@ export const dashboardAPI = {
         return handleResponse(response);
     }
 };
+
+// Inquiry API
+export const inquiryAPI = {
+    create: async (inquiryData) => {
+        const response = await fetch(`${API_URL}/inquiries`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(inquiryData)
+        });
+        return handleResponse(response);
+    }
+};

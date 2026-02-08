@@ -21,6 +21,12 @@ const Orders = () => {
     const [formData, setFormData] = useState({ customer: '', items: [], paymentMethod: 'Cash' });
     const [submitting, setSubmitting] = useState(false);
 
+    // Payment Confirmation State
+    const [paymentModalOpen, setPaymentModalOpen] = useState(false);
+    const [selectedOrderForPayment, setSelectedOrderForPayment] = useState(null);
+    const [paymentMethod, setPaymentMethod] = useState('Cash');
+    const [paymentNote, setPaymentNote] = useState('');
+
     useEffect(() => {
         fetchOrders();
         fetchCustomers();
@@ -91,6 +97,34 @@ const Orders = () => {
             toast.error(error.message);
         }
     };
+
+    // New Payment Confirmation Logic
+    const handleCompleteClick = (order) => {
+        setSelectedOrderForPayment(order);
+        setPaymentMethod(order.paymentMethod || 'Cash');
+        setPaymentNote('');
+        setPaymentModalOpen(true);
+    };
+
+    const handlePaymentConfirm = async () => {
+        if (!selectedOrderForPayment) return;
+
+        try {
+            await orderAPI.update(selectedOrderForPayment._id, {
+                status: 'Completed',
+                paymentStatus: 'Paid',
+                paymentMethod: paymentMethod,
+                notes: paymentNote || undefined
+            });
+            toast.success('Order completed and payment recorded!');
+            setPaymentModalOpen(false);
+            setSelectedOrderForPayment(null);
+            fetchOrders();
+        } catch (error) {
+            toast.error(error.message);
+        }
+    };
+
 
     const formatCurrency = (v) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(v);
     const formatDate = (d) => new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
@@ -184,8 +218,8 @@ const Orders = () => {
                                             <button className="action-btn edit" onClick={() => setViewOrder(order)}><Eye size={16} /></button>
                                             {order.status === 'Pending' && (
                                                 <>
-                                                    <button className="action-btn success" onClick={() => updateOrderStatus(order._id, 'Completed')}><Check size={16} /></button>
-                                                    <button className="action-btn delete" onClick={() => updateOrderStatus(order._id, 'Cancelled')}><X size={16} /></button>
+                                                    <button className="action-btn success" title="Complete & Pay" onClick={() => handleCompleteClick(order)}><Check size={16} /></button>
+                                                    <button className="action-btn delete" title="Cancel Order" onClick={() => updateOrderStatus(order._id, 'Cancelled')}><X size={16} /></button>
                                                 </>
                                             )}
                                         </div>
@@ -231,6 +265,50 @@ const Orders = () => {
                 </form>
             </Modal>
 
+            {/* Payment Confirmation Modal */}
+            <Modal
+                isOpen={paymentModalOpen}
+                onClose={() => setPaymentModalOpen(false)}
+                title="Confirm Payment & Complete Order"
+                size="md"
+                footer={
+                    <>
+                        <Button variant="secondary" onClick={() => setPaymentModalOpen(false)}>Cancel</Button>
+                        <Button variant="success" onClick={handlePaymentConfirm}>Confirm Payment</Button>
+                    </>
+                }
+            >
+                <div className="payment-form">
+                    <p style={{ marginBottom: '15px', color: 'var(--text-secondary)' }}>
+                        Completing order <strong>{selectedOrderForPayment?.orderNumber}</strong> for amount <strong>{selectedOrderForPayment ? formatCurrency(selectedOrderForPayment.totalAmount) : ''}</strong>.
+                    </p>
+                    <div className="input-group">
+                        <label className="input-label">Payment Method</label>
+                        <select
+                            className="input select"
+                            value={paymentMethod}
+                            onChange={(e) => setPaymentMethod(e.target.value)}
+                        >
+                            <option value="Cash">Cash</option>
+                            <option value="Credit Card">Credit Card</option>
+                            <option value="Debit Card">Debit Card</option>
+                            <option value="PayPal">PayPal</option>
+                            <option value="Bank Transfer">Bank Transfer</option>
+                        </select>
+                    </div>
+                    <div className="input-group" style={{ marginTop: '15px' }}>
+                        <label className="input-label">Notes (Optional)</label>
+                        <textarea
+                            className="input textarea"
+                            rows="2"
+                            value={paymentNote}
+                            onChange={(e) => setPaymentNote(e.target.value)}
+                            placeholder="Transaction ID, Receipt #, etc."
+                        />
+                    </div>
+                </div>
+            </Modal>
+
             {/* View Order Modal */}
             <Modal isOpen={!!viewOrder} onClose={() => setViewOrder(null)} title={`Order ${viewOrder?.orderNumber || ''}`} size="md">
                 {viewOrder && (
@@ -238,6 +316,7 @@ const Orders = () => {
                         <div className="detail-row"><span>Customer:</span><strong>{viewOrder.customer?.name}</strong></div>
                         <div className="detail-row"><span>Status:</span><span className={`badge badge-${getStatusBadge(viewOrder.status)}`}>{viewOrder.status}</span></div>
                         <div className="detail-row"><span>Payment:</span><span>{viewOrder.paymentMethod}</span></div>
+                        {viewOrder.notes && <div className="detail-row"><span>Notes:</span><span>{viewOrder.notes}</span></div>}
                         <div className="order-items">
                             <h4>Items</h4>
                             {viewOrder.items?.map((item, i) => (

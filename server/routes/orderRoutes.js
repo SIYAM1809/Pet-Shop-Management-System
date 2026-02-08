@@ -5,11 +5,15 @@ import {
     createOrder,
     updateOrder,
     deleteOrder,
-    getOrderStats
+    getOrderStats,
+    trackOrder
 } from '../controllers/orderController.js';
 import { protect, authorize } from '../middleware/auth.js';
 
 const router = express.Router();
+
+// Public routes
+router.get('/track/:orderNumber', trackOrder);
 
 router.use(protect);
 

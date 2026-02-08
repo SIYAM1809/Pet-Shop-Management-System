@@ -12,6 +12,7 @@ import Orders from './pages/Orders';
 import Settings from './pages/Settings';
 import Home from './pages/Public/Home';
 import BrowsePets from './pages/Public/BrowsePets';
+import TrackOrder from './pages/Public/TrackOrder';
 import AdminRoute from './components/layout/AdminRoute';
 import './styles/index.css';
 import './styles/components.css';
@@ -57,6 +58,7 @@ const AppRoutes = () => {
       <Route element={<PublicLayout />}>
         <Route index element={<Home />} />
         <Route path="browse" element={<BrowsePets />} />
+        <Route path="track" element={<TrackOrder />} />
       </Route>
 
       {/* Admin Dashboard Routes */}

@@ -49,6 +49,12 @@ const PublicLayout = () => {
                         >
                             Browse Pets
                         </Link>
+                        <Link
+                            to="/track"
+                            className={`nav-link ${location.pathname === '/track' ? 'active' : ''}`}
+                        >
+                            Track Order
+                        </Link>
                     </div>
 
                 </div>

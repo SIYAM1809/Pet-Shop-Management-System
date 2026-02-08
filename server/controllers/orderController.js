@@ -250,3 +250,26 @@ export const getOrderStats = asyncHandler(async (req, res) => {
         }
     });
 });
+
+// @desc    Track order by order number (Public)
+// @route   GET /api/orders/track/:orderNumber
+// @access  Public
+export const trackOrder = asyncHandler(async (req, res) => {
+    const { orderNumber } = req.params;
+
+    const order = await Order.findOne({ orderNumber })
+        .populate('items.pet', 'name species image')
+        .select('orderNumber status paymentStatus totalAmount items createdAt paymentMethod');
+
+    if (!order) {
+        return res.status(404).json({
+            success: false,
+            message: 'Order not found'
+        });
+    }
+
+    res.json({
+        success: true,
+        data: order
+    });
+});

@@ -196,6 +196,13 @@ export const orderAPI = {
             headers: getAuthHeader()
         });
         return handleResponse(response);
+    },
+
+    track: async (orderNumber) => {
+        const response = await fetch(`${API_URL}/orders/track/${orderNumber}`, {
+            headers: { 'Content-Type': 'application/json' }
+        });
+        return handleResponse(response);
     }
 };
 

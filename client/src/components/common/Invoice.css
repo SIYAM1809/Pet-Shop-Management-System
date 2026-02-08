@@ -1,0 +1,163 @@
+.invoice-container {
+    background: var(--bg-primary);
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 800px;
+    margin: 0 auto;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.invoice-paper {
+    background: white;
+    color: #333;
+    /* Always dark text for print readability */
+    padding: 40px;
+    border-radius: 4px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+.invoice-header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.shop-branding h1 {
+    font-size: 1.8rem;
+    color: var(--primary-700);
+    margin: 0 0 10px 0;
+}
+
+.shop-branding p {
+    margin: 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.invoice-meta {
+    text-align: right;
+}
+
+.invoice-meta h2 {
+    color: #ccc;
+    margin: 0 0 10px 0;
+    letter-spacing: 2px;
+}
+
+.payment-status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.85rem;
+    margin-top: 10px;
+    border: 2px solid;
+}
+
+.payment-status.success {
+    color: #059669;
+    border-color: #059669;
+}
+
+.bill-to h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.1rem;
+    color: #444;
+}
+
+.bill-to p {
+    margin: 0 0 5px 0;
+    color: #555;
+    font-size: 0.95rem;
+}
+
+.invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 30px 0;
+}
+
+.invoice-table th {
+    text-align: left;
+    padding: 12px 15px;
+    background: #f8fafc;
+    border-bottom: 2px solid #eee;
+    color: #555;
+    font-weight: 600;
+}
+
+.invoice-table td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    color: #444;
+}
+
+.invoice-table .text-right {
+    text-align: right;
+}
+
+.item-desc {
+    font-size: 0.85rem;
+    color: #777;
+    display: block;
+    margin-top: 4px;
+}
+
+.invoice-table tfoot td {
+    border-bottom: none;
+    padding: 10px 15px;
+    font-weight: 600;
+}
+
+.invoice-table .total-row td {
+    font-size: 1.2rem;
+    color: var(--primary-700);
+    border-top: 2px solid #333;
+    padding-top: 15px;
+}
+
+.invoice-footer {
+    text-align: center;
+    margin-top: 50px;
+    color: #777;
+    font-size: 0.9rem;
+}
+
+.invoice-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    padding-top: 10px;
+}
+
+/* Print Styles */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    #invoice-content,
+    #invoice-content * {
+        visibility: visible;
+    }
+
+    #invoice-content {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 20px;
+        box-shadow: none;
+    }
+
+    .invoice-actions,
+    .modal-close-btn,
+    .modal-overlay {
+        display: none !important;
+    }
+}

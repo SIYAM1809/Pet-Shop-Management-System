@@ -79,13 +79,13 @@ const InquiryModal = ({ isOpen, onClose, pet }) => {
     if (!pet) return null;
 
     // Payment Method Options
+    // Payment Method Options
     const paymentMethods = [
-        { id: 'Bkash', label: 'Bkash', icon: <Smartphone size={20} color="#e2136e" />, bgColor: '#fff0f5' },
-        { id: 'Nagad', label: 'Nagad', icon: <Smartphone size={20} color="#ec1d24" />, bgColor: '#fff0f0' },
-        { id: 'Rocket', label: 'Rocket', icon: <Smartphone size={20} color="#8c3494" />, bgColor: '#fcf0ff' },
-        { id: 'Debit Card', label: 'Debit Card', icon: <CreditCard size={20} color="#2563eb" />, bgColor: '#eff6ff' },
-        { id: 'Credit Card', label: 'Credit Card', icon: <CreditCard size={20} color="#2563eb" />, bgColor: '#eff6ff' },
-        { id: 'Bank Transfer', label: 'Bank Transfer', icon: <Building size={20} color="#4b5563" />, bgColor: '#f3f4f6' },
+        { id: 'Bkash', label: 'Bkash', icon: <img src="/images/payments/bkash.svg" alt="Bkash" style={{ height: '40px', objectFit: 'contain' }} />, bgColor: '#fff' },
+        { id: 'Nagad', label: 'Nagad', icon: <img src="/images/payments/nagad.svg" alt="Nagad" style={{ height: '40px', objectFit: 'contain' }} />, bgColor: '#fff' },
+        { id: 'Rocket', label: 'Rocket', icon: <img src="/images/payments/rocket.svg" alt="Rocket" style={{ height: '40px', objectFit: 'contain' }} />, bgColor: '#fff' },
+        { id: 'Debit Card', label: 'Cards', icon: <div style={{ display: 'flex', gap: '5px' }}><img src="/images/payments/visa.png" alt="Visa" style={{ height: '25px' }} /><img src="/images/payments/mastercard.png" alt="Mastercard" style={{ height: '35px' }} /></div>, bgColor: '#fff' },
+        { id: 'Bank Transfer', label: 'Bank Transfer', icon: <img src="/images/payments/bank.png" alt="Bank" style={{ height: '40px', objectFit: 'contain' }} />, bgColor: '#fff' },
     ];
 
     return (

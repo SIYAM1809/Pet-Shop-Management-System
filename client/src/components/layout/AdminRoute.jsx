@@ -24,6 +24,8 @@ const AdminRoute = ({ children }) => {
 
     // Check if user has admin or staff role
     if (user?.role !== 'admin' && user?.role !== 'staff') {
+        const toast = require('react-hot-toast').default;
+        toast.error("Access Denied: Admins Only");
         // Redirect unauthorized users (e.g. customers) to the public homepage
         return <Navigate to="/" replace />;
     }

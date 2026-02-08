@@ -3,32 +3,18 @@ import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import MainLayout from './components/layout/MainLayout';
+import PublicLayout from './components/layout/PublicLayout';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Pets from './pages/Pets';
 import Customers from './pages/Customers';
 import Orders from './pages/Orders';
 import Settings from './pages/Settings';
+import Home from './pages/Public/Home';
+import BrowsePets from './pages/Public/BrowsePets';
+import AdminRoute from './components/layout/AdminRoute';
 import './styles/index.css';
 import './styles/components.css';
-
-const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated, loading } = useAuth();
-
-  if (loading) {
-    return (
-      <div className="loading-screen">
-        <div className="spinner" />
-        <p>Loading...</p>
-      </div>
-    );
-  }
-
-  return isAuthenticated ? children : <Navigate to="/login" replace />;
-};
-
-import AdminRoute from './components/layout/AdminRoute';
-// ... imports
 
 const PublicRoute = ({ children }) => {
   const { isAuthenticated, user, loading } = useAuth();
@@ -52,12 +38,28 @@ const PublicRoute = ({ children }) => {
   return children;
 };
 
-import PublicLayout from './components/layout/PublicLayout';
-// ... (imports)
+const AppRoutes = () => {
+  return (
+    <Routes>
+      <Route
+        path="/login"
+        element={
+          <PublicRoute>
+            <Login />
+          </PublicRoute>
+        }
+      />
 
-// ... inside AppRoutes ...
+      {/* Admin Redirect */}
+      <Route path="/admin" element={<Navigate to="/dashboard" replace />} />
 
-{/* Admin Dashboard Routes */ }
+      {/* Public Storefront Routes */}
+      <Route element={<PublicLayout />}>
+        <Route index element={<Home />} />
+        <Route path="browse" element={<BrowsePets />} />
+      </Route>
+
+      {/* Admin Dashboard Routes */}
       <Route
         path="/dashboard"
         element={
@@ -73,7 +75,7 @@ import PublicLayout from './components/layout/PublicLayout';
         <Route path="settings" element={<Settings />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes >
+    </Routes>
   );
 };
 

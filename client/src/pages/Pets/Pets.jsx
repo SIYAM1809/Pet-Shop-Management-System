@@ -61,7 +61,7 @@ const Pets = () => {
     const fetchPets = async () => {
         try {
             console.log("Fetching pets...");
-            const params = {};
+            const params = { limit: 100 }; // Increase limit to show all pets
             if (filterSpecies) params.species = filterSpecies;
             if (filterStatus) params.status = filterStatus;
             console.log("Params:", params);

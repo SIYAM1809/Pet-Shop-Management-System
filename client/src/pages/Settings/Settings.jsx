@@ -49,7 +49,7 @@ const Settings = () => {
             setAddUserForm({ name: '', email: '', password: '', role: 'staff' });
             fetchUsers();
         } catch (error) {
-            toast.error(error.response?.data?.message || 'Failed to add user');
+            toast.error(error.message || 'Failed to add user');
         } finally {
             setAddingUser(false);
         }

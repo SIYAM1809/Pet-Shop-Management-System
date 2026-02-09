@@ -1,0 +1,68 @@
+/* Admin Reviews Specific Styling */
+
+/* Search Input Styling */
+.admin-search-input {
+    width: 100%;
+    padding: 12px 16px 12px 42px;
+    /* Left padding for icon */
+    background-color: #f9fafb;
+    /* gray-50 */
+    border: 1px solid #e5e7eb;
+    /* gray-200 */
+    border-radius: 12px;
+    font-size: 0.875rem;
+    /* text-sm */
+    color: #374151;
+    /* gray-700 */
+    outline: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.admin-search-input:focus {
+    background-color: #ffffff;
+    border-color: #2563eb;
+    /* primary-600 */
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.admin-search-input::placeholder {
+    color: #9ca3af;
+    /* gray-400 */
+}
+
+/* Filter Button Styling */
+.admin-filter-btn {
+    padding: 8px 20px;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.admin-filter-btn.active {
+    background-color: #2563eb;
+    /* primary-600 */
+    color: white;
+    border-color: #2563eb;
+    box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+    transform: scale(1.02);
+}
+
+.admin-filter-btn.inactive {
+    background-color: #ffffff;
+    color: #4b5563;
+    /* gray-600 */
+    border-color: #e5e7eb;
+    /* gray-200 */
+}
+
+.admin-filter-btn.inactive:hover {
+    background-color: #f9fafb;
+    /* gray-50 */
+    border-color: #d1d5db;
+    /* gray-300 */
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}

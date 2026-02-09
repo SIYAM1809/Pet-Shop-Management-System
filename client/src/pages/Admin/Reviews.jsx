@@ -16,6 +16,7 @@ import Button from '../../components/common/Button';
 import { containerVariants, itemVariants } from '../../utils/animations';
 import toast from 'react-hot-toast';
 import '../../components/home/TestimonialsSection.css'; // Import the design tokens
+import './Reviews.css'; // Import admin specific overrides
 
 const Reviews = () => {
     const [reviews, setReviews] = useState([]);
@@ -118,7 +119,7 @@ const Reviews = () => {
                     <input
                         type="text"
                         placeholder="Search reviews..."
-                        className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:bg-white transition-all text-sm text-gray-700 placeholder-gray-400"
+                        className="admin-search-input"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
@@ -129,10 +130,7 @@ const Reviews = () => {
                         <button
                             key={status}
                             onClick={() => setFilterStatus(status)}
-                            className={`px-6 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 whitespace-nowrap border ${filterStatus === status
-                                ? 'bg-primary-600 text-white border-primary-600 shadow-md transform scale-105'
-                                : 'bg-gray-50 text-gray-600 border-gray-200 hover:bg-white hover:border-gray-300 hover:shadow-sm'
-                                }`}
+                            className={`admin-filter-btn ${filterStatus === status ? 'active' : 'inactive'}`}
                         >
                             {status}
                         </button>

@@ -277,6 +277,13 @@ export const reviewAPI = {
         return handleResponse(response);
     },
 
+    getAllAdmin: async () => {
+        const response = await fetch(`${API_URL}/reviews/admin/all`, {
+            headers: getAuthHeader()
+        });
+        return handleResponse(response);
+    },
+
     create: async (reviewData) => {
         const response = await fetch(`${API_URL}/reviews`, {
             method: 'POST',
@@ -284,6 +291,26 @@ export const reviewAPI = {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(reviewData)
+        });
+        return handleResponse(response);
+    },
+
+    updateStatus: async (id, status) => {
+        const response = await fetch(`${API_URL}/reviews/${id}/status`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                ...getAuthHeader()
+            },
+            body: JSON.stringify({ status })
+        });
+        return handleResponse(response);
+    },
+
+    delete: async (id) => {
+        const response = await fetch(`${API_URL}/reviews/${id}`, {
+            method: 'DELETE',
+            headers: getAuthHeader()
         });
         return handleResponse(response);
     }

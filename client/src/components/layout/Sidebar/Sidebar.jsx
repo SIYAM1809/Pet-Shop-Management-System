@@ -6,6 +6,7 @@ import {
     Users,
     ShoppingCart,
     Calendar, // Import Calendar
+    Star, // Import Star for Reviews
     Settings,
     ChevronLeft,
     ChevronRight,
@@ -18,6 +19,7 @@ const navItems = [
     { path: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
     { path: '/dashboard/appointments', icon: Calendar, label: 'Appointments' }, // Add Appointments
     { path: '/dashboard/pets', icon: PawPrint, label: 'Pets' },
+    { path: '/dashboard/reviews', icon: Star, label: 'Reviews' }, // Add Reviews
     { path: '/dashboard/customers', icon: Users, label: 'Customers' },
     { path: '/dashboard/orders', icon: ShoppingCart, label: 'Orders' },
     { path: '/dashboard/settings', icon: Settings, label: 'Settings' }

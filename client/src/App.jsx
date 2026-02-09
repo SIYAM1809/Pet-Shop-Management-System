@@ -10,6 +10,7 @@ import Pets from './pages/Pets';
 import Customers from './pages/Customers';
 import Orders from './pages/Orders';
 import Appointments from './pages/Admin/Appointments'; // Import Appointments
+import Reviews from './pages/Admin/Reviews'; // Import Reviews
 import Settings from './pages/Settings';
 import Home from './pages/Public/Home';
 import BrowsePets from './pages/Public/BrowsePets';
@@ -78,6 +79,7 @@ const AppRoutes = () => {
         <Route path="pets" element={<Pets />} />
         <Route path="customers" element={<Customers />} />
         <Route path="orders" element={<Orders />} />
+        <Route path="reviews" element={<Reviews />} /> {/* Add Reviews Route */}
         <Route path="settings" element={<Settings />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />

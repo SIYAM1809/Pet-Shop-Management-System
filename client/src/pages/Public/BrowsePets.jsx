@@ -23,7 +23,7 @@ const BrowsePets = () => {
         const fetchPets = async () => {
             try {
                 // Fetch pets with a reasonable limit to improve performance
-                const response = await petAPI.getAll({ limit: 12 });
+                const response = await petAPI.getAll({ limit: 100 });
                 console.log("Pet API response:", response);
 
                 if (response.data && Array.isArray(response.data)) {

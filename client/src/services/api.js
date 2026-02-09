@@ -267,3 +267,24 @@ export const appointmentAPI = {
         return handleResponse(response);
     }
 };
+
+// Review API
+export const reviewAPI = {
+    getAll: async () => {
+        const response = await fetch(`${API_URL}/reviews`, {
+            headers: getAuthHeader()
+        });
+        return handleResponse(response);
+    },
+
+    create: async (reviewData) => {
+        const response = await fetch(`${API_URL}/reviews`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(reviewData)
+        });
+        return handleResponse(response);
+    }
+};

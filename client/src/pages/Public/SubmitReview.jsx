@@ -1,10 +1,12 @@
-import { useState, useRef } from 'react';
-import { Star, Upload, CheckCircle, Send, ArrowLeft, X, Image as ImageIcon } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { useState, useRef, useEffect } from 'react';
+import { Star, Upload, CheckCircle, Send, ArrowLeft, X } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../components/common/Button';
+import { reviewAPI } from '../../services/api';
 import './SubmitReview.css';
 
 const SubmitReview = () => {
+    const navigate = useNavigate();
     const fileInputRef = useRef(null);
     const [rating, setRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
@@ -17,6 +19,12 @@ const SubmitReview = () => {
     const [previewUrl, setPreviewUrl] = useState(null);
     const [submitted, setSubmitted] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [error, setError] = useState(null);
+
+    // Scroll to top on mount or when successfully submitted
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [submitted]);
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -43,14 +51,53 @@ const SubmitReview = () => {
         fileInputRef.current?.click();
     };
 
-    const handleSubmit = (e) => {
+    const convertToBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = (error) => reject(error);
+        });
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        if (rating === 0) {
+            setError("Please select a star rating");
+            return;
+        }
+
         setIsSubmitting(true);
-        // Simulate API call
-        setTimeout(() => {
+        setError(null);
+
+        try {
+            let imageBase64 = null;
+            if (formData.image) {
+                imageBase64 = await convertToBase64(formData.image);
+            }
+
+            const reviewData = {
+                name: formData.name,
+                petName: formData.petName,
+                review: formData.review,
+                rating: rating,
+                image: imageBase64
+            };
+
+            await reviewAPI.create(reviewData);
             setSubmitted(true);
+
+            // Auto redirect after 3 seconds
+            setTimeout(() => {
+                navigate('/');
+            }, 3000);
+
+        } catch (err) {
+            console.error("Failed to submit review:", err);
+            setError(err.message || "Failed to submit review. Please try again.");
+        } finally {
             setIsSubmitting(false);
-        }, 1500);
+        }
     };
 
     if (submitted) {
@@ -62,7 +109,10 @@ const SubmitReview = () => {
                     </div>
                     <h2 className="success-title">Thank You!</h2>
                     <p className="success-message">
-                        Your review has been submitted successfully. We love hearing from our community!
+                        Your review has been submitted successfully. It will appear in our Happy Tails section shortly!
+                    </p>
+                    <p style={{ fontSize: '0.875rem', color: 'var(--text-tertiary)', marginBottom: '2rem' }}>
+                        Redirecting to home...
                     </p>
                     <div className="action-buttons">
                         <Link to="/">
@@ -92,6 +142,19 @@ const SubmitReview = () => {
                     </div>
 
                     <div className="review-form-container">
+                        {error && (
+                            <div style={{
+                                background: '#fee2e2',
+                                color: '#b91c1c',
+                                padding: '1rem',
+                                borderRadius: '0.5rem',
+                                marginBottom: '1.5rem',
+                                textAlign: 'center'
+                            }}>
+                                {error}
+                            </div>
+                        )}
+
                         <form onSubmit={handleSubmit}>
                             {/* Star Rating */}
                             <div className="rating-section">

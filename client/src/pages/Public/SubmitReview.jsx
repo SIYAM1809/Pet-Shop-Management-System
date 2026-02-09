@@ -1,10 +1,11 @@
-import { useState } from 'react';
-import { Star, Upload, CheckCircle, Send, ArrowLeft } from 'lucide-react';
+import { useState, useRef } from 'react';
+import { Star, Upload, CheckCircle, Send, ArrowLeft, X, Image as ImageIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/common/Button';
 import './SubmitReview.css';
 
 const SubmitReview = () => {
+    const fileInputRef = useRef(null);
     const [rating, setRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
     const [formData, setFormData] = useState({
@@ -13,8 +14,34 @@ const SubmitReview = () => {
         review: '',
         image: null
     });
+    const [previewUrl, setPreviewUrl] = useState(null);
     const [submitted, setSubmitted] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setFormData({ ...formData, image: file });
+            const url = URL.createObjectURL(file);
+            setPreviewUrl(url);
+        }
+    };
+
+    const handleRemoveImage = (e) => {
+        e.stopPropagation();
+        setFormData({ ...formData, image: null });
+        if (previewUrl) {
+            URL.revokeObjectURL(previewUrl);
+            setPreviewUrl(null);
+        }
+        if (fileInputRef.current) {
+            fileInputRef.current.value = '';
+        }
+    };
+
+    const triggerFileInput = () => {
+        fileInputRef.current?.click();
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -129,17 +156,72 @@ const SubmitReview = () => {
 
                             <div className="form-group" style={{ marginTop: '1.5rem' }}>
                                 <label className="form-label">Add a Photo of Your Pet</label>
-                                <div className="file-upload-area">
-                                    <div className="upload-icon-wrapper">
-                                        <Upload size={24} />
-                                    </div>
-                                    <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-                                        <span style={{ color: 'var(--primary-600)', fontWeight: 500 }}>Upload a file</span>
-                                        {' '}or drag and drop
-                                    </div>
-                                    <p style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', marginTop: '0.25rem' }}>
-                                        PNG, JPG, GIF up to 5MB
-                                    </p>
+                                <input
+                                    type="file"
+                                    ref={fileInputRef}
+                                    className="hidden"
+                                    accept="image/*"
+                                    onChange={handleFileChange}
+                                    style={{ display: 'none' }}
+                                />
+                                <div
+                                    className={`file-upload-area ${previewUrl ? 'has-preview' : ''}`}
+                                    onClick={triggerFileInput}
+                                    style={{
+                                        position: 'relative',
+                                        overflow: 'hidden',
+                                        borderColor: previewUrl ? 'var(--primary-500)' : undefined
+                                    }}
+                                >
+                                    {previewUrl ? (
+                                        <div className="preview-container" style={{ position: 'relative', zIndex: 10 }}>
+                                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}>
+                                                <img
+                                                    src={previewUrl}
+                                                    alt="Preview"
+                                                    style={{
+                                                        width: '64px',
+                                                        height: '64px',
+                                                        objectFit: 'cover',
+                                                        borderRadius: '8px',
+                                                        boxShadow: 'var(--shadow-sm)'
+                                                    }}
+                                                />
+                                                <div style={{ textAlign: 'left' }}>
+                                                    <p style={{ fontWeight: 500, color: 'var(--text-primary)' }}>{formData.image.name}</p>
+                                                    <p style={{ fontSize: '0.75rem', color: 'var(--success)' }}>Image selected</p>
+                                                </div>
+                                                <button
+                                                    type="button"
+                                                    onClick={handleRemoveImage}
+                                                    style={{
+                                                        padding: '0.5rem',
+                                                        borderRadius: '50%',
+                                                        border: '1px solid var(--border-medium)',
+                                                        background: 'white',
+                                                        color: 'var(--error)',
+                                                        cursor: 'pointer',
+                                                        marginLeft: 'auto'
+                                                    }}
+                                                >
+                                                    <X size={16} />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <>
+                                            <div className="upload-icon-wrapper">
+                                                <Upload size={24} />
+                                            </div>
+                                            <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+                                                <span style={{ color: 'var(--primary-600)', fontWeight: 500 }}>Upload a file</span>
+                                                {' '}or drag and drop
+                                            </div>
+                                            <p style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', marginTop: '0.25rem' }}>
+                                                PNG, JPG, GIF up to 5MB
+                                            </p>
+                                        </>
+                                    )}
                                 </div>
                             </div>
 

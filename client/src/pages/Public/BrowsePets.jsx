@@ -22,10 +22,22 @@ const BrowsePets = () => {
     useEffect(() => {
         const fetchPets = async () => {
             try {
-                const response = await petAPI.getAll({ status: 'Available', limit: 100 });
-                setPets(response.data);
+                // Fetch all pets first to debug visibility issue
+                // Removed strict status filter for debugging
+                const response = await petAPI.getAll({ limit: 100 });
+                console.log("Pet API response:", response);
+
+                if (response.data && Array.isArray(response.data)) {
+                    setPets(response.data);
+                } else if (Array.isArray(response)) {
+                    setPets(response);
+                } else {
+                    console.error("Unexpected API response format:", response);
+                    setPets([]);
+                }
             } catch (error) {
-                console.error("Failed to load pets");
+                console.error("Failed to load pets:", error);
+                setPets([]);
             } finally {
                 setLoading(false);
             }
@@ -37,6 +49,7 @@ const BrowsePets = () => {
         const matchesSearch = pet.name.toLowerCase().includes(search.toLowerCase()) ||
             pet.breed.toLowerCase().includes(search.toLowerCase());
         const matchesSpecies = filterSpecies ? pet.species === filterSpecies : true;
+        // Previously enforced status check here too, now removed to show all returned pets
         return matchesSearch && matchesSpecies;
     });
 
@@ -111,7 +124,7 @@ const BrowsePets = () => {
                                             <PawPrint size={48} color="#cbd5e1" />
                                         </div>
                                     )}
-                                    <span className="pet-status-badge" style={{ color: '#10b981' }}>{pet.status}</span>
+                                    <span className="pet-status-badge" style={{ color: '#10b981' }}>{pet.status || 'Available'}</span>
                                 </div>
                                 <div className="pet-content">
                                     <h3 className="pet-title">{pet.name}</h3>
@@ -120,7 +133,7 @@ const BrowsePets = () => {
                                     <div className="pet-attributes">
                                         <div className="attribute">{pet.species}</div>
                                         <div className="attribute">{pet.gender}</div>
-                                        <div className="attribute">{pet.age.value} {pet.age.unit}</div>
+                                        <div className="attribute">{pet.age?.value} {pet.age?.unit}</div>
                                         <div className="attribute">{pet.color}</div>
                                     </div>
 

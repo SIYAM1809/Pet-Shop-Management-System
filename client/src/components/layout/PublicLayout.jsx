@@ -34,7 +34,7 @@ const PublicLayout = () => {
                         <div className="brand-icon" style={{ background: 'linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%)', padding: '8px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <Cat size={24} color="white" />
                         </div>
-                        <span className="brand-text gradient-text" style={{ fontSize: '1.5rem', fontWeight: '800', marginLeft: '10px' }}>Praniseba</span>
+                        <span className="brand-text gradient-text" style={{ fontSize: '1.5rem', fontWeight: '800', marginLeft: '10px' }}>Siyam Praniseba</span>
                     </Link>
 
                     <div className="navbar-links">
@@ -73,7 +73,7 @@ const PublicLayout = () => {
                         <div className="footer-brand-section">
                             <div className="footer-brand">
                                 <Cat size={24} className="text-primary-600" />
-                                <span className="brand-text">Praniseba</span>
+                                <span className="brand-text">Siyam Praniseba</span>
                             </div>
                             <p className="footer-tagline">
                                 Connecting pets with loving homes. We prioritize the well-being and happiness of every animal.
@@ -97,7 +97,7 @@ const PublicLayout = () => {
                     </div>
 
                     <div className="footer-bottom">
-                        <p>&copy; {new Date().getFullYear()} Praniseba. All rights reserved.</p>
+                        <p>&copy; {new Date().getFullYear()} Siyam Praniseba. All rights reserved.</p>
                         <p className="footer-credit">Designed & Developed by <span className="credit-name">Siyam</span></p>
                     </div>
                 </div>

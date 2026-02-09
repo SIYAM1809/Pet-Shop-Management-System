@@ -44,7 +44,7 @@ const Sidebar = ({ collapsed, onToggle }) => {
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.1 }}
                     >
-                        PetShop
+                        Siyam Praniseba
                     </motion.span>
                 )}
             </div>

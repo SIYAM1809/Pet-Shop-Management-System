@@ -1,11 +1,10 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import { Star, Upload, CheckCircle, Send, ArrowLeft } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Button from '../../components/common/Button';
+import './SubmitReview.css';
 
 const SubmitReview = () => {
-    const navigate = useNavigate();
     const [rating, setRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
     const [formData, setFormData] = useState({
@@ -29,20 +28,16 @@ const SubmitReview = () => {
 
     if (submitted) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12">
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full text-center"
-                >
-                    <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <CheckCircle size={40} className="text-green-600" />
+            <div className="submit-review-page">
+                <div className="review-card success-state">
+                    <div className="success-icon">
+                        <CheckCircle size={48} />
                     </div>
-                    <h2 className="text-3xl font-bold text-gray-900 mb-4">Thank You!</h2>
-                    <p className="text-gray-600 mb-8 text-lg">
+                    <h2 className="success-title">Thank You!</h2>
+                    <p className="success-message">
                         Your review has been submitted successfully. We love hearing from our community!
                     </p>
-                    <div className="flex gap-4 justify-center">
+                    <div className="action-buttons">
                         <Link to="/">
                             <Button variant="outline">Back to Home</Button>
                         </Link>
@@ -50,77 +45,69 @@ const SubmitReview = () => {
                             <Button>Browse Pets</Button>
                         </Link>
                     </div>
-                </motion.div>
+                </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-2xl mx-auto">
-                <Link to="/" className="inline-flex items-center text-gray-500 hover:text-primary-600 mb-8 transition-colors">
-                    <ArrowLeft size={20} className="mr-2" />
+        <div className="submit-review-page">
+            <div style={{ width: '100%', maxWidth: '700px' }}>
+                <Link to="/" className="back-link">
+                    <ArrowLeft size={20} />
                     Back to Home
                 </Link>
 
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="bg-white rounded-2xl shadow-xl overflow-hidden"
-                >
-                    <div className="bg-gradient-to-r from-primary-600 to-secondary-600 p-8 text-center">
-                        <h1 className="text-3xl font-bold text-white mb-2">Share Your Story</h1>
-                        <p className="text-primary-100 text-lg">
-                            Tell us about your new companion and detailed experience.
-                        </p>
+                <div className="review-card">
+                    <div className="review-header">
+                        <h1>Share Your Story</h1>
+                        <p>Tell us about your new companion and detailed experience.</p>
                     </div>
 
-                    <div className="p-8 sm:p-10">
-                        <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="review-form-container">
+                        <form onSubmit={handleSubmit}>
                             {/* Star Rating */}
-                            <div className="flex flex-col items-center justify-center mb-8">
-                                <label className="text-sm font-medium text-gray-700 mb-3">How would you rate your experience?</label>
-                                <div className="flex space-x-3">
+                            <div className="rating-section">
+                                <label className="rating-label">How would you rate your experience?</label>
+                                <div className="star-container">
                                     {[1, 2, 3, 4, 5].map((star) => (
                                         <button
                                             key={star}
                                             type="button"
-                                            className="transition-transform hover:scale-110 focus:outline-none"
+                                            className="star-btn"
                                             onMouseEnter={() => setHoverRating(star)}
                                             onMouseLeave={() => setHoverRating(0)}
                                             onClick={() => setRating(star)}
                                         >
                                             <Star
                                                 size={40}
-                                                className={`${star <= (hoverRating || rating)
-                                                    ? 'text-yellow-400 fill-yellow-400'
-                                                    : 'text-gray-200'
-                                                    } transition-colors`}
+                                                className="star-icon"
+                                                fill={star <= (hoverRating || rating) ? "#fbbf24" : "none"}
+                                                color={star <= (hoverRating || rating) ? "#fbbf24" : "#e5e7eb"}
                                             />
                                         </button>
                                     ))}
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Your Name</label>
+                            <div className="form-grid">
+                                <div className="form-group">
+                                    <label className="form-label">Your Name</label>
                                     <input
                                         type="text"
                                         required
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all bg-gray-50 focus:bg-white"
+                                        className="input"
                                         placeholder="John Doe"
                                         value={formData.name}
                                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                     />
                                 </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Pet's Name</label>
+                                <div className="form-group">
+                                    <label className="form-label">Pet's Name</label>
                                     <input
                                         type="text"
                                         required
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all bg-gray-50 focus:bg-white"
+                                        className="input"
                                         placeholder="Buddy"
                                         value={formData.petName}
                                         onChange={(e) => setFormData({ ...formData, petName: e.target.value })}
@@ -128,51 +115,48 @@ const SubmitReview = () => {
                                 </div>
                             </div>
 
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Your Review</label>
+                            <div className="form-group" style={{ marginTop: '1.5rem' }}>
+                                <label className="form-label">Your Review</label>
                                 <textarea
                                     required
                                     rows="5"
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all bg-gray-50 focus:bg-white resize-none"
+                                    className="input textarea"
                                     placeholder="Share your experience..."
                                     value={formData.review}
                                     onChange={(e) => setFormData({ ...formData, review: e.target.value })}
                                 ></textarea>
                             </div>
 
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Add a Photo of Your Pet</label>
-                                <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-xl hover:border-primary-500 hover:bg-primary-50 transition-all cursor-pointer group">
-                                    <div className="space-y-2 text-center">
-                                        <div className="mx-auto h-12 w-12 text-gray-400 group-hover:text-primary-500 transition-colors flex items-center justify-center rounded-full bg-gray-100 group-hover:bg-primary-100">
-                                            <Upload size={24} />
-                                        </div>
-                                        <div className="flex text-sm text-gray-600 justify-center">
-                                            <span className="relative cursor-pointer bg-white rounded-md font-medium text-primary-600 hover:text-primary-500 focus-within:outline-none">
-                                                <span>Upload a file</span>
-                                            </span>
-                                            <p className="pl-1">or drag and drop</p>
-                                        </div>
-                                        <p className="text-xs text-gray-500">PNG, JPG, GIF up to 5MB</p>
+                            <div className="form-group" style={{ marginTop: '1.5rem' }}>
+                                <label className="form-label">Add a Photo of Your Pet</label>
+                                <div className="file-upload-area">
+                                    <div className="upload-icon-wrapper">
+                                        <Upload size={24} />
                                     </div>
+                                    <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+                                        <span style={{ color: 'var(--primary-600)', fontWeight: 500 }}>Upload a file</span>
+                                        {' '}or drag and drop
+                                    </div>
+                                    <p style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', marginTop: '0.25rem' }}>
+                                        PNG, JPG, GIF up to 5MB
+                                    </p>
                                 </div>
                             </div>
 
-                            <div className="pt-4">
+                            <div className="submit-btn-wrapper">
                                 <Button
                                     type="submit"
                                     fullWidth
                                     size="lg"
-                                    className="h-12 text-lg shadow-lg hover:shadow-xl transform transition-all hover:-translate-y-1"
+                                    className="btn-primary"
                                     disabled={isSubmitting}
                                 >
                                     {isSubmitting ? (
-                                        <span className="flex items-center justify-center gap-2">
-                                            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                        <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                             Submitting...
                                         </span>
                                     ) : (
-                                        <span className="flex items-center justify-center gap-2">
+                                        <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                             Submit Review <Send size={20} />
                                         </span>
                                     )}
@@ -180,7 +164,7 @@ const SubmitReview = () => {
                             </div>
                         </form>
                     </div>
-                </motion.div>
+                </div>
             </div>
         </div>
     );

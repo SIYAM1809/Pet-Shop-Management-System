@@ -8,12 +8,14 @@ import {
     Search,
     Filter,
     MessageSquare,
-    AlertCircle
+    AlertCircle,
+    Quote
 } from 'lucide-react';
 import { reviewAPI } from '../../services/api';
-import Button from '../../components/common/Button';  // Adjusted path: ../../components/common/Button
-import { containerVariants, itemVariants } from '../../utils/animations'; // Adjusted path: ../../utils/animations
+import Button from '../../components/common/Button';
+import { containerVariants, itemVariants } from '../../utils/animations';
 import toast from 'react-hot-toast';
+import '../../components/home/TestimonialsSection.css'; // Import the design tokens
 
 const Reviews = () => {
     const [reviews, setReviews] = useState([]);
@@ -129,8 +131,8 @@ const Reviews = () => {
                             key={status}
                             onClick={() => setFilterStatus(status)}
                             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${filterStatus === status
-                                    ? 'bg-primary-600 text-white'
-                                    : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+                                ? 'bg-primary-600 text-white'
+                                : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
                                 }`}
                         >
                             {status}
@@ -140,7 +142,7 @@ const Reviews = () => {
             </div>
 
             {/* Reviews Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
                 {filteredReviews.length === 0 ? (
                     <div className="col-span-full text-center py-12">
                         <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -154,78 +156,96 @@ const Reviews = () => {
                         <motion.div
                             key={review._id}
                             variants={itemVariants}
-                            className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow"
+                            className="h-full"
                         >
-                            <div className="p-6">
-                                <div className="flex justify-between items-start mb-4">
-                                    <div className="flex items-center gap-3">
-                                        {review.image ? (
-                                            <img
-                                                src={review.image}
-                                                alt={review.petName}
-                                                className="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm"
-                                            />
-                                        ) : (
-                                            <div className="w-12 h-12 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-bold border-2 border-white shadow-sm">
-                                                {review.name.charAt(0)}
-                                            </div>
-                                        )}
-                                        <div>
-                                            <h3 className="font-bold text-gray-900">{review.name}</h3>
-                                            <p className="text-sm text-primary-600 font-medium">{review.petName}</p>
-                                        </div>
-                                    </div>
-                                    <span className={`px-2 py-1 rounded-full text-xs font-semibold ${getStatusColor(review.status)}`}>
+                            <div className="testimonial-card relative bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col h-full transform transition hover:-translate-y-1 hover:shadow-md">
+                                {/* Status Badge - Positioned absolutely */}
+                                <div className="absolute top-4 right-4 z-20">
+                                    <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm ${getStatusColor(review.status)}`}>
                                         {review.status || 'Pending'}
                                     </span>
                                 </div>
 
-                                <div className="flex mb-3">
+                                {/* Quote Icon */}
+                                <div className="quote-icon opacity-10 text-primary-500 absolute top-6 right-6 transform rotate-180 pointer-events-none">
+                                    <Quote size={80} />
+                                </div>
+
+                                <div className="card-header flex items-center mb-4 z-10 relative">
+                                    <div className="avatar-wrapper flex-shrink-0 relative">
+                                        {review.image ? (
+                                            <img
+                                                src={review.image}
+                                                alt={review.name}
+                                                className="user-avatar w-16 h-16 rounded-full object-cover border-4 border-white shadow-sm"
+                                            />
+                                        ) : (
+                                            <div className="avatar-placeholder w-16 h-16 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center font-bold text-xl border-4 border-white shadow-sm">
+                                                {review.name.charAt(0)}
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="user-info ml-4">
+                                        <h4 className="user-name font-bold text-gray-900 text-lg">{review.name}</h4>
+                                        <p className="pet-name text-sm text-primary-600 font-medium">{review.petName}</p>
+                                    </div>
+                                </div>
+
+                                <div className="rating-stars flex gap-1 mb-4 z-10 relative">
                                     {[...Array(5)].map((_, i) => (
                                         <Star
                                             key={i}
-                                            size={16}
+                                            size={18}
                                             className={i < review.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-200'}
                                         />
                                     ))}
                                 </div>
 
-                                <p className="text-gray-600 text-sm mb-4 line-clamp-4 italic bg-gray-50 p-3 rounded-lg border border-gray-100">
+                                <p className="review-text text-gray-600 italic mb-6 relative z-10 flex-grow leading-relaxed">
                                     "{review.review}"
                                 </p>
 
-                                <div className="text-xs text-gray-400 mb-4 font-medium">
-                                    Submitted: {new Date(review.createdAt).toLocaleDateString()}
-                                </div>
+                                <div className="card-footer pt-4 border-t border-gray-100 mt-auto flex flex-col gap-4">
+                                    <div className="flex justify-between items-center w-full text-xs text-gray-400 font-medium uppercase tracking-wide">
+                                        <span className="flex items-center gap-1">
+                                            {review.status === 'Approved' ? (
+                                                <><CheckCircle size={14} className="text-green-500" /> Verified</>
+                                            ) : (
+                                                <><AlertCircle size={14} className="text-yellow-500" /> Unverified</>
+                                            )}
+                                        </span>
+                                        <span>{new Date(review.createdAt).toLocaleDateString()}</span>
+                                    </div>
 
-                                <div className="flex gap-2 pt-4 border-t border-gray-100">
-                                    {review.status !== 'Approved' && (
-                                        <Button
-                                            size="sm"
-                                            className="flex-1 bg-green-600 hover:bg-green-700 text-white border-none"
-                                            onClick={() => handleStatusUpdate(review._id, 'Approved')}
-                                        >
-                                            <CheckCircle size={16} className="mr-1" /> Approve
-                                        </Button>
-                                    )}
-                                    {review.status === 'Approved' && (
+                                    <div className="flex gap-2 w-full z-20">
+                                        {review.status !== 'Approved' && (
+                                            <Button
+                                                size="sm"
+                                                className="flex-1 bg-green-600 hover:bg-green-700 text-white border-none py-2 shadow-sm"
+                                                onClick={() => handleStatusUpdate(review._id, 'Approved')}
+                                            >
+                                                <CheckCircle size={16} className="mr-1" /> Approve
+                                            </Button>
+                                        )}
+                                        {review.status === 'Approved' && (
+                                            <Button
+                                                size="sm"
+                                                variant="outline"
+                                                className="flex-1 text-yellow-600 border-yellow-200 hover:bg-yellow-50 py-2"
+                                                onClick={() => handleStatusUpdate(review._id, 'Pending')}
+                                            >
+                                                <AlertCircle size={16} className="mr-1" /> Suspend
+                                            </Button>
+                                        )}
                                         <Button
                                             size="sm"
                                             variant="outline"
-                                            className="flex-1 text-yellow-600 border-yellow-200 hover:bg-yellow-50"
-                                            onClick={() => handleStatusUpdate(review._id, 'Pending')}
+                                            className="text-red-600 border-red-200 hover:bg-red-50 px-3 shadow-sm"
+                                            onClick={() => handleDelete(review._id)}
                                         >
-                                            <AlertCircle size={16} className="mr-1" /> Suspend
+                                            <Trash2 size={16} />
                                         </Button>
-                                    )}
-                                    <Button
-                                        size="sm"
-                                        variant="outline"
-                                        className="text-red-600 border-red-200 hover:bg-red-50"
-                                        onClick={() => handleDelete(review._id)}
-                                    >
-                                        <Trash2 size={16} />
-                                    </Button>
+                                    </div>
                                 </div>
                             </div>
                         </motion.div>

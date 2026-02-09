@@ -14,6 +14,7 @@ import Settings from './pages/Settings';
 import Home from './pages/Public/Home';
 import BrowsePets from './pages/Public/BrowsePets';
 import TrackOrder from './pages/Public/TrackOrder';
+import SubmitReview from './pages/Public/SubmitReview';
 import AdminRoute from './components/layout/AdminRoute';
 import './styles/index.css';
 import './styles/components.css';
@@ -60,6 +61,7 @@ const AppRoutes = () => {
         <Route index element={<Home />} />
         <Route path="browse" element={<BrowsePets />} />
         <Route path="track" element={<TrackOrder />} />
+        <Route path="submit-review" element={<SubmitReview />} />
       </Route>
 
       {/* Admin Dashboard Routes */}

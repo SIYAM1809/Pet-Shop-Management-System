@@ -57,7 +57,7 @@ const Login = () => {
                         <div className="login-logo">
                             <PawPrint size={32} />
                         </div>
-                        <h1 className="login-title">Siyam Praniseba</h1>
+                        <h1 className="login-title">Siyam's Praniseba</h1>
                         <p className="login-subtitle">Sign in to your account</p>
                     </motion.div>
 

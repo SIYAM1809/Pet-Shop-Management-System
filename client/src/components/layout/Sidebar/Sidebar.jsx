@@ -44,7 +44,7 @@ const Sidebar = ({ collapsed, onToggle }) => {
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.1 }}
                     >
-                        Siyam Praniseba
+                        Siyam's Praniseba
                     </motion.span>
                 )}
             </div>

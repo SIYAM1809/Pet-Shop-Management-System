@@ -41,11 +41,11 @@ const Footer = () => {
                         <div className="contact-info">
                             <div className="contact-item">
                                 <MapPin size={18} className="contact-icon" />
-                                <span>123 Pet Street, Animal City, AC 12345</span>
+                                <span>Prembagan, Kosaibari, Uttara, Dhaka-1230</span>
                             </div>
                             <div className="contact-item">
                                 <Phone size={18} className="contact-icon" />
-                                <span>+1 (555) 123-4567</span>
+                                <span>+880 130 405 4566</span>
                             </div>
                             <div className="contact-item">
                                 <Mail size={18} className="contact-icon" />

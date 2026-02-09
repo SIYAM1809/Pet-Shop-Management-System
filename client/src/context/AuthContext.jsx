@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { authAPI } from '../services/api';
 
 const AuthContext = createContext(null);
 
@@ -19,18 +20,8 @@ export const AuthProvider = ({ children }) => {
         const initAuth = async () => {
             if (token) {
                 try {
-                    const response = await fetch('http://localhost:5000/api/auth/me', {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
-                    });
-
-                    if (response.ok) {
-                        const data = await response.json();
-                        setUser(data.user);
-                    } else {
-                        logout();
-                    }
+                    const data = await authAPI.getMe();
+                    setUser(data.user);
                 } catch (error) {
                     console.error('Auth initialization error:', error);
                     logout();
@@ -43,20 +34,7 @@ export const AuthProvider = ({ children }) => {
     }, [token]);
 
     const login = async (email, password) => {
-        const response = await fetch('http://localhost:5000/api/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email, password })
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.message || 'Login failed');
-        }
-
+        const data = await authAPI.login({ email, password });
         localStorage.setItem('token', data.token);
         setToken(data.token);
         setUser(data.user);
@@ -64,20 +42,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     const register = async (name, email, password) => {
-        const response = await fetch('http://localhost:5000/api/auth/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ name, email, password })
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.message || 'Registration failed');
-        }
-
+        const data = await authAPI.register({ name, email, password });
         localStorage.setItem('token', data.token);
         setToken(data.token);
         setUser(data.user);

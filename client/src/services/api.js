@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
 
 const getAuthHeader = () => {
     const token = localStorage.getItem('token');
@@ -23,6 +23,22 @@ export const authAPI = {
                 ...getAuthHeader()
             },
             body: JSON.stringify(userData)
+        });
+        return handleResponse(response);
+    },
+
+    login: async (credentials) => {
+        const response = await fetch(`${API_URL}/auth/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(credentials)
+        });
+        return handleResponse(response);
+    },
+
+    getMe: async () => {
+        const response = await fetch(`${API_URL}/auth/me`, {
+            headers: getAuthHeader()
         });
         return handleResponse(response);
     },

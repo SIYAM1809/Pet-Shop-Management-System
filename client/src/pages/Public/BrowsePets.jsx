@@ -22,9 +22,8 @@ const BrowsePets = () => {
     useEffect(() => {
         const fetchPets = async () => {
             try {
-                // Fetch all pets first to debug visibility issue
-                // Removed strict status filter for debugging
-                const response = await petAPI.getAll({ limit: 100 });
+                // Fetch pets with a reasonable limit to improve performance
+                const response = await petAPI.getAll({ limit: 12 });
                 console.log("Pet API response:", response);
 
                 if (response.data && Array.isArray(response.data)) {

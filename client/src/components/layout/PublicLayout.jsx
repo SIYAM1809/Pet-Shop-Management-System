@@ -1,7 +1,8 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { Cat, LogIn } from 'lucide-react'; // Changed import to Cat
+import { Cat, LogIn } from 'lucide-react';
 import Button from '../common/Button';
 import WhatsAppButton from '../common/WhatsAppButton';
+import Footer from './Footer/Footer';
 import './PublicLayout.css';
 import { useState, useEffect } from 'react';
 
@@ -11,7 +12,7 @@ const PublicLayout = () => {
 
     useEffect(() => {
         const handleScroll = () => {
-            if (window.scrollY > 50) { // Adjust scroll threshold as needed
+            if (window.scrollY > 50) {
                 setIsScrolled(true);
             } else {
                 setIsScrolled(false);
@@ -67,41 +68,7 @@ const PublicLayout = () => {
 
             <WhatsAppButton />
 
-            <footer className="public-footer">
-                <div className="container">
-                    <div className="footer-content">
-                        <div className="footer-brand-section">
-                            <div className="footer-brand">
-                                <Cat size={24} className="text-primary-600" />
-                                <span className="brand-text">Siyam's Praniseba</span>
-                            </div>
-                            <p className="footer-tagline">
-                                Connecting pets with loving homes. We prioritize the well-being and happiness of every animal.
-                            </p>
-                        </div>
-
-                        <div className="footer-links">
-                            <div className="footer-column">
-                                <h4>Quick Links</h4>
-                                <Link to="/">Home</Link>
-                                <Link to="/browse">Browse Pets</Link>
-                                <Link to="/about">About Us</Link>
-                            </div>
-                            <div className="footer-column">
-                                <h4>Support</h4>
-                                <Link to="/contact">Contact</Link>
-                                <Link to="/faq">FAQ</Link>
-                                <Link to="/privacy">Privacy Policy</Link>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="footer-bottom">
-                        <p>&copy; {new Date().getFullYear()} Siyam's Praniseba. All rights reserved.</p>
-                        <p className="footer-credit">Designed & Developed by <span className="credit-name">Siyam</span></p>
-                    </div>
-                </div>
-            </footer>
+            <Footer />
         </div >
     );
 };

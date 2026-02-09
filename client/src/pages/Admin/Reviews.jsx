@@ -15,9 +15,7 @@ import { reviewAPI } from '../../services/api';
 import Button from '../../components/common/Button';
 import { containerVariants, itemVariants } from '../../utils/animations';
 import toast from 'react-hot-toast';
-
-// Removed external CSS import to rely on Tailwind for admin layout
-// import '../../components/home/TestimonialsSection.css'; 
+import '../../components/home/TestimonialsSection.css'; // Import the design tokens
 
 const Reviews = () => {
     const [reviews, setReviews] = useState([]);
@@ -80,9 +78,9 @@ const Reviews = () => {
 
     const getStatusColor = (status) => {
         switch (status) {
-            case 'Approved': return 'bg-green-100 text-green-700 border-green-200';
-            case 'Pending': return 'bg-yellow-100 text-yellow-700 border-yellow-200';
-            default: return 'bg-gray-100 text-gray-700 border-gray-200';
+            case 'Approved': return 'bg-green-100 text-green-700';
+            case 'Pending': return 'bg-yellow-100 text-yellow-700';
+            default: return 'bg-gray-100 text-gray-700';
         }
     };
 
@@ -101,25 +99,25 @@ const Reviews = () => {
             initial="hidden"
             animate="visible"
         >
-            {/* Header Section */}
+            {/* Header Section - Better Alignment */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
                 <div>
                     <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Reviews & Testimonials</h1>
                     <p className="text-gray-500 mt-1">Manage customer reviews and feedback</p>
                 </div>
-                <div className="bg-white px-4 py-2 rounded-xl border border-gray-200 shadow-sm flex items-center gap-2">
+                <div className="px-4 py-2 bg-white rounded-xl border border-gray-200 shadow-sm flex items-center gap-2 self-start md:self-auto">
                     <span className="text-sm font-medium text-gray-500">Total Reviews:</span>
                     <span className="text-lg font-bold text-primary-600">{reviews.length}</span>
                 </div>
             </div>
 
-            {/* Filters Section */}
-            <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 mb-8 flex flex-col md:flex-row gap-4 justify-between items-center">
+            {/* Filters Section - Improved Layout & Spacing */}
+            <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 mb-8 flex flex-col md:flex-row gap-4 items-center justify-between">
                 <div className="relative w-full md:w-96">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" size={20} />
                     <input
                         type="text"
-                        placeholder="Search by name, pet, or content..."
+                        placeholder="Search reviews..."
                         className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:bg-white transition-all text-sm"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
@@ -132,7 +130,7 @@ const Reviews = () => {
                             key={status}
                             onClick={() => setFilterStatus(status)}
                             className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 whitespace-nowrap border ${filterStatus === status
-                                ? 'bg-primary-600 text-white border-primary-600 shadow-md transform scale-105'
+                                ? 'bg-primary-600 text-white border-primary-600 shadow-md'
                                 : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
                                 }`}
                         >
@@ -142,7 +140,7 @@ const Reviews = () => {
                 </div>
             </div>
 
-            {/* Reviews Grid */}
+            {/* Reviews Grid - Happy Tails Styling Restored */}
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {filteredReviews.length === 0 ? (
                     <div className="col-span-full flex flex-col items-center justify-center py-16 text-center bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">
@@ -151,7 +149,7 @@ const Reviews = () => {
                         </div>
                         <h3 className="text-lg font-semibold text-gray-900">No reviews found</h3>
                         <p className="text-gray-500 mt-1 max-w-sm">
-                            We couldn't find any reviews matching your search filters. Try adjusting your criteria.
+                            Try adjusting your search criteria.
                         </p>
                     </div>
                 ) : (
@@ -159,102 +157,98 @@ const Reviews = () => {
                         <motion.div
                             key={review._id}
                             variants={itemVariants}
-                            className="flex"
+                            className="h-full"
                         >
-                            {/* Card Container - Flex column for sticky footer */}
-                            <div className="relative w-full bg-white rounded-2xl p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] border border-gray-100 flex flex-col hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-
-                                {/* Status Badge (Absolute Top Right) */}
+                            <div className="testimonial-card relative bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col h-full transform transition hover:-translate-y-1 hover:shadow-md">
+                                {/* Status Badge */}
                                 <div className="absolute top-4 right-4 z-20">
-                                    <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm border ${getStatusColor(review.status)}`}>
+                                    <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm ${getStatusColor(review.status)}`}>
                                         {review.status || 'Pending'}
                                     </span>
                                 </div>
 
-                                {/* Quote Icon (Background Decoration) */}
-                                <div className="absolute top-8 right-8 text-primary-50 opacity-10 pointer-events-none z-0 transform rotate-180">
+                                {/* Quote Icon */}
+                                <div className="quote-icon opacity-10 text-primary-500 absolute top-6 right-6 transform rotate-180 pointer-events-none">
                                     <Quote size={80} strokeWidth={0} fill="currentColor" />
                                 </div>
 
                                 {/* Header: Avatar + Name */}
-                                <div className="flex items-center gap-4 mb-4 relative z-10">
-                                    <div className="relative">
+                                <div className="card-header flex items-center mb-4 z-10 relative">
+                                    <div className="avatar-wrapper flex-shrink-0 relative">
                                         {review.image ? (
                                             <img
                                                 src={review.image}
                                                 alt={review.name}
-                                                className="w-14 h-14 rounded-full object-cover border-2 border-white shadow-md ring-2 ring-gray-50"
+                                                className="user-avatar w-16 h-16 rounded-full object-cover border-4 border-white shadow-sm"
                                             />
                                         ) : (
-                                            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary-100 to-primary-50 text-primary-600 flex items-center justify-center font-bold text-xl border-2 border-white shadow-md ring-2 ring-gray-50">
+                                            <div className="avatar-placeholder w-16 h-16 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center font-bold text-xl border-4 border-white shadow-sm">
                                                 {review.name.charAt(0)}
                                             </div>
                                         )}
-                                        {/* Verification Checkmark */}
-                                        {review.status === 'Approved' && (
-                                            <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5 shadow-sm">
-                                                <CheckCircle size={16} className="text-green-500 fill-green-50" />
-                                            </div>
-                                        )}
                                     </div>
-                                    <div>
-                                        <h3 className="font-bold text-gray-900 leading-tight">{review.name}</h3>
-                                        <p className="text-sm text-primary-600 font-medium mt-0.5">{review.petName}</p>
+                                    <div className="user-info ml-4">
+                                        <h4 className="user-name font-bold text-gray-900 text-lg">{review.name}</h4>
+                                        <p className="pet-name text-sm text-primary-600 font-medium">{review.petName}</p>
                                     </div>
                                 </div>
 
                                 {/* Star Rating */}
-                                <div className="flex gap-1 mb-4 relative z-10">
+                                <div className="rating-stars flex gap-1 mb-4 z-10 relative">
                                     {[...Array(5)].map((_, i) => (
                                         <Star
                                             key={i}
-                                            size={16}
-                                            className={`${i < review.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-200 fill-gray-100'}`}
+                                            size={18}
+                                            className={i < review.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-200'}
                                         />
                                     ))}
                                 </div>
 
                                 {/* Review Text */}
-                                <div className="relative z-10 mb-6 flex-grow">
-                                    <p className="text-gray-600 text-sm leading-relaxed italic line-clamp-4">
-                                        "{review.review}"
-                                    </p>
-                                </div>
+                                <p className="review-text text-gray-600 italic mb-6 relative z-10 flex-grow leading-relaxed line-clamp-4">
+                                    "{review.review}"
+                                </p>
 
                                 {/* Footer: Date & Actions */}
-                                <div className="mt-auto pt-4 border-t border-gray-100 relative z-10">
-                                    <div className="flex justify-between items-center mb-4 text-xs font-medium text-gray-400 uppercase tracking-wide">
-                                        <span>Submitted</span>
+                                <div className="card-footer pt-4 border-t border-gray-100 mt-auto flex flex-col gap-4">
+                                    <div className="flex justify-between items-center w-full text-xs text-gray-400 font-medium uppercase tracking-wide">
+                                        <span className="flex items-center gap-1">
+                                            {review.status === 'Approved' ? (
+                                                <><CheckCircle size={14} className="text-green-500" /> Verified</>
+                                            ) : (
+                                                <><AlertCircle size={14} className="text-yellow-500" /> Unverified</>
+                                            )}
+                                        </span>
                                         <span>{new Date(review.createdAt).toLocaleDateString()}</span>
                                     </div>
 
-                                    <div className="grid grid-cols-2 gap-2">
-                                        {review.status !== 'Approved' ? (
+                                    <div className="flex gap-2 w-full z-20">
+                                        {review.status !== 'Approved' && (
                                             <Button
                                                 size="sm"
-                                                className="w-full bg-green-600 hover:bg-green-700 text-white border-none py-2 shadow-sm flex justify-center items-center gap-1.5"
+                                                className="flex-1 bg-green-600 hover:bg-green-700 text-white border-none py-2 shadow-sm"
                                                 onClick={() => handleStatusUpdate(review._id, 'Approved')}
                                             >
-                                                <CheckCircle size={14} /> Approve
+                                                <CheckCircle size={16} className="mr-1" /> Approve
                                             </Button>
-                                        ) : (
+                                        )}
+                                        {review.status === 'Approved' && (
                                             <Button
                                                 size="sm"
                                                 variant="outline"
-                                                className="w-full text-yellow-600 border-yellow-200 hover:bg-yellow-50 py-2 flex justify-center items-center gap-1.5"
+                                                className="flex-1 text-yellow-600 border-yellow-200 hover:bg-yellow-50 py-2"
                                                 onClick={() => handleStatusUpdate(review._id, 'Pending')}
                                             >
-                                                <AlertCircle size={14} /> Suspend
+                                                <AlertCircle size={16} className="mr-1" /> Suspend
                                             </Button>
                                         )}
-
                                         <Button
                                             size="sm"
                                             variant="outline"
-                                            className="w-full text-red-600 border-red-200 hover:bg-red-50 py-2 flex justify-center items-center gap-1.5"
+                                            className="text-red-600 border-red-200 hover:bg-red-50 px-3 shadow-sm"
                                             onClick={() => handleDelete(review._id)}
                                         >
-                                            <Trash2 size={14} /> Delete
+                                            <Trash2 size={16} />
                                         </Button>
                                     </div>
                                 </div>

@@ -1,8 +1,7 @@
-import { useState } from 'react';
 import { Star, Quote, MessageSquarePlus } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import Button from '../common/Button';
-import ReviewModal from '../common/ReviewModal';
 
 const testimonials = [
     {
@@ -32,12 +31,8 @@ const testimonials = [
 ];
 
 const TestimonialsSection = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
     return (
         <section className="py-20 bg-gradient-to-b from-white to-gray-50 overflow-hidden">
-            <ReviewModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-
             <div className="container mx-auto px-4">
                 <div className="text-center mb-16 relative">
                     <motion.div
@@ -116,14 +111,15 @@ const TestimonialsSection = () => {
                     className="text-center"
                 >
                     <div className="inline-block p-1 bg-gradient-to-r from-primary-100 to-secondary-100 rounded-full">
-                        <Button
-                            size="lg"
-                            className="rounded-full px-8 shadow-xl hover:shadow-2xl transform transition-all hover:scale-105 flex items-center gap-2"
-                            onClick={() => setIsModalOpen(true)}
-                        >
-                            <MessageSquarePlus size={20} />
-                            Share Your Story
-                        </Button>
+                        <Link to="/submit-review">
+                            <Button
+                                size="lg"
+                                className="rounded-full px-8 shadow-xl hover:shadow-2xl transform transition-all hover:scale-105 flex items-center gap-2"
+                            >
+                                <MessageSquarePlus size={20} />
+                                Share Your Story
+                            </Button>
+                        </Link>
                     </div>
                     <p className="mt-4 text-sm text-gray-500">Join our community of happy pet parents!</p>
                 </motion.div>

@@ -13,6 +13,7 @@ import dashboardRoutes from './routes/dashboardRoutes.js';
 import inquiryRoutes from './routes/inquiryRoutes.js';
 import appointmentRoutes from './routes/appointmentRoutes.js';
 import reviewRoutes from './routes/reviewRoutes.js';
+import subscriberRoutes from './routes/subscriberRoutes.js';
 
 // Connect to database
 connectDB();
@@ -36,7 +37,8 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/inquiries', inquiryRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/appointments', appointmentRoutes);
-app.use('/api/reviews', reviewRoutes); // Mounted here
+app.use('/api/reviews', reviewRoutes);
+app.use('/api/subscribers', subscriberRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

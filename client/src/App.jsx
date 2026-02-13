@@ -11,6 +11,7 @@ import Customers from './pages/Customers';
 import Orders from './pages/Orders';
 import Appointments from './pages/Admin/Appointments'; // Import Appointments
 import Reviews from './pages/Admin/Reviews'; // Import Reviews
+import Subscribers from './pages/Admin/Subscribers'; // Import Subscribers
 import Settings from './pages/Settings';
 import Home from './pages/Public/Home';
 import BrowsePets from './pages/Public/BrowsePets';
@@ -80,6 +81,7 @@ const AppRoutes = () => {
         <Route path="customers" element={<Customers />} />
         <Route path="orders" element={<Orders />} />
         <Route path="reviews" element={<Reviews />} /> {/* Add Reviews Route */}
+        <Route path="subscribers" element={<Subscribers />} /> {/* Add Subscribers Route */}
         <Route path="settings" element={<Settings />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />

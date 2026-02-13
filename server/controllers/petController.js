@@ -1,4 +1,6 @@
 import Pet from '../models/Pet.js';
+import Subscriber from '../models/Subscriber.js';
+import sendEmail from '../utils/sendEmail.js';
 import { asyncHandler } from '../middleware/error.js';
 
 // @desc    Get all pets
@@ -68,6 +70,34 @@ export const getPet = asyncHandler(async (req, res) => {
 // @access  Private
 export const createPet = asyncHandler(async (req, res) => {
     const pet = await Pet.create(req.body);
+
+    // Send email to subscribers (non-blocking)
+    try {
+        const subscribers = await Subscriber.find({});
+        const emails = subscribers.map(sub => sub.email);
+
+        if (emails.length > 0) {
+            const emailPromises = emails.map(email =>
+                sendEmail({
+                    email,
+                    subject: 'New Pet Added! 🐾',
+                    html: `
+                        <h1>New Friend Available!</h1>
+                        <p>A new ${pet.species} named <strong>${pet.name}</strong> has just arrived!</p>
+                        <p>Breed: ${pet.breed}</p>
+                        <p>Age: ${pet.age}</p>
+                        <p>Price: $${pet.price}</p>
+                        <p>Check out our website for more details!</p>
+                    `
+                })
+            );
+
+            // We don't await this to keep response fast
+            Promise.all(emailPromises).catch(err => console.error('Error sending bulk emails:', err));
+        }
+    } catch (error) {
+        console.error('Error processing subscriber emails:', error);
+    }
 
     res.status(201).json({
         success: true,

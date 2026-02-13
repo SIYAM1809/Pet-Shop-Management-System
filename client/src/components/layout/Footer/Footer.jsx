@@ -1,8 +1,42 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { Cat, Facebook, Instagram, Twitter, Linkedin, Mail, Phone, MapPin, Send } from 'lucide-react';
 import './Footer.css';
 
 const Footer = () => {
+    const [email, setEmail] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    const handleSubscribe = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+
+        try {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/subscribers`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email })
+            });
+
+            const data = await res.json();
+
+            if (data.success) {
+                toast.success(data.message);
+                setEmail('');
+            } else {
+                toast.error(data.message || 'Subscription failed');
+            }
+        } catch (error) {
+            console.error('Subscription error:', error);
+            toast.error('Something went wrong. Please try again.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <footer className="footer">
             <div className="container">
@@ -58,10 +92,17 @@ const Footer = () => {
                     <div className="footer-section newsletter-section">
                         <h4 className="footer-title">Stay Updated</h4>
                         <p className="newsletter-text">Subscribe to our newsletter for new arrivals and pet care tips.</p>
-                        <form className="newsletter-form" onSubmit={(e) => e.preventDefault()}>
+                        <form className="newsletter-form" onSubmit={handleSubscribe}>
                             <div className="input-group">
-                                <input type="email" placeholder="Enter your email" className="newsletter-input" />
-                                <button type="submit" className="newsletter-btn" aria-label="Subscribe">
+                                <input
+                                    type="email"
+                                    placeholder="Enter your email"
+                                    className="newsletter-input"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                />
+                                <button type="submit" className="newsletter-btn" aria-label="Subscribe" disabled={loading}>
                                     <Send size={18} />
                                 </button>
                             </div>

@@ -4,8 +4,10 @@ A modern, full-stack Pet Shop Management System built with **React**, **Node.js*
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![React](https://img.shields.io/badge/React-19.2-61DAFB?logo=react)
-![Node.js](https://img.shields.io/badge/Node.js-18+-339933?logo=node.js)
+![Node.js](https://img.shields.io/badge/Node.js-20+-339933?logo=node.js)
 ![MongoDB](https://img.shields.io/badge/MongoDB-8.0-47A248?logo=mongodb)
+![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker)
+![CI](https://github.com/SIYAM1809/Pet-Shop-Management-System/actions/workflows/ci.yml/badge.svg)
 
 ## ✨ Features
 

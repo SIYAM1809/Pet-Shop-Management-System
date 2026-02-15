@@ -12,8 +12,10 @@ const Footer = () => {
         e.preventDefault();
         setLoading(true);
 
+        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+
         try {
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/subscribers`, {
+            const res = await fetch(`${API_URL}/subscribers`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

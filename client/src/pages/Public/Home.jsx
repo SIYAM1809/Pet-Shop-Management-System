@@ -194,7 +194,7 @@ const FeaturedPetsList = () => {
     useEffect(() => {
         const fetchFeatured = async () => {
             try {
-                const response = await petAPI.getAll({ limit: 3, status: 'Available' });
+                const response = await petAPI.getAll({ limit: 0, status: 'Available' });
                 setPets(response.data);
             } catch (error) {
                 console.error("Failed to fetch featured pets");

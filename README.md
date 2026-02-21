@@ -1,376 +1,328 @@
 # 🐾 Pet Shop Management System
 
-A modern, full-stack Pet Shop Management System built with **React**, **Node.js**, **Express**, and **MongoDB**. Features a beautiful UI with animations, email notifications, customer reviews, appointment booking, and comprehensive admin management.
+> A production-ready, full-stack Pet Shop Management System with a premium UI, comprehensive admin dashboard, automated testing, containerization, and a live CI/CD pipeline.
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![React](https://img.shields.io/badge/React-19.2-61DAFB?logo=react)
-![Node.js](https://img.shields.io/badge/Node.js-20+-339933?logo=node.js)
-![MongoDB](https://img.shields.io/badge/MongoDB-8.0-47A248?logo=mongodb)
-![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker)
-![CI](https://github.com/SIYAM1809/Pet-Shop-Management-System/actions/workflows/ci.yml/badge.svg)
+<div align="center">
+
+**[🌐 Live Demo](https://pet-shop-management-system-siyam.vercel.app)** &nbsp;|&nbsp; **[📖 API Docs](https://pet-shop-backend-siyam.onrender.com/api-docs)** &nbsp;|&nbsp; **[🐳 Docker Hub](https://hub.docker.com/r/siyam1809/petshop)**
+
+[![CI Pipeline](https://github.com/SIYAM1809/Pet-Shop-Management-System/actions/workflows/ci.yml/badge.svg)](https://github.com/SIYAM1809/Pet-Shop-Management-System/actions/workflows/ci.yml)
+[![Code Quality](https://github.com/SIYAM1809/Pet-Shop-Management-System/actions/workflows/code-quality.yml/badge.svg)](https://github.com/SIYAM1809/Pet-Shop-Management-System/actions/workflows/code-quality.yml)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev)
+[![Node.js](https://img.shields.io/badge/Node.js-20+-339933?logo=node.js&logoColor=white)](https://nodejs.org)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?logo=mongodb&logoColor=white)](https://mongodb.com)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white)](https://docker.com)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+</div>
+
+---
+
+## 🚀 Live Deployment
+
+| Service | Platform | URL |
+|---------|----------|-----|
+| **Frontend** | Vercel | [pet-shop-management-system-siyam.vercel.app](https://pet-shop-management-system-siyam.vercel.app) |
+| **Backend API** | Render | [pet-shop-backend-siyam.onrender.com](https://pet-shop-backend-siyam.onrender.com) |
+| **API Documentation** | Swagger UI | [/api-docs](https://pet-shop-backend-siyam.onrender.com/api-docs) |
+
+> **Demo Credentials** — Email: `admin@petshop.com` · Password: `admin123`
+
+---
 
 ## ✨ Features
 
-### 🎯 Core Functionality
+### 🎯 Public-Facing
+- **🏠 Homepage** — Hero section, featured pets, testimonials, interactive map
+- **🐶 Browse Pets** — Species/status filters, search, paginated grid view
+- **📝 Pet Inquiries** — Contact form with email notification
+- **⭐ Customer Reviews** — Submit & view approved testimonials
+- **📅 Appointment Booking** — Schedule shop visits
+- **📦 Order Tracking** — Real-time status via order number
+- **📧 Newsletter** — Subscribe for new-pet email alerts
 
-#### Public Features
-- **🏠 Homepage** - Hero section, featured pets, testimonials, location map
-- **🐶 Browse Pets** - Grid view with filtering by species and search
-- **📝 Pet Inquiries** - Contact form for pet inquiries
-- **⭐ Submit Reviews** - Customer testimonials and feedback
-- **📅 Book Appointments** - Schedule visits to the shop
-- **📦 Track Orders** - Check order status with order number
-- **📧 Newsletter** - Subscribe to email notifications for new pets
-
-#### Admin Dashboard
-- **📊 Analytics Dashboard** - Real-time stats, revenue charts, activity feed
-- **🐕 Pet Management** - Full CRUD operations with grid/list views
-- **👥 Customer Management** - Customer database with order history
-- **🛒 Order Processing** - Create orders, update status, generate invoices
-- **📮 Subscriber Management** - View newsletter subscribers
-- **⭐ Review Management** - Approve/reject customer reviews
-- **📅 Appointment Management** - View and manage appointment requests
-- **⚙️ Settings** - Profile management, dark mode, staff management
+### 🛠️ Admin Dashboard
+- **📊 Analytics** — Live stats, revenue charts (Recharts), activity feed
+- **🐕 Pet Management** — Full CRUD with grid/list toggle view
+- **👥 Customer CRM** — Customer database with full order history
+- **🛒 Order Processing** — Create orders, update status, generate printable invoices
+- **⭐ Review Moderation** — Approve, reject, or delete customer reviews
+- **📅 Appointment Manager** — View and action appointment requests
+- **📮 Newsletter Admin** — View and manage subscriber list
+- **⚙️ Settings** — Profile, dark mode, staff account management
 
 ### 💡 Technical Highlights
+- **🌙 Dark Mode** — Full theme support with smooth transitions
+- **🎬 Animations** — Framer Motion page transitions & micro-interactions
+- **📱 Responsive** — Mobile-first, collapsible sidebar
+- **🔐 JWT Auth** — Role-based access control (Admin / Staff)
+- **📧 Email Notifications** — Nodemailer + Gmail SMTP
+- **📖 Swagger UI** — Interactive REST API documentation at `/api-docs`
+- **🧪 Test Suite** — 41 automated tests (Vitest + React Testing Library)
+- **🐳 Docker** — Multi-stage production builds for both services
+- **⚙️ CI/CD** — GitHub Actions runs tests on every push
 
-- **🎨 Modern UI** - Premium design with glassmorphism and gradients
-- **🌙 Dark Mode** - Full dark theme support with smooth transitions
-- **🎬 Animations** - Framer Motion for smooth page transitions
-- **📱 Responsive Design** - Mobile-first with collapsible sidebar
-- **🔐 JWT Authentication** - Secure login with role-based access (Admin/Staff)
-- **📧 Email Notifications** - Automated emails via Nodemailer
-- **📈 Charts** - Beautiful analytics with Recharts
-- **🔔 Toast Notifications** - Real-time feedback for all actions
-- **🎯 Protected Routes** - Admin-only pages with authentication guards
+---
 
-## 🚀 Quick Start
+## 🛠️ Tech Stack
+
+### Frontend
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| React | 19 | UI framework |
+| Vite | 6 | Build tool & dev server |
+| React Router | 7 | Client-side routing |
+| Framer Motion | 12 | Animations & transitions |
+| Recharts | 2 | Charts & analytics |
+| Lucide React | — | Icon library |
+| React Hot Toast | — | Toast notifications |
+
+### Backend
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| Node.js | 20+ | JavaScript runtime |
+| Express | 5 | Web framework |
+| MongoDB | Atlas | NoSQL database |
+| Mongoose | 8 | MongoDB ODM |
+| JWT | — | Authentication |
+| bcryptjs | — | Password hashing |
+| Nodemailer | — | Email notifications |
+| Swagger UI Express | — | API documentation |
+
+### DevOps & Testing
+| Tool | Purpose |
+|------|---------|
+| Vitest | Backend & frontend test runner |
+| Supertest | Backend integration testing |
+| MongoDB Memory Server | In-memory DB for tests (no secrets needed) |
+| React Testing Library | Frontend component testing |
+| Docker + Compose | Containerization |
+| GitHub Actions | CI/CD pipeline (tests + build + lint) |
+| Vercel | Frontend deployment |
+| Render | Backend deployment |
+
+---
+
+## 🧪 Testing
+
+The project includes **41 automated tests** across backend and frontend, running in CI on every push.
+
+```bash
+# Run backend tests (18 integration tests)
+cd server && npm test
+
+# Run frontend tests (23 component tests)
+cd client && npm test
+
+# Generate coverage report
+npm run test:coverage
+```
+
+### What's Tested
+
+**Backend** (supertest + MongoMemoryServer — no real DB required):
+- ✅ Health check endpoint
+- ✅ Auth: login validation, wrong credentials, success, field checking
+- ✅ Pets: public listing, filters, pagination, invalid ID (CastError → 404)
+- ✅ Protected routes return 401 without token (orders, customers, admin)
+- ✅ Public routes: reviews, newsletter, inquiries
+
+**Frontend** (React Testing Library + jsdom):
+- ✅ `Button` — 13 tests (variants, sizes, loading, disabled, onClick, icon)
+- ✅ `Card` — 10 tests (variants, padding, hover, className, prop forwarding)
+
+---
+
+## 🐳 Docker
+
+Run the entire stack locally with a single command:
+
+```bash
+# Copy and fill in your environment file
+cp .env.docker.example .env
+
+# Start all services (MongoDB + backend + frontend)
+docker compose up -d
+
+# Seed the database
+docker compose exec backend node seed.js
+```
+
+Then open http://localhost:3000.
+
+```bash
+# Stop all services
+docker compose down
+```
+
+### Services
+| Service | Port | Description |
+|---------|------|-------------|
+| MongoDB | 27017 | Database |
+| Backend API | 5001 | Express server |
+| Frontend | 3000 | Nginx-served React app |
+
+---
+
+## ⚙️ CI/CD Pipeline
+
+GitHub Actions runs automatically on every push to `main`:
+
+```
+Push → Tests (backend + frontend) → Lint → Docker Build → Deploy (Vercel auto)
+```
+
+| Workflow | Description |
+|----------|-------------|
+| `ci.yml` | Runs 41 tests + Docker build verification |
+| `code-quality.yml` | ESLint checks |
+| `docker-publish.yml` | Publishes Docker images on release tags |
+
+---
+
+## 🚀 Local Development
 
 ### Prerequisites
-- **Node.js** 18+ ([Download](https://nodejs.org/))
-- **MongoDB** ([Local](https://www.mongodb.com/try/download/community) or [Atlas](https://www.mongodb.com/cloud/atlas))
-- **Gmail Account** (for email notifications)
+- Node.js 18+ · MongoDB (local or Atlas) · Gmail account (for email)
 
-### Installation
+### Setup
 
-#### 1. Clone the Repository
 ```bash
+# 1. Clone
 git clone https://github.com/SIYAM1809/Pet-Shop-Management-System.git
 cd Pet-Shop-Management-System
+
+# 2. Install dependencies
+cd server && npm install
+cd ../client && npm install
+
+# 3. Configure environment (see below)
+
+# 4. Seed database
+cd server && node seed.js
+
+# 5. Run both services
+cd server && npm run dev      # Terminal 1 → http://localhost:5001
+cd client && npm run dev      # Terminal 2 → http://localhost:5173
 ```
 
-#### 2. Install Dependencies
-```bash
-# Install server dependencies
-cd server
-npm install
+### Environment Variables
 
-# Install client dependencies
-cd ../client
-npm install
-```
-
-#### 3. Environment Configuration
-
-**Server Environment** (`server/.env`):
+**`server/.env`**
 ```env
-# Database
 MONGODB_URI=mongodb://localhost:27017/petshop
-# OR use MongoDB Atlas:
-# MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/petshop
-
-# JWT Configuration
-JWT_SECRET=your-super-secret-jwt-key-change-this
+JWT_SECRET=your-super-secret-jwt-key
 JWT_EXPIRE=7d
-
-# Email Configuration (for notifications)
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_EMAIL=your-email@gmail.com
-SMTP_PASSWORD=your-app-password
+SMTP_PASSWORD=your-app-password   # Gmail App Password
 FROM_NAME=Siyam's Praniseba
 FROM_EMAIL=your-email@gmail.com
-
-# Server
 PORT=5001
 ```
 
-**Client Environment** (`client/.env`):
+**`client/.env`**
 ```env
 VITE_API_URL=http://localhost:5001/api
 ```
 
-> **📧 Email Setup Guide:**
-> 1. Go to your [Google Account](https://myaccount.google.com/)
-> 2. Enable 2-Step Verification
-> 3. Generate an [App Password](https://myaccount.google.com/apppasswords)
-> 4. Use this App Password as `SMTP_PASSWORD` in `.env`
+> **Gmail App Password:** Google Account → Security → 2-Step Verification → App Passwords
 
-#### 4. Seed the Database
-```bash
-cd server
-
-# Create admin user
-node seed.js
-
-# Add demo pets (optional)
-node seed_demo_pets.js
-```
-
-**Default Admin Credentials:**
-```
-Email: admin@petshop.com
-Password: admin123
-```
-
-#### 5. Start the Application
-```bash
-# Terminal 1 - Start backend server
-cd server
-npm run dev
-
-# Terminal 2 - Start frontend client
-cd client
-npm run dev
-```
-
-#### 6. Open in Browser
-- **Frontend:** http://localhost:5173
-- **Backend API:** http://localhost:5001
+---
 
 ## 📁 Project Structure
 
 ```
 Pet-Shop-Management-System/
-├── client/                         # React Frontend
+├── .github/workflows/          # CI/CD pipelines
+│   ├── ci.yml                  # Tests + Docker build
+│   ├── code-quality.yml        # ESLint
+│   └── docker-publish.yml      # Docker Hub publishing
+│
+├── client/                     # React Frontend (Vite)
 │   ├── src/
-│   │   ├── components/             # Reusable UI components
-│   │   │   ├── common/             # Button, Input, Modal, Card, etc.
-│   │   │   ├── layout/             # Sidebar, Header, Footer, MainLayout
-│   │   │   └── home/               # TestimonialsSection
-│   │   ├── context/                # React Context
-│   │   │   ├── AuthContext.jsx    # Authentication state
-│   │   │   └── ThemeContext.jsx   # Dark mode toggle
-│   │   ├── pages/                  # Page components
-│   │   │   ├── Admin/              # Admin dashboard pages
-│   │   │   └── Public/             # Public-facing pages
-│   │   ├── services/               # API service layer
-│   │   │   └── api.js              # Axios/fetch wrappers
-│   │   ├── styles/                 # Global CSS & design system
-│   │   └── utils/                  # Animation variants
-│   └── package.json
+│   │   ├── components/         # Button, Card, Input, Modal, Sidebar…
+│   │   ├── context/            # AuthContext, ThemeContext
+│   │   ├── pages/              # Admin/ + Public/ pages
+│   │   ├── services/api.js     # Centralized API layer
+│   │   └── utils/              # Animation variants
+│   ├── vitest.config.js        # Frontend test config
+│   └── Dockerfile              # Multi-stage Nginx build
 │
-├── server/                         # Node.js Backend
-│   ├── config/                     # Database configuration
-│   │   └── db.js                   # MongoDB connection
-│   ├── controllers/                # Route handlers
-│   │   ├── authController.js       # Login, register, getMe
-│   │   ├── petController.js        # Pet CRUD + email on create
-│   │   ├── customerController.js   # Customer management
-│   │   ├── orderController.js      # Order processing
-│   │   ├── dashboardController.js  # Analytics data
-│   │   ├── subscriberController.js # Newsletter subscriptions
-│   │   ├── reviewController.js     # Review management
-│   │   └── appointmentController.js # Appointments
-│   ├── middleware/                 # Custom middleware
-│   │   ├── auth.js                 # JWT verification & role checks
-│   │   └── error.js                # Error handling
-│   ├── models/                     # Mongoose schemas
-│   │   ├── User.js
-│   │   ├── Pet.js
-│   │   ├── Customer.js
-│   │   ├── Order.js
-│   │   ├── Subscriber.js
-│   │   ├── Review.js
-│   │   └── Appointment.js
-│   ├── routes/                     # API routes
-│   │   ├── authRoutes.js
-│   │   ├── petRoutes.js
-│   │   ├── customerRoutes.js
-│   │   ├── orderRoutes.js
-│   │   ├── dashboardRoutes.js
-│   │   ├── subscriberRoutes.js
-│   │   ├── reviewRoutes.js
-│   │   └── appointmentRoutes.js
-│   ├── scripts/                    # Utility scripts
-│   │   └── add_more_pets.js        # Add additional pets
-│   ├── utils/                      # Helper functions
-│   │   └── sendEmail.js            # Nodemailer configuration
-│   ├── server.js                   # Entry point
-│   ├── seed.js                     # Create admin user
-│   └── package.json
+├── server/                     # Node.js + Express Backend
+│   ├── __tests__/api.test.js   # 18 integration tests
+│   ├── config/                 # DB connection + Swagger spec
+│   ├── controllers/            # Route handlers (auth, pets, orders…)
+│   ├── middleware/             # JWT auth + error handler
+│   ├── models/                 # Mongoose schemas
+│   ├── routes/                 # API route definitions
+│   ├── app.js                  # Express app factory (for testing)
+│   ├── server.js               # Entry point (starts server)
+│   ├── seed.js                 # Admin + demo data seeder
+│   ├── vitest.config.js        # Backend test config
+│   └── Dockerfile              # Multi-stage Node build
 │
-└── README.md
+└── docker-compose.yml          # Full-stack orchestration
 ```
-
-## 🛠️ Tech Stack
-
-### Frontend
-| Technology | Purpose |
-|------------|---------|
-| React 19 | UI Framework |
-| Vite | Build tool & dev server |
-| React Router | Client-side routing |
-| Framer Motion | Animations & transitions |
-| Recharts | Charts & analytics |
-| Lucide React | Icon library |
-| React Hot Toast | Toast notifications |
-
-### Backend
-| Technology | Purpose |
-|------------|---------|
-| Node.js | JavaScript runtime |
-| Express | Web framework |
-| MongoDB | NoSQL database |
-| Mongoose | MongoDB ODM |
-| JWT | Authentication tokens |
-| bcryptjs | Password hashing |
-| Nodemailer | Email notifications |
-| CORS | Cross-origin requests |
-
-## 📝 API Documentation
-
-### Authentication
-| Endpoint | Method | Access | Description |
-|----------|--------|--------|-------------|
-| `/api/auth/register` | POST | Admin | Create new staff user |
-| `/api/auth/login` | POST | Public | User login |
-| `/api/auth/me` | GET | Private | Get current user |
-| `/api/auth/users` | GET | Admin | List all users |
-
-### Pets
-| Endpoint | Method | Access | Description |
-|----------|--------|--------|-------------|
-| `/api/pets` | GET | Public | List all pets (with filters) |
-| `/api/pets` | POST | Admin/Staff | Create new pet |
-| `/api/pets/:id` | GET | Public | Get single pet |
-| `/api/pets/:id` | PUT | Admin/Staff | Update pet |
-| `/api/pets/:id` | DELETE | Admin/Staff | Delete pet |
-| `/api/pets/stats` | GET | Admin/Staff | Pet statistics |
-
-### Customers
-| Endpoint | Method | Access | Description |
-|----------|--------|--------|-------------|
-| `/api/customers` | GET | Admin/Staff | List customers |
-| `/api/customers` | POST | Admin/Staff | Create customer |
-| `/api/customers/:id` | GET | Admin/Staff | Get customer |
-| `/api/customers/:id` | PUT | Admin/Staff | Update customer |
-| `/api/customers/:id` | DELETE | Admin/Staff | Delete customer |
-
-### Orders
-| Endpoint | Method | Access | Description |
-|----------|--------|--------|-------------|
-| `/api/orders` | GET | Admin/Staff | List orders |
-| `/api/orders` | POST | Admin/Staff | Create order |
-| `/api/orders/:id` | GET | Admin/Staff | Get order |
-| `/api/orders/:id` | PUT | Admin/Staff | Update order |
-| `/api/orders/:id` | DELETE | Admin/Staff | Delete order |
-| `/api/orders/track/:orderNumber` | GET | Public | Track order |
-| `/api/orders/stats` | GET | Admin/Staff | Order statistics |
-
-### Subscribers
-| Endpoint | Method | Access | Description |
-|----------|--------|--------|-------------|
-| `/api/subscribers` | POST | Public | Subscribe to newsletter |
-| `/api/subscribers` | GET | Admin/Staff | List subscribers |
-
-### Reviews
-| Endpoint | Method | Access | Description |
-|----------|--------|--------|-------------|
-| `/api/reviews` | GET | Public | List approved reviews |
-| `/api/reviews/admin/all` | GET | Admin/Staff | List all reviews |
-| `/api/reviews` | POST | Public | Submit review |
-| `/api/reviews/:id/status` | PUT | Admin/Staff | Approve/reject review |
-| `/api/reviews/:id` | DELETE | Admin/Staff | Delete review |
-
-### Appointments
-| Endpoint | Method | Access | Description |
-|----------|--------|--------|-------------|
-| `/api/appointments` | GET | Admin/Staff | List appointments |
-| `/api/appointments/:id` | PUT | Admin/Staff | Update appointment status |
-
-### Dashboard
-| Endpoint | Method | Access | Description |
-|----------|--------|--------|-------------|
-| `/api/dashboard` | GET | Admin/Staff | Dashboard statistics |
-
-## 🎨 Key Features Explained
-
-### Email Notifications
-- Subscribers receive automatic emails when new pets are added
-- Configured via Nodemailer using Gmail SMTP
-- Supports both production and development (Ethereal) modes
-
-### Newsletter Subscription
-- Footer subscription form on all public pages
-- Subscribers list viewable in admin dashboard
-- Email validation and duplicate prevention
-
-### Review System
-- Customers submit reviews via public form
-- Admin can approve/reject/delete reviews
-- Approved reviews show on homepage testimonials
-
-### Appointment Booking
-- Book appointments to visit the shop
-- Viewable location map
-- Admin can manage appointment requests
-
-### Order Tracking
-- Public order tracking by order number
-- Real-time status updates
-- Invoice generation
-
-## 🔐 Security Features
-
-- **JWT Authentication** - Secure token-based authentication
-- **Password Hashing** - bcrypt with salt rounds
-- **Role-Based Access** - Admin and Staff roles
-- **Protected Routes** - Middleware for route protection
-- **Environment Variables** - Sensitive data in `.env`
-- **CORS Configuration** - Controlled cross-origin requests
-
-## 🧪 Testing
-
-The repository includes various test scripts in `server/`:
-- `test_api.js` - API endpoint testing
-- `test_login.js` - Authentication testing
-- `check_admin.js` - Verify admin users
-- `debug_db.js` - Database debugging
-
-## 📦 Deployment
-
-### Backend (Render/Railway/Heroku)
-1. Set environment variables in hosting platform
-2. Set `MONGODB_URI` to MongoDB Atlas connection string
-3. Configure `SMTP_*` variables for email
-4. Deploy from GitHub repository
-
-### Frontend (Vercel/Netlify)
-1. Set `VITE_API_URL` to production API URL
-2. Build command: `npm run build`
-3. Output directory: `dist`
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👨‍💻 Author
-
-**SIYAM1809**
-- GitHub: [@SIYAM1809](https://github.com/SIYAM1809)
-- Project Link: [Pet-Shop-Management-System](https://github.com/SIYAM1809/Pet-Shop-Management-System)
 
 ---
 
-⭐ **Star this repository if you find it helpful!**
+## 📖 API Reference
 
-Made with ❤️ using React, Node.js, and MongoDB
+Full interactive documentation available at **[/api-docs](https://pet-shop-backend-siyam.onrender.com/api-docs)** (Swagger UI).
+
+### Quick Reference
+
+| Resource | Public | Admin/Staff |
+|----------|--------|-------------|
+| `GET /api/pets` | ✅ List + filter | — |
+| `POST /api/pets` | — | ✅ Create |
+| `PUT /api/pets/:id` | — | ✅ Update |
+| `DELETE /api/pets/:id` | — | ✅ Delete |
+| `GET /api/reviews` | ✅ Approved only | — |
+| `POST /api/auth/login` | ✅ Login | — |
+| `POST /api/auth/register` | — | ✅ Admin only |
+| `GET /api/orders` | — | ✅ All orders |
+| `GET /api/orders/track/:num` | ✅ Track by # | — |
+| `GET /api/dashboard` | — | ✅ Analytics |
+| `GET /api/health` | ✅ Health check | — |
+
+---
+
+## 🔐 Security
+
+- JWT tokens with configurable expiry
+- bcrypt password hashing (10 salt rounds)
+- Role-based route protection (Admin / Staff)
+- Environment variables for all secrets
+- CORS configured for production origins
+
+---
+
+## 🤝 Contributing
+
+```bash
+git checkout -b feature/your-feature
+git commit -m "feat: add your feature"
+git push origin feature/your-feature
+# Open a Pull Request → CI runs automatically
+```
+
+---
+
+## 📄 License
+
+MIT License — see [LICENSE](LICENSE) for details.
+
+---
+
+<div align="center">
+
+**Built by [SIYAM1809](https://github.com/SIYAM1809)** · [GitHub Repo](https://github.com/SIYAM1809/Pet-Shop-Management-System)
+
+⭐ Star this repository if you find it helpful!
+
+*Made with ❤️ using React, Node.js, Express, and MongoDB*
+
+</div>

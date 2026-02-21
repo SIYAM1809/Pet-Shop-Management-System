@@ -24,8 +24,7 @@ jobs:
         working-directory: ./server
         env:
           MONGOMS_SKIP_INITIAL_SETUP: true
-          MONGOMS_PREFER_GLOBAL_PATH: true
-        run: npm ci
+        run: npm install
 
       - name: Install frontend dependencies
         working-directory: ./client

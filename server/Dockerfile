@@ -8,8 +8,8 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies (skip mongodb-memory-server binary download)
-RUN MONGOMS_SKIP_INITIAL_SETUP=true npm ci --only=production
+# Install production dependencies only
+RUN MONGOMS_SKIP_INITIAL_SETUP=true npm install --production
 
 # Development stage
 FROM base AS development

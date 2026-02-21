@@ -29,12 +29,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: server/package-lock.json
 
       - name: Install dependencies
         working-directory: ./server
-        run: npm ci
+        env:
+          MONGOMS_SKIP_INITIAL_SETUP: true
+        run: npm install
 
       - name: Run backend tests
         working-directory: ./server

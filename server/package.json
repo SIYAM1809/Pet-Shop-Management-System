@@ -6,7 +6,10 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js"
+    "dev": "node --watch server.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "keywords": [
     "pet-shop",
@@ -27,5 +30,10 @@
     "nodemailer": "^8.0.1",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^4.0.18",
+    "supertest": "^7.2.2",
+    "vitest": "^4.0.18"
   }
 }

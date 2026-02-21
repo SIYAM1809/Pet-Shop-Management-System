@@ -4,9 +4,54 @@ import { protect, authorize } from '../middleware/auth.js';
 
 const router = express.Router();
 
+/**
+ * @swagger
+ * /api/reviews:
+ *   get:
+ *     summary: Get all approved reviews (public)
+ *     tags: [Reviews]
+ *     responses:
+ *       200:
+ *         description: List of approved reviews
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Review'
+ *   post:
+ *     summary: Submit a new review (public)
+ *     tags: [Reviews]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [name, rating, review]
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: Jane Doe
+ *               petName:
+ *                 type: string
+ *                 example: Max
+ *               rating:
+ *                 type: number
+ *                 minimum: 1
+ *                 maximum: 5
+ *                 example: 5
+ *               review:
+ *                 type: string
+ *                 example: Excellent service, very happy with our new pet!
+ *               image:
+ *                 type: string
+ *                 description: Optional base64 image or URL
+ *     responses:
+ *       201:
+ *         description: Review submitted (pending approval)
+ */
 // @desc    Get all reviews (Public - Approved only)
-// @route   GET /api/reviews
-// @access  Public
 router.get('/', async (req, res) => {
     try {
         const reviews = await Review.find({ status: 'Approved' }).sort({ createdAt: -1 });
@@ -17,9 +62,25 @@ router.get('/', async (req, res) => {
     }
 });
 
+/**
+ * @swagger
+ * /api/reviews/admin/all:
+ *   get:
+ *     summary: Get all reviews with any status (Admin/Staff)
+ *     tags: [Reviews]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: All reviews including pending and rejected
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Review'
+ */
 // @desc    Get all reviews (Admin - All statuses)
-// @route   GET /api/reviews/admin/all
-// @access  Private/Admin/Staff
 router.get('/admin/all', protect, authorize('admin', 'staff'), async (req, res) => {
     try {
         const reviews = await Review.find({}).sort({ createdAt: -1 });
@@ -31,8 +92,6 @@ router.get('/admin/all', protect, authorize('admin', 'staff'), async (req, res) 
 });
 
 // @desc    Create a review
-// @route   POST /api/reviews
-// @access  Public
 router.post('/', async (req, res) => {
     try {
         const { name, petName, rating, review, image } = req.body;
@@ -42,8 +101,8 @@ router.post('/', async (req, res) => {
             petName,
             rating,
             review,
-            image, // This will be the base64 string or URL sent from frontend
-            status: 'Pending' // Default to pending
+            image,
+            status: 'Pending'
         });
 
         res.status(201).json(newReview);
@@ -57,9 +116,38 @@ router.post('/', async (req, res) => {
     }
 });
 
+/**
+ * @swagger
+ * /api/reviews/{id}/status:
+ *   put:
+ *     summary: Approve or reject a review (Admin/Staff)
+ *     tags: [Reviews]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               status:
+ *                 type: string
+ *                 enum: [Approved, Rejected, Pending]
+ *                 example: Approved
+ *     responses:
+ *       200:
+ *         description: Review status updated
+ *       404:
+ *         description: Review not found
+ */
 // @desc    Update review status
-// @route   PUT /api/reviews/:id/status
-// @access  Private/Admin/Staff
 router.put('/:id/status', protect, authorize('admin', 'staff'), async (req, res) => {
     try {
         const { status } = req.body;
@@ -79,9 +167,27 @@ router.put('/:id/status', protect, authorize('admin', 'staff'), async (req, res)
     }
 });
 
+/**
+ * @swagger
+ * /api/reviews/{id}:
+ *   delete:
+ *     summary: Delete a review (Admin/Staff)
+ *     tags: [Reviews]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Review deleted
+ *       404:
+ *         description: Review not found
+ */
 // @desc    Delete review
-// @route   DELETE /api/reviews/:id
-// @access  Private/Admin/Staff
 router.delete('/:id', protect, authorize('admin', 'staff'), async (req, res) => {
     try {
         const review = await Review.findById(req.params.id);

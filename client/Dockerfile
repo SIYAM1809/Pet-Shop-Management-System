@@ -5,6 +5,11 @@ FROM node:20-alpine AS base
 FROM base AS builder
 WORKDIR /app
 
+# Declare build arg for API URL (passed from docker-compose)
+ARG VITE_API_URL=http://localhost:5001/api
+# Make it available to Vite at build time
+ENV VITE_API_URL=$VITE_API_URL
+
 # Copy package files
 COPY package*.json ./
 
@@ -14,7 +19,7 @@ RUN npm ci
 # Copy source code
 COPY . .
 
-# Build production bundle
+# Build production bundle (Vite reads VITE_* env vars)
 RUN npm run build
 
 # Production stage with Nginx

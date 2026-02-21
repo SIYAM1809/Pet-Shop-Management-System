@@ -12,8 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      MONGODB_URI: ${{ secrets.MONGODB_URI }}
-      JWT_SECRET: ${{ secrets.JWT_SECRET || 'test-secret-for-ci' }}
+      JWT_SECRET: test-secret-for-ci-only
       JWT_EXPIRE: 7d
       NODE_ENV: test
       PORT: 5001

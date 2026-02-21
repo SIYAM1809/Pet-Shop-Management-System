@@ -1,11 +1,11 @@
 /**
- * Express app factory — exports app WITHOUT starting the server,
- * so supertest can bind its own port.
+ * Express app factory — exports app WITHOUT starting the server or connecting DB.
+ * Used by supertest in tests. DB connection is managed by the test setup (MongoMemoryServer).
+ * For production use, see server.js which calls connectDB() and app.listen().
  */
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import { createRequire } from 'module';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './config/swagger.js';
 import { errorHandler } from './middleware/error.js';

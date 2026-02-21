@@ -16,6 +16,10 @@ jobs:
       JWT_EXPIRE: 7d
       NODE_ENV: test
       PORT: 5001
+      # mongodb-memory-server: skip auto-download during npm ci postinstall
+      MONGOMS_SKIP_INITIAL_SETUP: true
+      # Use system MongoDB binary provided by GitHub runners (ubuntu-latest has it)
+      MONGOMS_PREFER_GLOBAL_PATH: true
 
     steps:
       - name: Checkout code

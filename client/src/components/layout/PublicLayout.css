@@ -10,11 +10,24 @@
 
 
 .public-navbar {
-    background-color: white;
-    box-shadow: var(--shadow-sm);
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 50px;
     position: sticky;
-    top: 0;
+    top: 20px;
     z-index: 100;
+    transition: all 0.3s ease;
+}
+
+.public-navbar.scrolled {
+    background: rgba(255, 255, 255, 0.65);
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
 .container {
@@ -63,16 +76,33 @@
 
 .nav-link {
     text-decoration: none;
-    color: var(--text-secondary);
-    font-weight: 500;
-    font-size: 0.95rem;
-    padding: var(--space-2) 0;
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 8px 12px;
     position: relative;
-    transition: color 0.2s;
+    transition: color 0.3s ease;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background: var(--primary-500);
+    border-radius: 3px;
+    transition: width 0.3s ease;
 }
 
 .nav-link:hover {
     color: var(--primary-600);
+}
+
+.nav-link:hover::after {
+    width: 80%;
 }
 
 .nav-link.active {
@@ -80,14 +110,7 @@
 }
 
 .nav-link.active::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background-color: var(--primary-500);
-    border-radius: 2px;
+    width: 100%;
 }
 
 .public-content {

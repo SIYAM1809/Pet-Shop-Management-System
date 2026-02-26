@@ -38,19 +38,9 @@ const Sidebar = ({ collapsed, onToggle }) => {
             transition={{ duration: 0.3, ease: 'easeInOut' }}
         >
             <div className="sidebar-header">
-                <div className="sidebar-logo">
-                    <PawPrint size={24} />
+                <div className="sidebar-logo" style={{ display: 'flex', justifyContent: 'center', width: '100%', overflow: 'hidden' }}>
+                    <img src="/logo.png" alt="Siyam's Praniseba Logo" style={{ height: '36px', width: 'auto', maxWidth: '100%', objectFit: 'contain' }} />
                 </div>
-                {!collapsed && (
-                    <motion.span
-                        className="sidebar-brand"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.1 }}
-                    >
-                        Siyam's Praniseba
-                    </motion.span>
-                )}
             </div>
 
             <nav className="sidebar-nav">

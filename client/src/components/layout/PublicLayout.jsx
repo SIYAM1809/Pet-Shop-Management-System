@@ -32,10 +32,9 @@ const PublicLayout = () => {
             <nav className={`public-navbar ${isScrolled ? 'scrolled' : ''}`}>
                 <div className="container navbar-content">
                     <Link to="/" className="navbar-brand">
-                        <div className="brand-icon" style={{ background: 'linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%)', padding: '8px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <Cat size={24} color="white" />
+                        <div className="brand-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <img src="/logo.png" alt="Siyam's Praniseba Logo" style={{ height: '52px', width: 'auto', objectFit: 'contain' }} />
                         </div>
-                        <span className="brand-text gradient-text" style={{ fontSize: '1.5rem', fontWeight: '800', marginLeft: '10px' }}>Siyam's Praniseba</span>
                     </Link>
 
                     <div className="navbar-links">

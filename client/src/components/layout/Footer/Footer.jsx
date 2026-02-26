@@ -45,9 +45,8 @@ const Footer = () => {
                 <div className="footer-content">
                     {/* Brand Section */}
                     <div className="footer-section brand-section">
-                        <div className="footer-brand">
-                            <Cat size={24} className="text-primary-600" />
-                            <span className="brand-text">Siyam's Praniseba</span>
+                        <div className="footer-brand" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                            <img src="/logo.png" alt="Siyam's Praniseba Logo" style={{ height: '48px', width: 'auto', objectFit: 'contain' }} />
                         </div>
                         <p className="footer-description">
                             Connecting pets with loving homes. We prioritize the well-being and happiness of every animal, providing comprehensive care solutions.

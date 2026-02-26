@@ -30,8 +30,32 @@ const PetCard = ({ pet, imageErrors, onImageError }) => (
 const PetMarquee = ({ pets = [], imageErrors = {}, onImageError = () => { } }) => {
     if (!pets.length) return null;
 
-    // Duplicate the list to create a seamless infinite loop
-    const doubled = [...pets, ...pets];
+    const chunk1Size = Math.ceil(pets.length / 3);
+    const chunk2Size = Math.ceil((pets.length - chunk1Size) / 2);
+
+    const line1Pets = pets.slice(0, chunk1Size);
+    const line2Pets = pets.slice(chunk1Size, chunk1Size + chunk2Size);
+    const line3Pets = pets.slice(chunk1Size + chunk2Size);
+
+    const doubled1 = [...line1Pets, ...line1Pets];
+    const doubled2 = [...line2Pets, ...line2Pets];
+    const doubled3 = [...line3Pets, ...line3Pets];
+
+    const renderTrack = (doubledList, directionClass, lineIndex) => {
+        if (!doubledList.length) return null;
+        return (
+            <div className={`marquee-track ${directionClass}`}>
+                {doubledList.map((pet, idx) => (
+                    <PetCard
+                        key={`${pet._id}-line${lineIndex}-${idx}`}
+                        pet={pet}
+                        imageErrors={imageErrors}
+                        onImageError={onImageError}
+                    />
+                ))}
+            </div>
+        );
+    };
 
     return (
         <div className="pet-marquee-section">
@@ -45,15 +69,10 @@ const PetMarquee = ({ pets = [], imageErrors = {}, onImageError = () => { } }) =
                 <div className="marquee-fade marquee-fade-left" />
                 <div className="marquee-fade marquee-fade-right" />
 
-                <div className="marquee-track">
-                    {doubled.map((pet, idx) => (
-                        <PetCard
-                            key={`${pet._id}-${idx}`}
-                            pet={pet}
-                            imageErrors={imageErrors}
-                            onImageError={onImageError}
-                        />
-                    ))}
+                <div className="marquee-tracks-container">
+                    {renderTrack(doubled1, 'marquee-track-rtl', 1)}
+                    {renderTrack(doubled2, 'marquee-track-ltr', 2)}
+                    {renderTrack(doubled3, 'marquee-track-rtl', 3)}
                 </div>
             </div>
         </div>

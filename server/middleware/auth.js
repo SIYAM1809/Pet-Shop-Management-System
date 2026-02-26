@@ -12,7 +12,7 @@ export const protect = async (req, res, next) => {
             req.user = await User.findById(decoded.id).select('-password');
             return next(); // ← return prevents falling through to the !token check below
         } catch (error) {
-            console.error(error);
+            console.error(`JWT Authentication Error: ${error.message}`);
             return res.status(401).json({ success: false, message: 'Not authorized, token failed' });
             // ← return ensures no second response fires after this
         }

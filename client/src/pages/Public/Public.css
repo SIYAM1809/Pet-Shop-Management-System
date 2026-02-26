@@ -498,20 +498,30 @@ h3,
     background: linear-gradient(to left, var(--bg-secondary), transparent);
 }
 
+.home-marquee-tracks-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
 .home-marquee-track {
     display: flex;
     gap: 30px;
     padding-right: 30px;
     /* crucial for seamless loop */
     width: max-content;
-    animation: home-marquee-slide 40s linear infinite;
 }
 
-.home-marquee-wrapper:hover .home-marquee-track {
-    animation-play-state: paused;
+.home-marquee-track-rtl {
+    animation: home-marquee-slide-rtl 40s linear infinite;
 }
 
-@keyframes home-marquee-slide {
+.home-marquee-track-ltr {
+    animation: home-marquee-slide-ltr 40s linear infinite;
+}
+
+
+@keyframes home-marquee-slide-rtl {
     0% {
         transform: translateX(0);
     }
@@ -521,7 +531,17 @@ h3,
     }
 }
 
+@keyframes home-marquee-slide-ltr {
+    0% {
+        transform: translateX(-50%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
 .home-marquee-card-wrapper {
-    width: 320px;
+    width: 240px;
     flex-shrink: 0;
 }

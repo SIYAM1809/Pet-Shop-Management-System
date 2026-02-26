@@ -46,8 +46,15 @@
     background: linear-gradient(to left, var(--bg-primary, #f8f9ff), transparent);
 }
 
-/* The scrolling row — animation duration controls speed */
-@keyframes marquee-slide {
+.marquee-tracks-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding-bottom: var(--space-4);
+}
+
+/* Right to Left Animation */
+@keyframes marquee-slide-rtl {
     0% {
         transform: translateX(0);
     }
@@ -57,12 +64,30 @@
     }
 }
 
+/* Left to Right Animation */
+@keyframes marquee-slide-ltr {
+    0% {
+        transform: translateX(-50%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
 .marquee-track {
     display: flex;
     gap: var(--space-5);
     width: max-content;
-    animation: marquee-slide 30s linear infinite;
-    padding: var(--space-2) 0 var(--space-4);
+    padding: var(--space-2) var(--space-5) var(--space-2) 0;
+}
+
+.marquee-track-rtl {
+    animation: marquee-slide-rtl 25s linear infinite;
+}
+
+.marquee-track-ltr {
+    animation: marquee-slide-ltr 25s linear infinite;
 }
 
 /* Pause on hover for better UX */

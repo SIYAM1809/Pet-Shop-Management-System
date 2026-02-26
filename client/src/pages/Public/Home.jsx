@@ -87,7 +87,7 @@ const Home = () => {
 
                     <div className="text-center" style={{ marginTop: '40px' }}>
                         <Link to="/browse">
-                            <Button variant="outline" size="lg">View All Pets</Button>
+                            <Button variant="outline" size="lg">Meet all pets</Button>
                         </Link>
                     </div>
                 </div>
@@ -214,40 +214,44 @@ const FeaturedPetsList = () => {
 
     if (pets.length === 0) return null;
 
+    const doubledPets = [...pets, ...pets];
+
     return (
         <>
-            <div className="featured-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
-                {pets.map((pet, index) => (
-                    <motion.div
-                        key={pet._id}
-                        className="public-pet-card"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3, delay: index * 0.1 }}
-                        style={{ background: 'var(--surface)', borderRadius: '16px', overflow: 'hidden', boxShadow: 'var(--shadow-md)' }}
-                    >
-                        <div className="pet-image-container" style={{ height: '240px', position: 'relative', overflow: 'hidden' }}>
-                            {pet.image ? (
-                                <img src={pet.image} alt={pet.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={(e) => e.target.style.display = 'none'} />
-                            ) : (
-                                <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f1f5f9' }}>
-                                    <PawPrint size={48} color="#cbd5e1" />
+            <div className="home-marquee-wrapper">
+                <div className="home-marquee-track">
+                    {doubledPets.map((pet, index) => (
+                        <div key={`${pet._id}-${index}`} className="home-marquee-card-wrapper">
+                            <div
+                                className="public-pet-card"
+                                style={{ background: 'var(--surface)', borderRadius: '16px', overflow: 'hidden', boxShadow: 'var(--shadow-md)', height: '100%', display: 'flex', flexDirection: 'column' }}
+                            >
+                                <div className="pet-image-container" style={{ height: '240px', position: 'relative', overflow: 'hidden' }}>
+                                    {pet.image ? (
+                                        <img src={pet.image} alt={pet.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={(e) => e.target.style.display = 'none'} />
+                                    ) : (
+                                        <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f1f5f9' }}>
+                                            <PawPrint size={48} color="#cbd5e1" />
+                                        </div>
+                                    )}
+                                    <div style={{ position: 'absolute', top: '15px', right: '15px', background: 'rgba(255,255,255,0.9)', padding: '5px 12px', borderRadius: '20px', fontSize: '0.85rem', fontWeight: '600', color: 'var(--primary-600)' }}>
+                                        {pet.species}
+                                    </div>
                                 </div>
-                            )}
-                            <div style={{ position: 'absolute', top: '15px', right: '15px', background: 'rgba(255,255,255,0.9)', padding: '5px 12px', borderRadius: '20px', fontSize: '0.85rem', fontWeight: '600', color: 'var(--primary-600)' }}>
-                                {pet.species}
+                                <div className="pet-content" style={{ padding: '20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '0 0 10px 0' }}>
+                                        <h3 style={{ fontSize: '1.25rem', fontWeight: '700', color: 'var(--text-primary)', margin: 0 }}>{pet.name}</h3>
+                                        <span style={{ fontSize: '1.1rem', fontWeight: '700', color: 'var(--primary-600)' }}>${pet.price}</span>
+                                    </div>
+                                    <p style={{ color: 'var(--text-secondary)', marginBottom: '15px' }}>{pet.breed} • {pet.gender}</p>
+                                    <div style={{ marginTop: 'auto' }}>
+                                        <Button size="sm" variant="primary" fullWidth onClick={() => handleInquire(pet)}>Inquire Now</Button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div className="pet-content" style={{ padding: '20px' }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                                <h3 style={{ fontSize: '1.25rem', fontWeight: '700', color: 'var(--text-primary)', margin: 0 }}>{pet.name}</h3>
-                                <span style={{ fontSize: '1.1rem', fontWeight: '700', color: 'var(--primary-600)' }}>${pet.price}</span>
-                            </div>
-                            <p style={{ color: 'var(--text-secondary)', marginBottom: '15px' }}>{pet.breed} • {pet.gender}</p>
-                            <Button size="sm" variant="primary" fullWidth onClick={() => handleInquire(pet)}>Inquire Now</Button>
-                        </div>
-                    </motion.div>
-                ))}
+                    ))}
+                </div>
             </div>
             <InquiryModal
                 isOpen={inquiryModalOpen}

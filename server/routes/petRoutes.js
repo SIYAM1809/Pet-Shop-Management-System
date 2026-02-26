@@ -87,8 +87,8 @@ router.get('/stats', protect, getPetStats);
  *         description: Unauthorized
  */
 router.route('/')
-    .get(getPets)
-    .post(protect, createPet);
+    .get(getPets) //calls getPets (no login required)
+    .post(protect, createPet); //calls createPet (login REQUIRED — protect runs first)
 
 /**
  * @swagger

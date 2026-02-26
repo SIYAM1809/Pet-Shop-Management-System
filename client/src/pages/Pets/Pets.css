@@ -75,6 +75,85 @@
     height: 300px;
 }
 
+/* Skeleton Loaders */
+@keyframes skeleton-shimmer {
+    0% {
+        background-position: -400px 0;
+    }
+
+    100% {
+        background-position: 400px 0;
+    }
+}
+
+.skeleton {
+    background: linear-gradient(90deg,
+            var(--bg-tertiary) 25%,
+            var(--surface-hover, rgba(139, 92, 246, 0.06)) 50%,
+            var(--bg-tertiary) 75%);
+    background-size: 800px 100%;
+    animation: skeleton-shimmer 1.4s ease-in-out infinite;
+    border-radius: var(--radius-md);
+}
+
+.pet-card-skeleton {
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+}
+
+.pet-card-skeleton .skeleton-image {
+    height: 180px;
+    width: 100%;
+    border-radius: 0;
+}
+
+.pet-card-skeleton .skeleton-body {
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.pet-card-skeleton .skeleton-title {
+    height: 18px;
+    width: 60%;
+}
+
+.pet-card-skeleton .skeleton-subtitle {
+    height: 13px;
+    width: 80%;
+}
+
+.pet-card-skeleton .skeleton-meta {
+    height: 13px;
+    width: 45%;
+}
+
+.pet-card-skeleton .skeleton-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--space-2);
+}
+
+.pet-card-skeleton .skeleton-price {
+    height: 22px;
+    width: 70px;
+}
+
+.pet-card-skeleton .skeleton-actions {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.pet-card-skeleton .skeleton-btn {
+    height: 32px;
+    width: 32px;
+    border-radius: var(--radius-md);
+}
+
 .pets-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));

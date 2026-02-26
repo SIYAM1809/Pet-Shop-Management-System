@@ -248,8 +248,24 @@ const Pets = () => {
 
             {/* Pets Grid/List */}
             {loading ? (
-                <div className="loading-container">
-                    <div className="spinner" />
+                <div className={view === 'grid' ? 'pets-grid' : 'pets-list'}>
+                    {Array.from({ length: 8 }).map((_, i) => (
+                        <div key={i} className="pet-card-skeleton">
+                            <div className="skeleton skeleton-image" />
+                            <div className="skeleton-body">
+                                <div className="skeleton skeleton-title" />
+                                <div className="skeleton skeleton-subtitle" />
+                                <div className="skeleton skeleton-meta" />
+                                <div className="skeleton-footer">
+                                    <div className="skeleton skeleton-price" />
+                                    <div className="skeleton-actions">
+                                        <div className="skeleton skeleton-btn" />
+                                        <div className="skeleton skeleton-btn" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             ) : filteredPets.length === 0 ? (
                 <div className="empty-state">

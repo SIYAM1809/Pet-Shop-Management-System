@@ -85,14 +85,6 @@ const Reviews = () => {
         }
     };
 
-    if (loading) {
-        return (
-            <div className="flex justify-center items-center h-full min-h-[400px]">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
-            </div>
-        );
-    }
-
     return (
         <motion.div
             className="p-6 max-w-7xl mx-auto"
@@ -138,9 +130,36 @@ const Reviews = () => {
                 </div>
             </div>
 
-            {/* Reviews Grid - Happy Tails Styling Restored */}
+            {/* Reviews Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                {filteredReviews.length === 0 ? (
+                {loading ? (
+                    Array.from({ length: 6 }).map((_, i) => (
+                        <div key={i} className="review-card-skeleton bg-white rounded-2xl p-6 border border-gray-100 shadow-sm flex flex-col gap-4">
+                            <div className="flex items-center gap-4">
+                                <div className="skeleton-review skeleton-avatar" />
+                                <div className="flex flex-col gap-2 flex-1">
+                                    <div className="skeleton-review skeleton-name" />
+                                    <div className="skeleton-review skeleton-pet" />
+                                </div>
+                                <div className="skeleton-review skeleton-badge" />
+                            </div>
+                            <div className="flex gap-1">
+                                {Array.from({ length: 5 }).map((__, j) => (
+                                    <div key={j} className="skeleton-review skeleton-star" />
+                                ))}
+                            </div>
+                            <div className="flex flex-col gap-2">
+                                <div className="skeleton-review skeleton-line" />
+                                <div className="skeleton-review skeleton-line" />
+                                <div className="skeleton-review skeleton-line-short" />
+                            </div>
+                            <div className="pt-4 border-t border-gray-100 flex gap-2">
+                                <div className="skeleton-review skeleton-action-btn flex-1" />
+                                <div className="skeleton-review skeleton-action-btn-sm" />
+                            </div>
+                        </div>
+                    ))
+                ) : filteredReviews.length === 0 ? (
                     <div className="col-span-full flex flex-col items-center justify-center py-16 text-center bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">
                         <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-4 shadow-sm border border-gray-100">
                             <MessageSquare className="text-gray-400" size={32} />

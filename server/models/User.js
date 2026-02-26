@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please add a password'],
         minlength: [6, 'Password must be at least 6 characters'],
-        select: false
+        select: false // ← " means NEVER include this field in query results by default"
     },
     role: {
         type: String,

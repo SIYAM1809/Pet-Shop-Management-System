@@ -23,10 +23,10 @@ import subscriberRoutes from './routes/subscriberRoutes.js';
 
 // Connect to database
 connectDB();
-
+//Creating your Express "app" (your waiter)
 const app = express();
 
-// Body parser
+// Body parser  
 app.use(express.json({ limit: '10mb' })); // Increased to 10mb for base64 images
 
 // Enable CORS - Support both Docker (port 3000) and dev server (port 5173)
@@ -51,7 +51,7 @@ app.use(cors({
     credentials: true
 }));
 
-// Mount routes
+// Mount routes (Registering all your routes (like: "if customer asks for /api/pets, go here")
 app.use('/api/auth', authRoutes);
 app.use('/api/pets', petRoutes);
 app.use('/api/customers', customerRoutes);

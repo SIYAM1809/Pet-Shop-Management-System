@@ -90,15 +90,6 @@ const Dashboard = () => {
         }
     ];
 
-    if (loading) {
-        return (
-            <div className="dashboard-loading">
-                <div className="spinner" />
-                <p>Loading dashboard...</p>
-            </div>
-        );
-    }
-
     return (
         <motion.div
             className="dashboard"
@@ -115,28 +106,47 @@ const Dashboard = () => {
 
             {/* Stats Cards */}
             <motion.div className="stats-grid" variants={containerVariants}>
-                {statsCards.map((stat, index) => (
-                    <motion.div
-                        key={stat.title}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3, delay: index * 0.1 }}
-                    >
-                        <div className="stats-card">
-                            <div className={`stats-icon stats-icon-${stat.color}`}>
-                                <stat.icon size={24} />
-                            </div>
-                            <div className="stats-content">
-                                <p className="stats-label">{stat.title}</p>
-                                <h3 className="stats-value">{stat.value}</h3>
-                                <div className={`stats-change ${stat.positive ? 'stats-change-up' : 'stats-change-down'}`}>
-                                    {stat.positive ? <ArrowUpRight size={14} /> : <ArrowDownRight size={14} />}
-                                    <span>{stat.change} from last month</span>
+                {loading
+                    ? Array.from({ length: 4 }).map((_, i) => (
+                        <motion.div
+                            key={i}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.3, delay: i * 0.1 }}
+                        >
+                            <div className="stats-card-skeleton">
+                                <div className="skeleton skeleton-icon" />
+                                <div className="skeleton-content">
+                                    <div className="skeleton skeleton-label" />
+                                    <div className="skeleton skeleton-value" />
+                                    <div className="skeleton skeleton-change" />
                                 </div>
                             </div>
-                        </div>
-                    </motion.div>
-                ))}
+                        </motion.div>
+                    ))
+                    : statsCards.map((stat, index) => (
+                        <motion.div
+                            key={stat.title}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.3, delay: index * 0.1 }}
+                        >
+                            <div className="stats-card">
+                                <div className={`stats-icon stats-icon-${stat.color}`}>
+                                    <stat.icon size={24} />
+                                </div>
+                                <div className="stats-content">
+                                    <p className="stats-label">{stat.title}</p>
+                                    <h3 className="stats-value">{stat.value}</h3>
+                                    <div className={`stats-change ${stat.positive ? 'stats-change-up' : 'stats-change-down'}`}>
+                                        {stat.positive ? <ArrowUpRight size={14} /> : <ArrowDownRight size={14} />}
+                                        <span>{stat.change} from last month</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </motion.div>
+                    ))
+                }
             </motion.div>
 
             {/* Charts Section */}
@@ -244,20 +254,32 @@ const Dashboard = () => {
                     <Card className="activity-card">
                         <h3 className="activity-title">Recent Orders</h3>
                         <div className="activity-list">
-                            {(stats?.recentOrders || []).slice(0, 5).map((order) => (
-                                <div key={order._id} className="activity-item">
-                                    <div className="activity-icon order-icon">
-                                        <ShoppingCart size={16} />
+                            {loading
+                                ? Array.from({ length: 5 }).map((_, i) => (
+                                    <div key={i} className="activity-item-skeleton">
+                                        <div className="skeleton skeleton-icon" />
+                                        <div className="skeleton-content">
+                                            <div className="skeleton skeleton-name" />
+                                            <div className="skeleton skeleton-meta" />
+                                        </div>
+                                        <div className="skeleton skeleton-amount" />
                                     </div>
-                                    <div className="activity-content">
-                                        <p className="activity-name">{order.orderNumber}</p>
-                                        <p className="activity-meta">{order.customer?.name}</p>
+                                ))
+                                : (stats?.recentOrders || []).slice(0, 5).map((order) => (
+                                    <div key={order._id} className="activity-item">
+                                        <div className="activity-icon order-icon">
+                                            <ShoppingCart size={16} />
+                                        </div>
+                                        <div className="activity-content">
+                                            <p className="activity-name">{order.orderNumber}</p>
+                                            <p className="activity-meta">{order.customer?.name}</p>
+                                        </div>
+                                        <div className="activity-amount">
+                                            {formatCurrency(order.totalAmount)}
+                                        </div>
                                     </div>
-                                    <div className="activity-amount">
-                                        {formatCurrency(order.totalAmount)}
-                                    </div>
-                                </div>
-                            ))}
+                                ))
+                            }
                         </div>
                     </Card>
                 </motion.div>
@@ -266,20 +288,32 @@ const Dashboard = () => {
                     <Card className="activity-card">
                         <h3 className="activity-title">New Pets</h3>
                         <div className="activity-list">
-                            {(stats?.recentPets || []).slice(0, 5).map((pet) => (
-                                <div key={pet._id} className="activity-item">
-                                    <div className="activity-icon pet-icon">
-                                        <PawPrint size={16} />
+                            {loading
+                                ? Array.from({ length: 5 }).map((_, i) => (
+                                    <div key={i} className="activity-item-skeleton">
+                                        <div className="skeleton skeleton-icon" />
+                                        <div className="skeleton-content">
+                                            <div className="skeleton skeleton-name" />
+                                            <div className="skeleton skeleton-meta" />
+                                        </div>
+                                        <div className="skeleton skeleton-amount" />
                                     </div>
-                                    <div className="activity-content">
-                                        <p className="activity-name">{pet.name}</p>
-                                        <p className="activity-meta">{pet.species} - {pet.breed}</p>
+                                ))
+                                : (stats?.recentPets || []).slice(0, 5).map((pet) => (
+                                    <div key={pet._id} className="activity-item">
+                                        <div className="activity-icon pet-icon">
+                                            <PawPrint size={16} />
+                                        </div>
+                                        <div className="activity-content">
+                                            <p className="activity-name">{pet.name}</p>
+                                            <p className="activity-meta">{pet.species} - {pet.breed}</p>
+                                        </div>
+                                        <span className={`badge badge-${pet.status === 'Available' ? 'success' : 'warning'}`}>
+                                            {pet.status}
+                                        </span>
                                     </div>
-                                    <span className={`badge badge-${pet.status === 'Available' ? 'success' : 'warning'}`}>
-                                        {pet.status}
-                                    </span>
-                                </div>
-                            ))}
+                                ))
+                            }
                         </div>
                     </Card>
                 </motion.div>

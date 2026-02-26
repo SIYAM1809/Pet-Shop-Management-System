@@ -1,0 +1,373 @@
+/* ===== NEXT.JS PET SHOP — LEARNING PROJECT ===== */
+/* This file is the global stylesheet — loaded once for the entire app */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #0f0f1a;
+  color: #e2e8f0;
+  min-height: 100vh;
+}
+
+/* ---- NAVBAR ---- */
+.navbar {
+  background: #1a1a2e;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #2d2d4e;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-brand {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #8b5cf6;
+  text-decoration: none;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+.navbar-links a {
+  color: #94a3b8;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.navbar-links a:hover {
+  color: #8b5cf6;
+}
+
+/* ---- LAYOUT ---- */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* ---- HERO ---- */
+.hero {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  color: #94a3b8;
+  max-width: 500px;
+  margin: 0 auto 2rem;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  background: #8b5cf6;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.btn:hover {
+  background: #7c3aed;
+  transform: translateY(-2px);
+}
+
+/* ---- RENDERING BADGES ---- */
+.render-badge {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-bottom: 1.5rem;
+}
+
+.badge-ssg {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.badge-ssr {
+  background: rgba(251, 146, 60, 0.15);
+  color: #fb923c;
+  border: 1px solid rgba(251, 146, 60, 0.3);
+}
+
+.badge-csr {
+  background: rgba(139, 92, 246, 0.15);
+  color: #8b5cf6;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+/* ---- PAGE HEADER ---- */
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.page-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.page-header p {
+  color: #64748b;
+  margin-top: 0.5rem;
+}
+
+/* ---- PET GRID ---- */
+.pets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.pet-card {
+  background: #1a1a2e;
+  border: 1px solid #2d2d4e;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.pet-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
+  border-color: #8b5cf6;
+}
+
+.pet-image {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(135deg, #1e1e3f, #2d1b69);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+}
+
+.pet-info {
+  padding: 1.25rem;
+}
+
+.pet-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.pet-species {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+
+.pet-price {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #8b5cf6;
+  margin-top: 0.75rem;
+}
+
+.pet-status {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.status-available {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+}
+
+.status-sold {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+
+/* ---- PET DETAIL ---- */
+.pet-detail {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.pet-detail-header {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  background: #1a1a2e;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #2d2d4e;
+}
+
+.pet-detail-image {
+  width: 300px;
+  min-height: 300px;
+  background: linear-gradient(135deg, #1e1e3f, #2d1b69);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 6rem;
+  flex-shrink: 0;
+}
+
+.pet-detail-info {
+  padding: 2rem;
+}
+
+.pet-detail-name {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #f1f5f9;
+}
+
+.pet-detail-price {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #8b5cf6;
+  margin-top: 0.5rem;
+}
+
+.pet-detail-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  color: #94a3b8;
+}
+
+.pet-detail-meta span strong {
+  color: #e2e8f0;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #8b5cf6;
+  text-decoration: none;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.back-link:hover {
+  color: #a78bfa;
+}
+
+/* ---- DASHBOARD STATS ---- */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.stat-card {
+  background: #1a1a2e;
+  border: 1px solid #2d2d4e;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #8b5cf6;
+}
+
+.stat-label {
+  color: #64748b;
+  margin-top: 0.25rem;
+  font-size: 0.9rem;
+}
+
+/* ---- CONCEPT BOX (learning notes) ---- */
+.concept-box {
+  background: #1a1a2e;
+  border: 1px solid #2d2d4e;
+  border-left: 4px solid #8b5cf6;
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+  color: #94a3b8;
+}
+
+.concept-box h3 {
+  color: #8b5cf6;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.concept-box p {
+  line-height: 1.7;
+}
+
+.concept-box code {
+  background: #0f0f1a;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  color: #a78bfa;
+  font-size: 0.85rem;
+}
+
+/* ---- ERROR / LOADING ---- */
+.error-box {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  padding: 1.5rem;
+  color: #ef4444;
+  text-align: center;
+}
+
+.not-found {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.not-found h2 {
+  font-size: 1.5rem;
+  color: #f1f5f9;
+}
+
+.not-found p {
+  color: #64748b;
+  margin: 1rem 0;
+}

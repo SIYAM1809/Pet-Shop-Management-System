@@ -35,6 +35,7 @@ const PublicLayout = () => {
                         <div className="brand-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <img src="/logo.png" alt="Siyam's Praniseba Logo" style={{ height: '52px', width: 'auto', objectFit: 'contain' }} />
                         </div>
+                        <span className="brand-text gradient-text" style={{ fontSize: '1.5rem', fontWeight: '800', marginLeft: '5px' }}>Siyam's Praniseba</span>
                     </Link>
 
                     <div className="navbar-links">

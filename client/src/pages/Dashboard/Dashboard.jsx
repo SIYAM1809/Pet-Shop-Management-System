@@ -22,7 +22,8 @@ import {
     Cell
 } from 'recharts';
 import Card from '../../components/common/Card';
-import { dashboardAPI } from '../../services/api';
+import PetMarquee from '../../components/common/PetMarquee/PetMarquee';
+import { dashboardAPI, petAPI } from '../../services/api';
 import { containerVariants, itemVariants } from '../../utils/animations';
 import './Dashboard.css';
 
@@ -30,16 +31,26 @@ const COLORS = ['#8b5cf6', '#06b6d4', '#ec4899', '#f97316', '#10b981', '#6366f1'
 
 const Dashboard = () => {
     const [stats, setStats] = useState(null);
+    const [pets, setPets] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [imageErrors, setImageErrors] = useState({});
 
     useEffect(() => {
         fetchDashboardData();
     }, []);
 
+    const handleImageError = (petId) => {
+        setImageErrors(prev => ({ ...prev, [petId]: true }));
+    };
+
     const fetchDashboardData = async () => {
         try {
-            const response = await dashboardAPI.getStats();
-            setStats(response.data);
+            const [dashRes, petsRes] = await Promise.all([
+                dashboardAPI.getStats(),
+                petAPI.getAll({ limit: 50 })
+            ]);
+            setStats(dashRes.data);
+            setPets(petsRes.data || []);
         } catch (error) {
             console.error('Failed to fetch dashboard data:', error);
         } finally {
@@ -243,6 +254,13 @@ const Dashboard = () => {
                     </Card>
                 </motion.div>
             </div>
+
+            {/* Pet Marquee Strip */}
+            <PetMarquee
+                pets={pets}
+                imageErrors={imageErrors}
+                onImageError={handleImageError}
+            />
 
             {/* Recent Activity */}
             <div className="activity-grid">

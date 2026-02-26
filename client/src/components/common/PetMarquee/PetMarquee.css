@@ -1,0 +1,177 @@
+/* ─── Pet Marquee Section ─── */
+.pet-marquee-section {
+    margin-bottom: var(--space-8);
+}
+
+.pet-marquee-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+}
+
+.pet-marquee-icon {
+    color: var(--primary-500);
+}
+
+.pet-marquee-title {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* Outer container clips the scrolling track */
+.pet-marquee-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Smooth fade on left and right edges */
+.marquee-fade {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 80px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.marquee-fade-left {
+    left: 0;
+    background: linear-gradient(to right, var(--bg-primary, #f8f9ff), transparent);
+}
+
+.marquee-fade-right {
+    right: 0;
+    background: linear-gradient(to left, var(--bg-primary, #f8f9ff), transparent);
+}
+
+/* The scrolling row — animation duration controls speed */
+@keyframes marquee-slide {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.marquee-track {
+    display: flex;
+    gap: var(--space-5);
+    width: max-content;
+    animation: marquee-slide 30s linear infinite;
+    padding: var(--space-2) 0 var(--space-4);
+}
+
+/* Pause on hover for better UX */
+.pet-marquee-wrapper:hover .marquee-track {
+    animation-play-state: paused;
+}
+
+/* ─── Individual Pet Card ─── */
+.marquee-pet-card {
+    width: 200px;
+    flex-shrink: 0;
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    cursor: pointer;
+}
+
+.marquee-pet-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.marquee-pet-image {
+    position: relative;
+    height: 140px;
+    background: var(--bg-tertiary);
+}
+
+.marquee-pet-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.marquee-pet-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-tertiary);
+}
+
+/* Status badge inside card */
+.marquee-badge {
+    position: absolute;
+    top: var(--space-2);
+    right: var(--space-2);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.badge-success {
+    background: rgba(16, 185, 129, 0.15);
+    color: #059669;
+}
+
+.badge-error {
+    background: rgba(239, 68, 68, 0.15);
+    color: #dc2626;
+}
+
+.badge-warning {
+    background: rgba(245, 158, 11, 0.15);
+    color: #d97706;
+}
+
+/* Pet info below image */
+.marquee-pet-info {
+    padding: var(--space-3) var(--space-4);
+}
+
+.marquee-pet-name {
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 2px;
+}
+
+.marquee-pet-breed {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: var(--space-2);
+}
+
+.marquee-pet-price {
+    font-size: var(--font-size-base);
+    font-weight: 700;
+    color: var(--primary-500);
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .marquee-fade-left {
+    background: linear-gradient(to right, var(--bg-primary, #0f0f1a), transparent);
+}
+
+[data-theme="dark"] .marquee-fade-right {
+    background: linear-gradient(to left, var(--bg-primary, #0f0f1a), transparent);
+}

@@ -4,6 +4,7 @@ import { Search, Filter, PawPrint } from 'lucide-react';
 import { petAPI } from '../../services/api';
 import Button from '../../components/common/Button';
 import InquiryModal from '../../components/common/InquiryModal';
+import CustomerAuthModal from '../../components/common/CustomerAuthModal';
 import './Public.css';
 
 const BrowsePets = () => {
@@ -13,6 +14,7 @@ const BrowsePets = () => {
     const [filterSpecies, setFilterSpecies] = useState('');
     const [inquiryPet, setInquiryPet] = useState(null);
     const [inquiryModalOpen, setInquiryModalOpen] = useState(false);
+    const [authModalOpen, setAuthModalOpen] = useState(false);
 
     const handleInquire = (pet) => {
         setInquiryPet(pet);
@@ -151,6 +153,11 @@ const BrowsePets = () => {
                 isOpen={inquiryModalOpen}
                 onClose={() => setInquiryModalOpen(false)}
                 pet={inquiryPet}
+                onLoginRequired={() => setAuthModalOpen(true)}
+            />
+            <CustomerAuthModal
+                isOpen={authModalOpen}
+                onClose={() => setAuthModalOpen(false)}
             />
         </div>
     );

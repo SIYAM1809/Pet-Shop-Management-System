@@ -9,6 +9,31 @@ const generateToken = (id) => {
     });
 };
 
+// @desc    Register customer (Public self-sign-up)
+// @route   POST /api/auth/customer-register
+// @access  Public
+export const customerRegister = asyncHandler(async (req, res) => {
+    const { name, email, password } = req.body;
+
+    if (!name || !email || !password) {
+        return res.status(400).json({ success: false, message: 'Please provide name, email and password' });
+    }
+
+    const existing = await User.findOne({ email });
+    if (existing) {
+        return res.status(400).json({ success: false, message: 'An account with this email already exists' });
+    }
+
+    const user = await User.create({ name, email, password, role: 'customer' });
+    const token = generateToken(user._id);
+
+    res.status(201).json({
+        success: true,
+        token,
+        user: { id: user._id, name: user.name, email: user.email, role: user.role }
+    });
+});
+
 // @desc    Register user (Admin only)
 // @route   POST /api/auth/register
 // @access  Private/Admin

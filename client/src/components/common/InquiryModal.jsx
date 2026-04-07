@@ -4,10 +4,16 @@ import Button from './Button';
 import Input from './Input';
 import Invoice from './Invoice';
 import { inquiryAPI } from '../../services/api';
+import { useAuth } from '../../context/AuthContext';
+import { useCart } from '../../context/CartContext';
 import toast from 'react-hot-toast';
-import { CreditCard, Banknote, Smartphone, Building } from 'lucide-react';
+import { CreditCard, Banknote, Smartphone, Building, ShoppingCart, Check } from 'lucide-react';
 
-const InquiryModal = ({ isOpen, onClose, pet }) => {
+const InquiryModal = ({ isOpen, onClose, pet, onLoginRequired }) => {
+    const { isAuthenticated, user } = useAuth();
+    const { addToCart, cartItems } = useCart();
+    const isCustomer = isAuthenticated && user?.role === 'customer';
+    const isInCart = cartItems.some(item => item._id === pet?._id);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -229,9 +235,30 @@ const InquiryModal = ({ isOpen, onClose, pet }) => {
                         />
                     </div>
 
-                    <div className="modal-actions" style={{ marginTop: '25px', display: 'flex', justifyContent: 'end', gap: '10px' }}>
+                    <div className="modal-actions" style={{ marginTop: '25px', display: 'flex', justifyContent: 'end', gap: '10px', flexWrap: 'wrap' }}>
                         <Button type="button" variant="secondary" onClick={handleClose}>Cancel</Button>
-                        <Button type="submit" variant="primary" loading={submitting}>Confirm & Get Invoice</Button>
+
+                        <Button
+                            type="button"
+                            variant="outline"
+                            icon={isInCart ? <Check size={16} /> : <ShoppingCart size={16} />}
+                            onClick={() => {
+                                if (!isCustomer) {
+                                    handleClose();
+                                    if (onLoginRequired) onLoginRequired();
+                                    else toast('🔒 Please log in to add items to your cart');
+                                    return;
+                                }
+                                if (isInCart) { toast('Already in your cart!'); return; }
+                                addToCart(pet);
+                                toast.success(`${pet.name} added to cart! 🛒`);
+                                handleClose();
+                            }}
+                        >
+                            {isInCart ? 'In Cart' : 'Add to Cart'}
+                        </Button>
+
+                        <Button type="submit" variant="primary" loading={submitting}>Confirm &amp; Get Invoice</Button>
                     </div>
                 </form>
             )}

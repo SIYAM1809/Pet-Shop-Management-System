@@ -118,3 +118,104 @@
 }
 
 /* Footer styles moved to Footer/Footer.css */
+
+/* ── Navbar Auth & Cart Area ─────────────────────────── */
+.navbar-auth-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.navbar-login-btn {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 18px;
+    border: none;
+    border-radius: 50px;
+    background: var(--gradient-primary);
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+    box-shadow: 0 3px 12px rgba(139, 92, 246, 0.28);
+    white-space: nowrap;
+}
+.navbar-login-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+
+/* Cart button */
+.navbar-cart-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1.5px solid var(--border-light);
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s;
+    backdrop-filter: blur(8px);
+}
+.navbar-cart-btn:hover {
+    border-color: var(--primary-400);
+    color: var(--primary-600);
+    background: rgba(139, 92, 246, 0.08);
+}
+
+.cart-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: var(--primary-500);
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 800;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
+    line-height: 1;
+}
+
+/* User chip */
+.navbar-user-chip {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(139, 92, 246, 0.25);
+    color: var(--primary-600);
+    padding: 6px 12px;
+    border-radius: 50px;
+    font-size: 0.83rem;
+    font-weight: 600;
+}
+
+/* Logout */
+.navbar-logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 12px;
+    border: 1.5px solid var(--border-light);
+    border-radius: 50px;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.navbar-logout-btn:hover {
+    border-color: var(--error);
+    color: var(--error);
+    background: #fee2e2;
+}

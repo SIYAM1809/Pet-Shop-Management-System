@@ -48,6 +48,15 @@ export const authAPI = {
             headers: getAuthHeader()
         });
         return handleResponse(response);
+    },
+
+    customerRegister: async (userData) => {
+        const response = await fetch(`${API_URL}/auth/customer-register`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(userData)
+        });
+        return handleResponse(response);
     }
 };
 

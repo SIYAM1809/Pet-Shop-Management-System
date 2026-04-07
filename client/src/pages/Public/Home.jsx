@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import { petAPI } from '../../services/api';
 import { PawPrint } from 'lucide-react';
 import InquiryModal from '../../components/common/InquiryModal';
+import CustomerAuthModal from '../../components/common/CustomerAuthModal';
 import TestimonialsSection from '../../components/home/TestimonialsSection';
 import AppointmentModal from '../../components/common/AppointmentModal';
 
@@ -190,6 +191,7 @@ const FeaturedPetsList = () => {
     const [loading, setLoading] = useState(true);
     const [inquiryPet, setInquiryPet] = useState(null);
     const [inquiryModalOpen, setInquiryModalOpen] = useState(false);
+    const [authModalOpen, setAuthModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchFeatured = async () => {
@@ -288,6 +290,11 @@ const FeaturedPetsList = () => {
                 isOpen={inquiryModalOpen}
                 onClose={() => setInquiryModalOpen(false)}
                 pet={inquiryPet}
+                onLoginRequired={() => setAuthModalOpen(true)}
+            />
+            <CustomerAuthModal
+                isOpen={authModalOpen}
+                onClose={() => setAuthModalOpen(false)}
             />
         </>
     );

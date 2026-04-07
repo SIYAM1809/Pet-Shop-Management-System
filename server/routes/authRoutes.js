@@ -1,5 +1,5 @@
 import express from 'express';
-import { register, login, getMe, updateProfile, getUsers } from '../controllers/authController.js';
+import { register, login, getMe, updateProfile, getUsers, customerRegister } from '../controllers/authController.js';
 import { protect, authorize } from '../middleware/auth.js';
 
 const router = express.Router();
@@ -31,6 +31,9 @@ const router = express.Router();
  *               $ref: '#/components/schemas/Error'
  */
 router.post('/login', login);
+
+// Public customer self-registration
+router.post('/customer-register', customerRegister);
 
 /**
  * @swagger

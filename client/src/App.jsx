@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
+import { CartProvider } from './context/CartContext';
 import MainLayout from './components/layout/MainLayout';
 import PublicLayout from './components/layout/PublicLayout';
 import Login from './pages/Login';
@@ -93,34 +94,36 @@ function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
-        <Router>
-          <AppRoutes />
-          <Toaster
-            position="top-right"
-            toastOptions={{
-              duration: 3000,
-              style: {
-                background: 'var(--surface)',
-                color: 'var(--text-primary)',
-                border: '1px solid var(--border-light)',
-                borderRadius: 'var(--radius-lg)',
-                boxShadow: 'var(--shadow-lg)'
-              },
-              success: {
-                iconTheme: {
-                  primary: 'var(--success)',
-                  secondary: 'white'
+        <CartProvider>
+          <Router>
+            <AppRoutes />
+            <Toaster
+              position="top-right"
+              toastOptions={{
+                duration: 3000,
+                style: {
+                  background: 'var(--surface)',
+                  color: 'var(--text-primary)',
+                  border: '1px solid var(--border-light)',
+                  borderRadius: 'var(--radius-lg)',
+                  boxShadow: 'var(--shadow-lg)'
+                },
+                success: {
+                  iconTheme: {
+                    primary: 'var(--success)',
+                    secondary: 'white'
+                  }
+                },
+                error: {
+                  iconTheme: {
+                    primary: 'var(--error)',
+                    secondary: 'white'
+                  }
                 }
-              },
-              error: {
-                iconTheme: {
-                  primary: 'var(--error)',
-                  secondary: 'white'
-                }
-              }
-            }}
-          />
-        </Router>
+              }}
+            />
+          </Router>
+        </CartProvider>
       </AuthProvider>
     </ThemeProvider>
   );

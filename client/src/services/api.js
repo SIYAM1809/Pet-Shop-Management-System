@@ -324,3 +324,56 @@ export const reviewAPI = {
         return handleResponse(response);
     }
 };
+
+// Product API (Accessories)
+export const productAPI = {
+    getAll: async (params = {}) => {
+        const query = new URLSearchParams(params).toString();
+        const response = await fetch(`${API_URL}/products?${query}`);
+        return handleResponse(response);
+    },
+
+    getFeatured: async () => {
+        const response = await fetch(`${API_URL}/products/featured`);
+        return handleResponse(response);
+    },
+
+    getStats: async () => {
+        const response = await fetch(`${API_URL}/products/stats`, {
+            headers: getAuthHeader()
+        });
+        return handleResponse(response);
+    },
+
+    getById: async (id) => {
+        const response = await fetch(`${API_URL}/products/${id}`);
+        return handleResponse(response);
+    },
+
+    create: async (productData) => {
+        const response = await fetch(`${API_URL}/products`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
+            body: JSON.stringify(productData)
+        });
+        return handleResponse(response);
+    },
+
+    update: async (id, productData) => {
+        const response = await fetch(`${API_URL}/products/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
+            body: JSON.stringify(productData)
+        });
+        return handleResponse(response);
+    },
+
+    delete: async (id) => {
+        const response = await fetch(`${API_URL}/products/${id}`, {
+            method: 'DELETE',
+            headers: getAuthHeader()
+        });
+        return handleResponse(response);
+    }
+};
+

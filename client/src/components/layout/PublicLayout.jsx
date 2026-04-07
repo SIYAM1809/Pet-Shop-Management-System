@@ -53,6 +53,9 @@ const PublicLayout = () => {
                         <Link to="/browse" className={`nav-link ${location.pathname === '/browse' ? 'active' : ''}`}>
                             Browse Pets
                         </Link>
+                        <Link to="/accessories" className={`nav-link ${location.pathname.startsWith('/accessories') ? 'active' : ''}`}>
+                            Accessories
+                        </Link>
 
                         {/* Track Order — only for logged-in customers */}
                         {isCustomer && (

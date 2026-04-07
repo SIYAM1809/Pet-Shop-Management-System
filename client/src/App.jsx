@@ -18,6 +18,9 @@ import Home from './pages/Public/Home';
 import BrowsePets from './pages/Public/BrowsePets';
 import TrackOrder from './pages/Public/TrackOrder';
 import SubmitReview from './pages/Public/SubmitReview';
+import Accessories from './pages/Public/Accessories';
+import AccessoryDetail from './pages/Public/AccessoryDetail';
+import Products from './pages/Admin/Products';
 import AdminRoute from './components/layout/AdminRoute';
 import './styles/index.css';
 import './styles/components.css';
@@ -63,6 +66,8 @@ const AppRoutes = () => {
       <Route element={<PublicLayout />}>
         <Route index element={<Home />} />
         <Route path="browse" element={<BrowsePets />} />
+        <Route path="accessories" element={<Accessories />} />
+        <Route path="accessories/:id" element={<AccessoryDetail />} />
         <Route path="track" element={<TrackOrder />} />
         <Route path="submit-review" element={<SubmitReview />} />
       </Route>
@@ -77,12 +82,13 @@ const AppRoutes = () => {
         }
       >
         <Route index element={<Dashboard />} />
-        <Route path="appointments" element={<Appointments />} /> {/* Add Route */}
+        <Route path="appointments" element={<Appointments />} />
         <Route path="pets" element={<Pets />} />
+        <Route path="products" element={<Products />} />
         <Route path="customers" element={<Customers />} />
         <Route path="orders" element={<Orders />} />
-        <Route path="reviews" element={<Reviews />} /> {/* Add Reviews Route */}
-        <Route path="subscribers" element={<Subscribers />} /> {/* Add Subscribers Route */}
+        <Route path="reviews" element={<Reviews />} />
+        <Route path="subscribers" element={<Subscribers />} />
         <Route path="settings" element={<Settings />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />

@@ -81,9 +81,24 @@ const CartDrawer = ({ isOpen, onClose }) => {
 
                                                 {/* Info */}
                                                 <div className="cart-item-info">
-                                                    <p className="cart-item-name">{item.name}</p>
-                                                    <p className="cart-item-meta">{item.breed} • {item.species}</p>
-                                                    <p className="cart-item-price">${(item.price * item.quantity).toLocaleString()}</p>
+                                                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '2px' }}>
+                                                        <p className="cart-item-name">{item.name}</p>
+                                                        <span style={{
+                                                            fontSize: '0.62rem', fontWeight: 700,
+                                                            padding: '1px 6px', borderRadius: '10px',
+                                                            background: item.itemType === 'accessory' ? 'rgba(6,182,212,0.12)' : 'rgba(139,92,246,0.12)',
+                                                            color: item.itemType === 'accessory' ? '#0891b2' : 'var(--primary-500)',
+                                                            flexShrink: 0, textTransform: 'uppercase'
+                                                        }}>
+                                                            {item.itemType === 'accessory' ? 'Accessory' : 'Pet'}
+                                                        </span>
+                                                    </div>
+                                                    <p className="cart-item-meta">
+                                                        {item.itemType === 'accessory'
+                                                            ? `${item.animalCategory ?? ''} · ${item.productType ?? ''}`
+                                                            : `${item.breed ?? ''} · ${item.species ?? ''}`}
+                                                    </p>
+                                                    <p className="cart-item-price">${((item.salePrice || item.price) * item.quantity).toLocaleString()}</p>
                                                 </div>
 
                                                 {/* Quantity + Remove */}
@@ -126,7 +141,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
                                     <span className="cart-total-value">${cartTotal.toLocaleString()}</span>
                                 </div>
                                 <p className="cart-footer-note">
-                                    💡 Click <strong>Inquire</strong> on a product to complete your purchase
+                                    💡 Use <strong>Inquire</strong> for pets · Browse <strong>Accessories</strong> for supplies
                                 </p>
                             </div>
                         )}

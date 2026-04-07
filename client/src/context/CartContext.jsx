@@ -24,16 +24,17 @@ export const CartProvider = ({ children }) => {
         localStorage.setItem(CART_KEY, JSON.stringify(cartItems));
     }, [cartItems]);
 
-    const addToCart = (pet) => {
+    const addToCart = (item) => {
         setCartItems(prev => {
-            const exists = prev.find(item => item._id === pet._id);
+            const exists = prev.find(i => i._id === item._id && i.itemType === item.itemType);
             if (exists) {
-                // Increment quantity if already in cart
-                return prev.map(item =>
-                    item._id === pet._id ? { ...item, quantity: item.quantity + 1 } : item
+                return prev.map(i =>
+                    (i._id === item._id && i.itemType === item.itemType)
+                        ? { ...i, quantity: i.quantity + 1 }
+                        : i
                 );
             }
-            return [...prev, { ...pet, quantity: 1 }];
+            return [...prev, { ...item, itemType: item.itemType || 'pet', quantity: 1 }];
         });
     };
 

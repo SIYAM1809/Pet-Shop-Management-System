@@ -5,25 +5,27 @@ import {
     PawPrint,
     Users,
     ShoppingCart,
-    Calendar, // Import Calendar
-    Star, // Import Star for Reviews
+    Package,
+    Calendar,
+    Star,
     Settings,
     ChevronLeft,
     ChevronRight,
     LogOut,
-    Mail // Import Mail
+    Mail
 } from 'lucide-react';
 import { useAuth } from '../../../context/AuthContext';
 import './Sidebar.css';
 
 const navItems = [
     { path: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-    { path: '/dashboard/appointments', icon: Calendar, label: 'Appointments' }, // Add Appointments
+    { path: '/dashboard/appointments', icon: Calendar, label: 'Appointments' },
     { path: '/dashboard/pets', icon: PawPrint, label: 'Pets' },
-    { path: '/dashboard/reviews', icon: Star, label: 'Reviews' }, // Add Reviews
+    { path: '/dashboard/products', icon: Package, label: 'Products' },
+    { path: '/dashboard/reviews', icon: Star, label: 'Reviews' },
     { path: '/dashboard/customers', icon: Users, label: 'Customers' },
     { path: '/dashboard/orders', icon: ShoppingCart, label: 'Orders' },
-    { path: '/dashboard/subscribers', icon: Mail, label: 'Subscribers' }, // Add Subscribers
+    { path: '/dashboard/subscribers', icon: Mail, label: 'Subscribers' },
     { path: '/dashboard/settings', icon: Settings, label: 'Settings' }
 ];
 

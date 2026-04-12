@@ -5,6 +5,7 @@ import {
     Users,
     ShoppingCart,
     DollarSign,
+    Package,
     TrendingUp,
     ArrowUpRight,
     ArrowDownRight
@@ -23,7 +24,7 @@ import {
 } from 'recharts';
 import Card from '../../components/common/Card';
 import PetMarquee from '../../components/common/PetMarquee/PetMarquee';
-import { dashboardAPI, petAPI } from '../../services/api';
+import { dashboardAPI, petAPI, productAPI } from '../../services/api';
 import { containerVariants, itemVariants } from '../../utils/animations';
 import './Dashboard.css';
 
@@ -32,6 +33,7 @@ const COLORS = ['#8b5cf6', '#06b6d4', '#ec4899', '#f97316', '#10b981', '#6366f1'
 const Dashboard = () => {
     const [stats, setStats] = useState(null);
     const [pets, setPets] = useState([]);
+    const [productStats, setProductStats] = useState({ total: 0, active: 0, outOfStock: 0 });
     const [loading, setLoading] = useState(true);
     const [imageErrors, setImageErrors] = useState({});
 
@@ -45,12 +47,14 @@ const Dashboard = () => {
 
     const fetchDashboardData = async () => {
         try {
-            const [dashRes, petsRes] = await Promise.all([
+            const [dashRes, petsRes, prodRes] = await Promise.all([
                 dashboardAPI.getStats(),
-                petAPI.getAll({ limit: 50 })
+                petAPI.getAll({ limit: 50 }),
+                productAPI.getStats()
             ]);
             setStats(dashRes.data);
             setPets(petsRes.data || []);
+            setProductStats(prodRes.data || { total: 0, active: 0, outOfStock: 0 });
         } catch (error) {
             console.error('Failed to fetch dashboard data:', error);
         } finally {
@@ -98,6 +102,14 @@ const Dashboard = () => {
             color: 'emerald',
             change: '+15%',
             positive: true
+        },
+        {
+            title: 'Products',
+            value: productStats.total,
+            icon: Package,
+            color: 'teal',
+            change: `${productStats.active} active`,
+            positive: true
         }
     ];
 
@@ -118,7 +130,7 @@ const Dashboard = () => {
             {/* Stats Cards */}
             <motion.div className="stats-grid" variants={containerVariants}>
                 {loading
-                    ? Array.from({ length: 4 }).map((_, i) => (
+                    ? Array.from({ length: 5 }).map((_, i) => (
                         <motion.div
                             key={i}
                             initial={{ opacity: 0, y: 20 }}

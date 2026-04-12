@@ -199,18 +199,18 @@ const Products = () => {
             {/* Header */}
             <div className="page-header">
                 <div>
-                    <h1 className="page-title">Products</h1>
+                    <h1 className="page-title">Accessories</h1>
                     <p className="page-subtitle">Manage pet accessories & supplies</p>
                 </div>
                 <Button variant="primary" icon={<Plus size={18} />} onClick={() => handleOpenModal()}>
-                    Add Product
+                    Add Accessory
                 </Button>
             </div>
 
             {/* Stats */}
             <div className="products-stats-row">
                 {[
-                    { label: 'Total Products', value: stats.total, color: 'var(--primary-500)' },
+                    { label: 'Total Accessories', value: stats.total, color: 'var(--primary-500)' },
                     { label: 'Active', value: stats.active, color: 'var(--success)' },
                     { label: 'Out of Stock', value: stats.outOfStock, color: '#f59e0b' },
                     { label: 'Discontinued', value: stats.discontinued || 0, color: 'var(--error)' },
@@ -254,13 +254,13 @@ const Products = () => {
 
             {/* Table */}
             {loading ? (
-                <Card><div style={{ padding: '60px', textAlign: 'center', color: 'var(--text-secondary)' }}>Loading products...</div></Card>
+                <Card><div style={{ padding: '60px', textAlign: 'center', color: 'var(--text-secondary)' }}>Loading accessories...</div></Card>
             ) : filtered.length === 0 ? (
                 <div className="empty-state">
                     <Package size={64} className="empty-state-icon" />
-                    <h3 className="empty-state-title">No products found</h3>
-                    <p className="empty-state-description">Add your first accessory product to get started</p>
-                    <Button variant="primary" onClick={() => handleOpenModal()}>Add Product</Button>
+                    <h3 className="empty-state-title">No accessories found</h3>
+                    <p className="empty-state-description">Add your first accessory to get started</p>
+                    <Button variant="primary" onClick={() => handleOpenModal()}>Add Accessory</Button>
                 </div>
             ) : (
                 <Card>
@@ -356,13 +356,13 @@ const Products = () => {
             <Modal
                 isOpen={modalOpen}
                 onClose={() => setModalOpen(false)}
-                title={editingProduct ? 'Edit Product' : 'Add New Product'}
+                title={editingProduct ? 'Edit Accessory' : 'Add New Accessory'}
                 size="lg"
                 footer={
                     <>
                         <Button variant="secondary" onClick={() => setModalOpen(false)}>Cancel</Button>
                         <Button variant="primary" onClick={handleSubmit} loading={submitting}>
-                            {editingProduct ? 'Save Changes' : 'Add Product'}
+                            {editingProduct ? 'Save Changes' : 'Add Accessory'}
                         </Button>
                     </>
                 }

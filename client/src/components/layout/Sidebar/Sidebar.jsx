@@ -21,7 +21,7 @@ const navItems = [
     { path: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
     { path: '/dashboard/appointments', icon: Calendar, label: 'Appointments' },
     { path: '/dashboard/pets', icon: PawPrint, label: 'Pets' },
-    { path: '/dashboard/products', icon: Package, label: 'Products' },
+    { path: '/dashboard/products', icon: Package, label: 'Accessories' },
     { path: '/dashboard/reviews', icon: Star, label: 'Reviews' },
     { path: '/dashboard/customers', icon: Users, label: 'Customers' },
     { path: '/dashboard/orders', icon: ShoppingCart, label: 'Orders' },

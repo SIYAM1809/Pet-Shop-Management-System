@@ -254,18 +254,17 @@ const Accessories = () => {
                 ) : (
                     <motion.div
                         className="accessories-grid"
-                        initial="hidden"
-                        animate="visible"
-                        variants={{ visible: { transition: { staggerChildren: 0.06 } } }}
                     >
                         <AnimatePresence>
                             {products.map(product => (
                                 <motion.div
                                     key={product._id}
                                     className="accessory-card"
-                                    variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, scale: 0.9 }}
+                                    transition={{ duration: 0.2 }}
                                     whileHover={{ y: -4 }}
-                                    layout
                                 >
                                     <Link to={`/accessories/${product._id}`} className="accessory-card-link">
                                         {/* Image */}

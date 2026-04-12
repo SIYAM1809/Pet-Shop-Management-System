@@ -250,7 +250,7 @@ const InquiryModal = ({ isOpen, onClose, pet, onLoginRequired }) => {
                                     return;
                                 }
                                 if (isInCart) { toast('Already in your cart!'); return; }
-                                addToCart(pet);
+                                addToCart({ ...pet, itemType: 'pet' });
                                 toast.success(`${pet.name} added to cart! 🛒`);
                                 handleClose();
                             }}

@@ -1,15 +1,18 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Heart, Shield, Star } from 'lucide-react';
+import { Heart, Shield, Star, ShoppingBag, ArrowRight, ShoppingCart } from 'lucide-react';
 import Button from '../../components/common/Button';
 import './Public.css';
 import { useState, useEffect } from 'react';
-import { petAPI } from '../../services/api';
-import { PawPrint } from 'lucide-react';
+import { petAPI, productAPI } from '../../services/api';
+import { Package, PawPrint } from 'lucide-react';
 import InquiryModal from '../../components/common/InquiryModal';
 import CustomerAuthModal from '../../components/common/CustomerAuthModal';
 import TestimonialsSection from '../../components/home/TestimonialsSection';
 import AppointmentModal from '../../components/common/AppointmentModal';
+import { useCart } from '../../context/CartContext';
+import { useAuth } from '../../context/AuthContext';
+import toast from 'react-hot-toast';
 
 const Home = () => {
     const [appointmentModalOpen, setAppointmentModalOpen] = useState(false);
@@ -93,6 +96,9 @@ const Home = () => {
                     </div>
                 </div>
             </section>
+
+            {/* ── Accessories Showcase Section ── */}
+            <FeaturedAccessoriesSection />
 
             {/* Value Proposition */}
             <section className="features-section">
@@ -301,3 +307,162 @@ const FeaturedPetsList = () => {
 };
 
 export default Home;
+
+// ─────────────────────────────────────────────
+// FeaturedAccessoriesSection component
+// ─────────────────────────────────────────────
+const animalEmoji = { 'Dog': '🐕', 'Cat': '🐈', 'Bird': '🦜', 'Fish': '🐠', 'Rabbit': '🐇', 'Small Animal': '🐹', 'Reptile': '🦎', 'All Pets': '🐾' };
+
+const FeaturedAccessoriesSection = () => {
+    const { isAuthenticated, user } = useAuth();
+    const { addToCart, cartItems } = useCart();
+    const isCustomer = isAuthenticated && user?.role === 'customer';
+
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [authModalOpen, setAuthModalOpen] = useState(false);
+
+    useEffect(() => {
+        const fetchFeatured = async () => {
+            try {
+                // Try featured first, fall back to latest 4
+                const res = await productAPI.getFeatured();
+                if (res.data && res.data.length > 0) {
+                    setProducts(res.data.slice(0, 4));
+                } else {
+                    const fallback = await productAPI.getAll({ limit: 4, status: 'Active' });
+                    setProducts(fallback.data || []);
+                }
+            } catch {
+                // Silently fail — section just won't show
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchFeatured();
+    }, []);
+
+    // Don't render the section at all if no products
+    if (!loading && products.length === 0) return null;
+
+    const handleAddToCart = (e, product) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (!isCustomer) { setAuthModalOpen(true); return; }
+        addToCart({ ...product, itemType: 'accessory' });
+        toast.success(`${product.name} added to cart! 🛒`);
+    };
+
+    const isInCart = (id) => cartItems.some(item => item._id === id);
+
+    return (
+        <>
+            <section className="home-accessories-section">
+                <div className="container">
+                    {/* Section Header */}
+                    <div className="home-acc-header">
+                        <div>
+                            <span className="home-acc-badge"><ShoppingBag size={14} /> Shop Accessories</span>
+                            <h2 className="home-acc-title">
+                                Everything Your Pet <span className="home-acc-gradient">Needs</span>
+                            </h2>
+                            <p className="home-acc-sub">
+                                Premium food, toys, grooming essentials and more — all in one place.
+                            </p>
+                        </div>
+                        <Link to="/accessories" className="home-acc-view-all">
+                            Browse all accessories <ArrowRight size={16} />
+                        </Link>
+                    </div>
+
+                    {/* Product Cards Grid */}
+                    {loading ? (
+                        <div className="home-acc-grid">
+                            {Array.from({ length: 4 }).map((_, i) => (
+                                <div key={i} className="home-acc-skeleton">
+                                    <div className="home-acc-ske-img" />
+                                    <div style={{ padding: '16px' }}>
+                                        <div className="home-acc-ske-line" style={{ width: '50%', height: '11px' }} />
+                                        <div className="home-acc-ske-line" style={{ width: '85%', height: '16px', margin: '8px 0 4px' }} />
+                                        <div className="home-acc-ske-line" style={{ width: '35%', height: '20px' }} />
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <motion.div
+                            className="home-acc-grid"
+                        >
+                            {products.map(product => (
+                                <motion.div
+                                    key={product._id}
+                                    className="home-acc-card"
+                                    initial={{ opacity: 0, y: 15 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true, margin: '-80px' }}
+                                    transition={{ duration: 0.3 }}
+                                    whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                                >
+                                    <Link to={`/accessories/${product._id}`} className="home-acc-card-link">
+                                        <div className="home-acc-img-wrap">
+                                            {product.images?.[0] ? (
+                                                <img src={product.images[0]} alt={product.name} loading="lazy" />
+                                            ) : (
+                                                <div className="home-acc-img-placeholder"><Package size={36} /></div>
+                                            )}
+                                            {product.salePrice && product.salePrice < product.price && (
+                                                <span className="home-acc-sale-badge">SALE</span>
+                                            )}
+                                            {product.status === 'Out of Stock' && (
+                                                <div className="home-acc-oos">Out of Stock</div>
+                                            )}
+                                        </div>
+                                        <div className="home-acc-card-body">
+                                            <span className="home-acc-cat-chip">
+                                                {animalEmoji[product.animalCategory] || '🐾'} {product.animalCategory}
+                                            </span>
+                                            <h3 className="home-acc-name">{product.name}</h3>
+                                            {product.brand && <p className="home-acc-brand">{product.brand}</p>}
+                                            <div className="home-acc-price-row">
+                                                {product.salePrice && product.salePrice < product.price ? (
+                                                    <>
+                                                        <span className="home-acc-sale-price">${product.salePrice}</span>
+                                                        <span className="home-acc-orig-price">${product.price}</span>
+                                                    </>
+                                                ) : (
+                                                    <span className="home-acc-price">${product.price}</span>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </Link>
+                                    <div className="home-acc-card-action">
+                                        <button
+                                            className={`home-acc-cart-btn ${isInCart(product._id) ? 'in-cart' : ''} ${product.status === 'Out of Stock' ? 'oos' : ''}`}
+                                            onClick={e => { if (product.status !== 'Out of Stock') handleAddToCart(e, product); }}
+                                            disabled={product.status === 'Out of Stock'}
+                                        >
+                                            <ShoppingCart size={14} />
+                                            {isInCart(product._id) ? 'In Cart ✓' : product.status === 'Out of Stock' ? 'Out of Stock' : 'Add to Cart'}
+                                        </button>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </motion.div>
+                    )}
+
+                    {/* Bottom CTA */}
+                    <div className="home-acc-cta">
+                        <Link to="/accessories">
+                            <button className="home-acc-cta-btn">
+                                View All Accessories <ArrowRight size={16} />
+                            </button>
+                        </Link>
+                    </div>
+                </div>
+            </section>
+
+            <CustomerAuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
+        </>
+    );
+};
+

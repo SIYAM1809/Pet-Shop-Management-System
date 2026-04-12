@@ -67,43 +67,54 @@ const PublicLayout = () => {
 
                     {/* Right side — Auth + Cart */}
                     <div className="navbar-auth-area">
-                        {isCustomer ? (
-                            <>
-                                {/* Cart button */}
-                                <button
-                                    className="navbar-cart-btn"
-                                    onClick={() => setCartDrawerOpen(true)}
-                                    aria-label="Open cart"
-                                >
-                                    <ShoppingCart size={18} />
-                                    {cartCount > 0 && (
-                                        <span className="cart-badge">{cartCount}</span>
-                                    )}
-                                </button>
+                        {isAuthenticated ? (
+                            isCustomer ? (
+                                <>
+                                    {/* Cart button */}
+                                    <button
+                                        className="navbar-cart-btn"
+                                        onClick={() => setCartDrawerOpen(true)}
+                                        aria-label="Open cart"
+                                    >
+                                        <ShoppingCart size={18} />
+                                        {cartCount > 0 && (
+                                            <span className="cart-badge">{cartCount}</span>
+                                        )}
+                                    </button>
 
-                                {/* User chip */}
-                                <div className="navbar-user-chip">
-                                    <User size={14} />
-                                    <span>{user.name.split(' ')[0]}</span>
-                                </div>
+                                    {/* User chip */}
+                                    <div className="navbar-user-chip">
+                                        <User size={14} />
+                                        <span>{user.name.split(' ')[0]}</span>
+                                    </div>
 
-                                {/* Logout */}
-                                <button className="navbar-logout-btn" onClick={handleLogout} title="Logout">
-                                    <LogOut size={15} />
-                                    <span>Logout</span>
-                                </button>
-                            </>
-                        ) : (
-                            !isAuthenticated && (
-                                <button
-                                    className="navbar-login-btn"
-                                    onClick={() => setAuthModalOpen(true)}
-                                    id="customer-login-btn"
-                                >
-                                    <LogIn size={15} />
-                                    <span>Login / Sign Up</span>
-                                </button>
+                                    {/* Logout */}
+                                    <button className="navbar-logout-btn" onClick={handleLogout} title="Logout">
+                                        <LogOut size={15} />
+                                        <span>Logout</span>
+                                    </button>
+                                </>
+                            ) : (
+                                <>
+                                    {/* Dashboard link for admin/staff */}
+                                    <Link to="/dashboard" className="navbar-login-btn" style={{ textDecoration: 'none', background: 'var(--primary-50)', color: 'var(--primary-600)', border: '1px solid var(--primary-200)' }}>
+                                        <User size={15} />
+                                        <span>Admin Dashboard</span>
+                                    </Link>
+                                    <button className="navbar-logout-btn" onClick={handleLogout} title="Logout">
+                                        <LogOut size={15} />
+                                    </button>
+                                </>
                             )
+                        ) : (
+                            <button
+                                className="navbar-login-btn"
+                                onClick={() => setAuthModalOpen(true)}
+                                id="customer-login-btn"
+                            >
+                                <LogIn size={15} />
+                                <span>Login / Sign Up</span>
+                            </button>
                         )}
                     </div>
                 </div>

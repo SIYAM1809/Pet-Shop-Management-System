@@ -13,7 +13,7 @@ const products = [
         price: 45.99,
         salePrice: null,
         stock: 50,
-        images: ['https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=600&q=80'],
+        images: ['/images/accessories/dog_food.png'],
         tags: ['premium', 'nutrition', 'adult'],
         status: 'Active',
         featured: true
@@ -27,7 +27,7 @@ const products = [
         price: 12.99,
         salePrice: 9.99,
         stock: 120,
-        images: ['https://images.unsplash.com/photo-1601758125946-6ec2ef64daf8?w=600&q=80'],
+        images: ['/images/accessories/dog_toy.png'],
         tags: ['toys', 'chew', 'interactive'],
         status: 'Active',
         featured: false
@@ -41,7 +41,7 @@ const products = [
         price: 28.50,
         salePrice: null,
         stock: 35,
-        images: ['https://images.unsplash.com/photo-1583511655826-05700442b31b?w=600&q=80'],
+        images: ['/images/accessories/dog_harness.png'],
         tags: ['harness', 'no-pull', 'reflective', 'safety'],
         status: 'Active',
         featured: true
@@ -55,7 +55,7 @@ const products = [
         price: 6.99,
         salePrice: null,
         stock: 80,
-        images: ['https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600&q=80'],
+        images: ['/images/accessories/dog_toy.png'],
         tags: ['training', 'clicker', 'beginner'],
         status: 'Active',
         featured: false
@@ -69,7 +69,7 @@ const products = [
         price: 8.99,
         salePrice: 6.99,
         stock: 200,
-        images: ['https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600&q=80'],
+        images: ['/images/accessories/dog_food.png'],
         tags: ['treats', 'chicken', 'low-calorie'],
         status: 'Active',
         featured: false
@@ -83,7 +83,7 @@ const products = [
         price: 18.99,
         salePrice: null,
         stock: 60,
-        images: ['https://images.unsplash.com/photo-1574158622682-e40e69881006?w=600&q=80'],
+        images: ['/images/accessories/cat_brush.png'],
         tags: ['grooming', 'brush', 'self-cleaning'],
         status: 'Active',
         featured: true
@@ -97,7 +97,7 @@ const products = [
         price: 22.00,
         salePrice: null,
         stock: 45,
-        images: ['https://images.unsplash.com/photo-1513245543132-31f507417b26?w=600&q=80'],
+        images: ['/images/accessories/dog_toy.png'],
         tags: ['toys', 'tunnel', 'exercise'],
         status: 'Active',
         featured: false
@@ -111,7 +111,7 @@ const products = [
         price: 34.99,
         salePrice: 27.99,
         stock: 25,
-        images: ['https://images.unsplash.com/photo-1567278048020-45e4cef3b52c?w=600&q=80'],
+        images: ['/images/accessories/cat_bed.png'],
         tags: ['bed', 'cozy', 'cave', 'washable'],
         status: 'Active',
         featured: false
@@ -125,7 +125,7 @@ const products = [
         price: 7.50,
         salePrice: null,
         stock: 150,
-        images: ['https://images.unsplash.com/photo-1491349174775-aaaefdd81942?w=600&q=80'],
+        images: ['/images/accessories/dog_harness.png'],
         tags: ['collar', 'safety', 'bell', 'breakaway'],
         status: 'Active',
         featured: false
@@ -139,7 +139,7 @@ const products = [
         price: 9.50,
         salePrice: null,
         stock: 90,
-        images: ['https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=600&q=80'],
+        images: ['/images/accessories/dog_food.png'],
         tags: ['birdfood', 'millet', 'natural'],
         status: 'Active',
         featured: false
@@ -153,7 +153,7 @@ const products = [
         price: 15.99,
         salePrice: 11.99,
         stock: 70,
-        images: ['https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=600&q=80'],
+        images: ['/images/accessories/dog_toy.png'],
         tags: ['perch', 'swing', 'cage', 'activity'],
         status: 'Active',
         featured: true
@@ -167,7 +167,7 @@ const products = [
         price: 79.99,
         salePrice: null,
         stock: 15,
-        images: ['https://images.unsplash.com/photo-1520302519878-3c0f5b5c2c20?w=600&q=80'],
+        images: ['/images/accessories/cat_bed.png'], // Using the cozy housing/bed icon
         tags: ['aquarium', 'tank', 'starter', 'tropical'],
         status: 'Active',
         featured: true
@@ -181,7 +181,7 @@ const products = [
         price: 11.00,
         salePrice: null,
         stock: 40,
-        images: ['https://images.unsplash.com/photo-1583195764036-1ef71a224bd5?w=600&q=80'],
+        images: ['/images/accessories/dog_food.png'],
         tags: ['rabbit', 'pellets', 'high-fibre'],
         status: 'Active',
         featured: false
@@ -195,7 +195,7 @@ const products = [
         price: 42.00,
         salePrice: 35.00,
         stock: 20,
-        images: ['https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=600&q=80'],
+        images: ['/images/accessories/cat_bed.png'],
         tags: ['travel', 'airline', 'carrier', 'soft'],
         status: 'Active',
         featured: true
@@ -209,7 +209,7 @@ const products = [
         price: 19.99,
         salePrice: null,
         stock: 55,
-        images: ['https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600&q=80'],
+        images: ['/images/accessories/cat_brush.png'],
         tags: ['flea', 'tick', 'natural', 'vet-approved'],
         status: 'Active',
         featured: false
@@ -228,7 +228,7 @@ const seedProducts = async () => {
         }
 
         const inserted = await Product.insertMany(products);
-        console.log(`✅ Successfully seeded ${inserted.length} products!`);
+        console.log(`✅ Successfully seeded ${inserted.length} products with locally generated real accessory images!`);
 
         // Summary
         const featured = inserted.filter(p => p.featured).length;

@@ -174,7 +174,38 @@ h3,
     transition: transform 0.3s ease;
 }
 
-.hero-image-card:hover .hero-img {
+.hero-img.blob-avatar {
+    width: 450px;
+    height: 450px;
+    object-fit: cover;
+    box-shadow: 0 25px 50px -12px rgba(124, 58, 237, 0.4);
+    animation: blobMorph 8s ease-in-out infinite, floatingHero 6s ease-in-out infinite;
+    border: 8px solid rgba(255, 255, 255, 0.7);
+    transform-origin: center;
+}
+
+@keyframes blobMorph {
+    0% {
+        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    }
+    50% {
+        border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+    }
+    100% {
+        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    }
+}
+
+@keyframes floatingHero {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-20px) scale(1.02);
+    }
+}
+
+.hero-image-card:hover .hero-img:not(.blob-avatar) {
     transform: scale(1.02);
 }
 

@@ -57,6 +57,15 @@ export const authAPI = {
             body: JSON.stringify(userData)
         });
         return handleResponse(response);
+    },
+
+    updateProfile: async (profileData) => {
+        const response = await fetch(`${API_URL}/auth/profile`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
+            body: JSON.stringify(profileData)
+        });
+        return handleResponse(response);
     }
 };
 
@@ -376,4 +385,65 @@ export const productAPI = {
         return handleResponse(response);
     }
 };
+
+// Rider / Delivery API
+export const riderAPI = {
+    // ── Rider-facing ──────────────────────────────────────────
+    getStats: async () => {
+        const response = await fetch(`${API_URL}/rider/stats`, {
+            headers: getAuthHeader()
+        });
+        return handleResponse(response);
+    },
+
+    getMyDeliveries: async (params = {}) => {
+        const query = new URLSearchParams(params).toString();
+        const response = await fetch(`${API_URL}/rider/deliveries?${query}`, {
+            headers: getAuthHeader()
+        });
+        return handleResponse(response);
+    },
+
+    updateDeliveryStatus: async (id, data) => {
+        const response = await fetch(`${API_URL}/rider/deliveries/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
+            body: JSON.stringify(data)
+        });
+        return handleResponse(response);
+    },
+
+    // ── Admin-facing ──────────────────────────────────────────
+    getAdminStats: async () => {
+        const response = await fetch(`${API_URL}/rider/admin/stats`, {
+            headers: getAuthHeader()
+        });
+        return handleResponse(response);
+    },
+
+    getAllDeliveries: async (params = {}) => {
+        const query = new URLSearchParams(params).toString();
+        const response = await fetch(`${API_URL}/rider/admin/deliveries?${query}`, {
+            headers: getAuthHeader()
+        });
+        return handleResponse(response);
+    },
+
+    assignDelivery: async (data) => {
+        const response = await fetch(`${API_URL}/rider/admin/assign`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
+            body: JSON.stringify(data)
+        });
+        return handleResponse(response);
+    },
+
+    getAvailableRiders: async () => {
+        const response = await fetch(`${API_URL}/rider/admin/riders`, {
+            headers: getAuthHeader()
+        });
+        return handleResponse(response);
+    }
+};
+
 

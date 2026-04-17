@@ -19,8 +19,17 @@ const PublicLayout = () => {
     const { isAuthenticated, user, logout } = useAuth();
     const { cartCount } = useCart();
 
-    // Only show as "customer" in public nav — admin/staff have their own dashboard
+    // Only show as "customer" in public nav — admin/staff have their own dashboards
     const isCustomer = isAuthenticated && user?.role === 'customer';
+
+    // Redirect staff/riders away from the public storefront to their portal
+    useEffect(() => {
+        if (isAuthenticated && user?.role === 'staff') {
+            navigate('/rider', { replace: true });
+        } else if (isAuthenticated && user?.role === 'admin') {
+            navigate('/dashboard', { replace: true });
+        }
+    }, [isAuthenticated, user, navigate]);
 
     useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 50);

@@ -1,0 +1,266 @@
+/* ── Rider Dashboard ─────────────────────────────────────── */
+
+.rider-dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Page header */
+.rider-page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.rider-page-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.rider-page-subtitle {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin: 0.25rem 0 0;
+}
+
+/* ── Stats Grid ─────────────────────────────────────────── */
+.rider-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 1rem;
+}
+
+.rider-stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.rider-stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.rider-stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.rider-stat-icon.orange  { background: rgba(249,115,22,0.12); color: #f97316; }
+.rider-stat-icon.amber   { background: rgba(251,191,36,0.12); color: #d97706; }
+.rider-stat-icon.blue    { background: rgba(59,130,246,0.12); color: #3b82f6; }
+.rider-stat-icon.green   { background: rgba(34,197,94,0.12);  color: #22c55e; }
+.rider-stat-icon.red     { background: rgba(239,68,68,0.12);  color: #ef4444; }
+.rider-stat-icon.purple  { background: rgba(139,92,246,0.12); color: #8b5cf6; }
+
+.rider-stat-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+}
+
+.rider-stat-label {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    font-weight: 500;
+}
+
+.rider-stat-value {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+/* ── Recent Deliveries ──────────────────────────────────── */
+.rider-recent-card {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+.rider-card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.rider-delivery-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.rider-delivery-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.875rem 1rem;
+    background: var(--background);
+    border-radius: 10px;
+    border: 1px solid var(--border-light);
+    transition: background 0.15s;
+}
+
+.rider-delivery-item:hover {
+    background: var(--surface-hover, rgba(0,0,0,0.03));
+}
+
+.rider-delivery-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: rgba(249,115,22,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #f97316;
+    flex-shrink: 0;
+}
+
+.rider-delivery-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.rider-delivery-order {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.rider-delivery-customer {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-top: 0.1rem;
+}
+
+.rider-delivery-amount {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    flex-shrink: 0;
+}
+
+/* Status badges */
+.rider-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.625rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.rider-badge-assigned   { background: rgba(251,191,36,0.15); color: #d97706; }
+.rider-badge-pickedup   { background: rgba(59,130,246,0.15); color: #3b82f6; }
+.rider-badge-intransit  { background: rgba(139,92,246,0.15); color: #8b5cf6; }
+.rider-badge-delivered  { background: rgba(34,197,94,0.15);  color: #16a34a; }
+.rider-badge-failed     { background: rgba(239,68,68,0.15);  color: #dc2626; }
+
+/* Empty state */
+.rider-empty {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-tertiary);
+}
+
+.rider-empty svg {
+    opacity: 0.3;
+    margin-bottom: 0.75rem;
+}
+
+/* Skeleton loaders */
+.rider-skeleton-card {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.skeleton-pulse {
+    background: linear-gradient(90deg, var(--border-light) 25%, var(--surface) 50%, var(--border-light) 75%);
+    background-size: 200% 100%;
+    animation: skeletonShimmer 1.4s ease infinite;
+    border-radius: 6px;
+}
+
+@keyframes skeletonShimmer {
+    0%   { background-position: -200% 0; }
+    100% { background-position:  200% 0; }
+}
+
+/* ── Quick Action Cards ─────────────────────────────────── */
+.rider-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.rider-action-card {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: 14px;
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.rider-action-card:hover {
+    border-color: var(--rider-primary, #f97316);
+    box-shadow: 0 0 0 1px var(--rider-primary, #f97316), 0 4px 16px rgba(249,115,22,0.12);
+    transform: translateY(-1px);
+}
+
+.rider-action-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(249,115,22,0.15), rgba(251,191,36,0.1));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #f97316;
+    flex-shrink: 0;
+}
+
+.rider-action-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.rider-action-sub {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-top: 0.1rem;
+}

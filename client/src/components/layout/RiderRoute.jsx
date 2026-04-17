@@ -1,13 +1,19 @@
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
-const AdminRoute = ({ children }) => {
+/**
+ * RiderRoute — protects /rider/* routes.
+ * Only accessible by users with role 'staff' (the rider role).
+ * Admins are redirected to their own dashboard.
+ * Unauthenticated users go to /login.
+ */
+const RiderRoute = ({ children }) => {
     const { user, isAuthenticated, loading } = useAuth();
 
     if (loading) {
         return (
             <div className="loading-screen" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-                <div className="spinner" style={{ width: '40px', height: '40px', border: '4px solid #f3f3f3', borderTop: '4px solid #8b5cf6', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
+                <div className="spinner" style={{ width: '40px', height: '40px', border: '4px solid #f3f3f3', borderTop: '4px solid #f97316', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
                 <style>{`
                     @keyframes spin {
                         0% { transform: rotate(0deg); }
@@ -22,19 +28,17 @@ const AdminRoute = ({ children }) => {
         return <Navigate to="/login" replace />;
     }
 
-    // Staff (riders) have their own portal — redirect them
-    if (user?.role === 'staff') {
-        return <Navigate to="/rider" replace />;
+    // Admin should not access the rider portal
+    if (user?.role === 'admin') {
+        return <Navigate to="/dashboard" replace />;
     }
 
-    // Only admins can access the admin dashboard
-    if (user?.role !== 'admin') {
-        const toast = require('react-hot-toast').default;
-        toast.error("Access Denied: Admins Only");
+    // Only staff (riders) are allowed
+    if (user?.role !== 'staff') {
         return <Navigate to="/" replace />;
     }
 
     return children;
 };
 
-export default AdminRoute;
+export default RiderRoute;

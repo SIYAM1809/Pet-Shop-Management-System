@@ -1,0 +1,299 @@
+/* =========================================================
+   Rider Portal — Layout & Sidebar Styles
+   Theme: Amber / Orange — distinct from admin purple
+   ========================================================= */
+
+:root {
+    --rider-primary:       #f97316; /* orange-500 */
+    --rider-primary-dark:  #ea580c; /* orange-600 */
+    --rider-primary-light: #fed7aa; /* orange-200 */
+    --rider-accent:        #fbbf24; /* amber-400 */
+    --rider-sidebar-bg:    #1c1917; /* stone-900 */
+    --rider-sidebar-width: 260px;
+    --rider-sidebar-collapsed: 80px;
+}
+
+/* ── Layout Shell ──────────────────────────────────────── */
+.rider-layout {
+    display: flex;
+    height: 100vh;
+    background: var(--background);
+    overflow: hidden;
+}
+
+.rider-main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: margin-left 0.3s ease;
+}
+
+.rider-page-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 2rem;
+}
+
+/* ── Rider Sidebar ─────────────────────────────────────── */
+.rider-sidebar {
+    background: var(--rider-sidebar-bg);
+    color: #f5f5f4;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    flex-shrink: 0;
+}
+
+.rider-sidebar-header {
+    padding: 1.25rem 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 72px;
+}
+
+.rider-sidebar-logo-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--rider-primary), var(--rider-accent));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.4);
+}
+
+.rider-sidebar-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.rider-sidebar-subtitle {
+    font-size: 0.7rem;
+    color: #a8a29e;
+    white-space: nowrap;
+}
+
+/* ── Nav ───────────────────────────────────────────────── */
+.rider-sidebar-nav {
+    flex: 1;
+    padding: 1rem 0.75rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.rider-nav-section-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #78716c;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.5rem 0.75rem 0.25rem;
+}
+
+.rider-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 0.875rem;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #a8a29e;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.rider-nav-item:hover {
+    background: rgba(249, 115, 22, 0.12);
+    color: #fdba74;
+}
+
+.rider-nav-item.active {
+    background: linear-gradient(135deg, rgba(249,115,22,0.22), rgba(251,191,36,0.12));
+    color: var(--rider-primary);
+    font-weight: 600;
+}
+
+.rider-nav-item.active .rider-nav-icon {
+    color: var(--rider-primary);
+    filter: drop-shadow(0 0 6px rgba(249,115,22,0.5));
+}
+
+.rider-nav-icon {
+    flex-shrink: 0;
+    color: #78716c;
+    transition: color 0.2s;
+}
+
+.rider-nav-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ── Badge for delivered count ─────────────────────────── */
+.rider-nav-badge {
+    margin-left: auto;
+    background: var(--rider-primary);
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.1rem 0.45rem;
+    border-radius: 999px;
+    flex-shrink: 0;
+}
+
+/* ── Footer ────────────────────────────────────────────── */
+.rider-sidebar-footer {
+    padding: 0.75rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.rider-user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.375rem;
+    overflow: hidden;
+}
+
+.rider-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--rider-primary), var(--rider-accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+}
+
+.rider-user-name {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #e7e5e4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rider-user-role {
+    font-size: 0.65rem;
+    color: var(--rider-accent);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.rider-logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 0.875rem;
+    border-radius: 10px;
+    background: transparent;
+    border: none;
+    color: #78716c;
+    font-size: 0.875rem;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.rider-logout-btn:hover {
+    background: rgba(239, 68, 68, 0.12);
+    color: #f87171;
+}
+
+.rider-toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    border-radius: 8px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #78716c;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
+}
+
+.rider-toggle-btn:hover {
+    background: rgba(255,255,255,0.05);
+    color: #a8a29e;
+}
+
+/* ── Header ────────────────────────────────────────────── */
+.rider-header {
+    height: 64px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border-light);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    flex-shrink: 0;
+}
+
+.rider-header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.rider-header-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.rider-header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.rider-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 6px rgba(34,197,94,0.6);
+}
+
+.rider-header-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 0.875rem;
+    background: rgba(249,115,22,0.1);
+    border: 1px solid rgba(249,115,22,0.25);
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--rider-primary);
+}

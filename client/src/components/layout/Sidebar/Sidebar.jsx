@@ -12,7 +12,8 @@ import {
     ChevronLeft,
     ChevronRight,
     LogOut,
-    Mail
+    Mail,
+    Truck
 } from 'lucide-react';
 import { useAuth } from '../../../context/AuthContext';
 import './Sidebar.css';
@@ -25,6 +26,7 @@ const navItems = [
     { path: '/dashboard/reviews', icon: Star, label: 'Reviews' },
     { path: '/dashboard/customers', icon: Users, label: 'Customers' },
     { path: '/dashboard/orders', icon: ShoppingCart, label: 'Orders' },
+    { path: '/dashboard/deliveries', icon: Truck, label: 'Deliveries' },
     { path: '/dashboard/subscribers', icon: Mail, label: 'Subscribers' },
     { path: '/dashboard/settings', icon: Settings, label: 'Settings' }
 ];

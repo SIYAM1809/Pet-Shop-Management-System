@@ -22,6 +22,13 @@ import Accessories from './pages/Public/Accessories';
 import AccessoryDetail from './pages/Public/AccessoryDetail';
 import Products from './pages/Admin/Products';
 import AdminRoute from './components/layout/AdminRoute';
+import RiderRoute from './components/layout/RiderRoute';
+import RiderLayout from './pages/Rider/RiderLayout';
+import RiderDashboard from './pages/Rider/RiderDashboard';
+import MyDeliveries from './pages/Rider/MyDeliveries';
+import RiderProfile from './pages/Rider/RiderProfile';
+import RiderSettings from './pages/Rider/RiderSettings';
+import AdminDeliveries from './pages/Admin/Deliveries';
 import './styles/index.css';
 import './styles/components.css';
 
@@ -37,9 +44,12 @@ const PublicRoute = ({ children }) => {
   }
 
   if (isAuthenticated) {
-    // Redirect admins/staff to dashboard, others to home
-    if (user?.role === 'admin' || user?.role === 'staff') {
+    // Redirect staff (riders) to their portal, admins to dashboard, customers to home
+    if (user?.role === 'admin') {
       return <Navigate to="/dashboard" replace />;
+    }
+    if (user?.role === 'staff') {
+      return <Navigate to="/rider" replace />;
     }
     return <Navigate to="/" replace />;
   }
@@ -87,10 +97,28 @@ const AppRoutes = () => {
         <Route path="products" element={<Products />} />
         <Route path="customers" element={<Customers />} />
         <Route path="orders" element={<Orders />} />
+        <Route path="deliveries" element={<AdminDeliveries />} />
         <Route path="reviews" element={<Reviews />} />
         <Route path="subscribers" element={<Subscribers />} />
         <Route path="settings" element={<Settings />} />
       </Route>
+
+      {/* Rider Portal Routes */}
+      <Route
+        path="/rider"
+        element={
+          <RiderRoute>
+            <RiderLayout />
+          </RiderRoute>
+        }
+      >
+        <Route index element={<RiderDashboard />} />
+        <Route path="deliveries" element={<MyDeliveries />} />
+        <Route path="profile" element={<RiderProfile />} />
+        <Route path="settings" element={<RiderSettings />} />
+      </Route>
+
+      {/* Admin Redirect */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

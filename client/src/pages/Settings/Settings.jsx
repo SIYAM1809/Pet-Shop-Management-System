@@ -129,8 +129,8 @@ const Settings = () => {
                             <div className="settings-header">
                                 <div className="settings-icon staff"><Users size={24} /></div>
                                 <div>
-                                    <h3>Staff Management</h3>
-                                    <p>Manage system access for employees</p>
+                                    <h3>Team Management</h3>
+                                    <p>Manage riders &amp; system access for employees</p>
                                 </div>
                                 <Button
                                     size="sm"
@@ -247,7 +247,7 @@ const Settings = () => {
                             value={addUserForm.role}
                             onChange={(e) => setAddUserForm({ ...addUserForm, role: e.target.value })}
                         >
-                            <option value="staff">Staff</option>
+                            <option value="staff">Staff / Rider</option>
                             <option value="admin">Admin</option>
                         </select>
                     </div>

@@ -1,0 +1,182 @@
+/* Admin Deliveries Page — complete styles */
+
+.admin-deliveries {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* ── Stats mini row ─────────────────────────────────────── */
+.delivery-stats-row {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.delivery-stat-mini {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 0.875rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    min-width: 90px;
+    flex: 1;
+    text-align: center;
+}
+
+.delivery-stat-mini-value {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+/* ── Filters ────────────────────────────────────────────── */
+.filters-card {
+    /* inherits .card styles */
+}
+
+.filters-row {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.search-filter {
+    position: relative;
+    flex: 1;
+    min-width: 180px;
+}
+
+.search-filter .search-icon {
+    position: absolute;
+    left: 0.875rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-tertiary);
+    pointer-events: none;
+}
+
+.search-filter .search-input {
+    width: 100%;
+    padding: 0.6rem 0.875rem 0.6rem 2.5rem;
+    background: var(--background);
+    border: 1px solid var(--border-light);
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.search-filter .search-input:focus {
+    border-color: var(--primary-500, #8b5cf6);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+/* ── Input / Select / Textarea ──────────────────────────── */
+.input {
+    width: 100%;
+    padding: 0.65rem 0.875rem;
+    background: var(--background, var(--bg-tertiary));
+    border: 1px solid var(--border-light);
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.input:focus {
+    border-color: var(--primary-500, #8b5cf6);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.input.select {
+    cursor: pointer;
+    min-width: 140px;
+    appearance: auto;
+}
+
+.input.textarea {
+    resize: vertical;
+    min-height: 72px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+}
+
+.input-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+/* ── Action buttons ─────────────────────────────────────── */
+.action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    background: transparent;
+}
+
+.action-btn.edit {
+    color: var(--primary-500, #8b5cf6);
+    background: rgba(139, 92, 246, 0.08);
+}
+
+.action-btn.edit:hover {
+    background: var(--primary-500, #8b5cf6);
+    color: white;
+}
+
+.action-btn.delete {
+    color: var(--error, #ef4444);
+    background: rgba(239, 68, 68, 0.08);
+}
+
+.action-btn.delete:hover {
+    background: var(--error, #ef4444);
+    color: white;
+}
+
+/* ── Loading ────────────────────────────────────────────── */
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem;
+}
+
+/* ── Order number in table ──────────────────────────────── */
+.order-number {
+    font-weight: 700;
+    color: var(--primary-500, #8b5cf6);
+    font-family: monospace;
+    font-size: 0.8rem;
+}
+
+/* ── Pagination row ─────────────────────────────────────── */
+.delivery-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-top: 1px solid var(--border-light);
+}

@@ -19,6 +19,7 @@ import inquiryRoutes from './routes/inquiryRoutes.js';
 import appointmentRoutes from './routes/appointmentRoutes.js';
 import reviewRoutes from './routes/reviewRoutes.js';
 import subscriberRoutes from './routes/subscriberRoutes.js';
+import riderRoutes from './routes/riderRoutes.js';
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/appointments', appointmentRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/subscribers', subscriberRoutes);
+app.use('/api/rider', riderRoutes);
 
 app.get('/api/health', (req, res) => {
     res.json({ success: true, message: 'Pet Shop API is running' });

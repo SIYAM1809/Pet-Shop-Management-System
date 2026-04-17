@@ -1,43 +1,31 @@
 import mongoose from 'mongoose';
 
+export const INSIDE_DHAKA = [
+    'Uttara', 'Mirpur', 'Dhanmondi', 'Mohammadpur', 'Gulshan',
+    'Banani', 'Motijheel', 'Rampura', 'Badda', 'Khilgaon',
+    'Bashundhara', 'Wari', 'Lalbagh', 'Jatrabari'
+];
+
 const orderSchema = new mongoose.Schema({
-    orderNumber: {
-        type: String,
-        unique: true
-    },
+    orderNumber: { type: String, unique: true },
     customer: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Customer',
         required: [true, 'Please add a customer']
     },
     items: [{
-        pet: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Pet'
-        },
-        petName: String,
-        petSpecies: String,
-        price: {
-            type: Number,
-            required: true
-        }
+        pet:      { type: mongoose.Schema.Types.ObjectId, ref: 'Pet' },
+        product:  { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
+        itemName: String,
+        itemType: { type: String, enum: ['pet', 'accessory'], default: 'pet' },
+        price:    { type: Number, required: true },
+        quantity: { type: Number, default: 1 }
     }],
-    subtotal: {
-        type: Number,
-        required: true
-    },
-    tax: {
-        type: Number,
-        default: 0
-    },
-    discount: {
-        type: Number,
-        default: 0
-    },
-    totalAmount: {
-        type: Number,
-        required: true
-    },
+    subtotal:       { type: Number, required: true },
+    tax:            { type: Number, default: 0 },
+    discount:       { type: Number, default: 0 },
+    deliveryCharge: { type: Number, default: 0 },
+    totalAmount:    { type: Number, required: true },
     paymentMethod: {
         type: String,
         enum: ['Cash', 'Credit Card', 'Debit Card', 'PayPal', 'Bank Transfer', 'Bkash', 'Nagad', 'Rocket'],
@@ -53,33 +41,30 @@ const orderSchema = new mongoose.Schema({
         enum: ['Pending', 'Processing', 'Completed', 'Cancelled'],
         default: 'Pending'
     },
-    notes: {
+    // ── Home Delivery ───────────────────────────────────────
+    deliveryType: {
         type: String,
-        maxlength: [500, 'Notes cannot be more than 500 characters']
+        enum: ['store_pickup', 'home_delivery'],
+        default: 'store_pickup'
     },
-    processedBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    },
-    updatedAt: {
-        type: Date,
-        default: Date.now
-    }
+    deliveryArea:    { type: String, trim: true },
+    deliveryAddress: { type: String, trim: true },
+    deliveryPhone:   { type: String, trim: true },
+    // ────────────────────────────────────────────────────────
+    notes:   { type: String, maxlength: [500, 'Notes cannot exceed 500 characters'] },
+    processedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now }
 });
 
-// Generate order number before saving
 orderSchema.pre('save', async function (next) {
     if (!this.orderNumber) {
         const date = new Date();
-        const year = date.getFullYear().toString().slice(-2);
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
-        this.orderNumber = `ORD-${year}${month}${day}-${random}`;
+        const yy  = date.getFullYear().toString().slice(-2);
+        const mm  = String(date.getMonth() + 1).padStart(2, '0');
+        const dd  = String(date.getDate()).padStart(2, '0');
+        const rnd = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+        this.orderNumber = `ORD-${yy}${mm}${dd}-${rnd}`;
     }
     this.updatedAt = Date.now();
     next();

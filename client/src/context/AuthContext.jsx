@@ -23,8 +23,19 @@ export const AuthProvider = ({ children }) => {
                     const data = await authAPI.getMe();
                     setUser(data.user);
                 } catch (error) {
-                    console.error('Auth initialization error:', error);
-                    logout();
+                    // Only log out on 401 (invalid/expired token).
+                    // Network errors (server restarting) should NOT clear the session.
+                    const isAuthError =
+                        error.message?.includes('Not authorized') ||
+                        error.message?.includes('token') ||
+                        error.message?.includes('401');
+                    if (isAuthError) {
+                        console.error('Auth token invalid — logging out:', error.message);
+                        logout();
+                    } else {
+                        console.warn('Could not reach server during auth init (server may be starting up):', error.message);
+                        // Keep the token; user can retry actions manually
+                    }
                 }
             }
             setLoading(false);

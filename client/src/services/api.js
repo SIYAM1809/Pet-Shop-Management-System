@@ -24,7 +24,7 @@ export const authAPI = {
             },
             body: JSON.stringify(userData)
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     login: async (credentials) => {
@@ -33,21 +33,21 @@ export const authAPI = {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(credentials)
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     getMe: async () => {
         const response = await fetch(`${API_URL}/auth/me`, {
             headers: getAuthHeader()
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     getUsers: async () => {
         const response = await fetch(`${API_URL}/auth/users`, {
             headers: getAuthHeader()
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     customerRegister: async (userData) => {
@@ -56,7 +56,7 @@ export const authAPI = {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(userData)
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     updateProfile: async (profileData) => {
@@ -65,7 +65,15 @@ export const authAPI = {
             headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
             body: JSON.stringify(profileData)
         });
-        return handleResponse(response);
+        return await handleResponse(response);
+    },
+
+    deleteUser: async (id) => {
+        const response = await fetch(`${API_URL}/auth/users/${id}`, {
+            method: 'DELETE',
+            headers: getAuthHeader()
+        });
+        return await handleResponse(response);
     }
 };
 
@@ -76,14 +84,14 @@ export const petAPI = {
         const response = await fetch(`${API_URL}/pets?${query}`, {
             headers: getAuthHeader()
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     getById: async (id) => {
         const response = await fetch(`${API_URL}/pets/${id}`, {
             headers: getAuthHeader()
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     create: async (petData) => {
@@ -95,7 +103,7 @@ export const petAPI = {
             },
             body: JSON.stringify(petData)
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     update: async (id, petData) => {
@@ -107,7 +115,7 @@ export const petAPI = {
             },
             body: JSON.stringify(petData)
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     delete: async (id) => {
@@ -115,14 +123,14 @@ export const petAPI = {
             method: 'DELETE',
             headers: getAuthHeader()
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     getStats: async () => {
         const response = await fetch(`${API_URL}/pets/stats`, {
             headers: getAuthHeader()
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     }
 };
 
@@ -133,21 +141,21 @@ export const customerAPI = {
         const response = await fetch(`${API_URL}/customers?${query}`, {
             headers: getAuthHeader()
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     getById: async (id) => {
         const response = await fetch(`${API_URL}/customers/${id}`, {
             headers: getAuthHeader()
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     getMe: async () => {
         const response = await fetch(`${API_URL}/customers/me`, {
             headers: getAuthHeader()
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     create: async (customerData) => {
@@ -159,7 +167,7 @@ export const customerAPI = {
             },
             body: JSON.stringify(customerData)
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     update: async (id, customerData) => {
@@ -171,7 +179,7 @@ export const customerAPI = {
             },
             body: JSON.stringify(customerData)
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     delete: async (id) => {
@@ -179,7 +187,7 @@ export const customerAPI = {
             method: 'DELETE',
             headers: getAuthHeader()
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     }
 };
 
@@ -190,14 +198,14 @@ export const orderAPI = {
         const response = await fetch(`${API_URL}/orders?${query}`, {
             headers: getAuthHeader()
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     getById: async (id) => {
         const response = await fetch(`${API_URL}/orders/${id}`, {
             headers: getAuthHeader()
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     create: async (orderData) => {
@@ -209,7 +217,7 @@ export const orderAPI = {
             },
             body: JSON.stringify(orderData)
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     update: async (id, orderData) => {
@@ -221,7 +229,7 @@ export const orderAPI = {
             },
             body: JSON.stringify(orderData)
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     delete: async (id) => {
@@ -229,21 +237,21 @@ export const orderAPI = {
             method: 'DELETE',
             headers: getAuthHeader()
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     getStats: async () => {
         const response = await fetch(`${API_URL}/orders/stats`, {
             headers: getAuthHeader()
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     track: async (orderNumber) => {
         const response = await fetch(`${API_URL}/orders/track/${orderNumber}`, {
             headers: { 'Content-Type': 'application/json' }
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     checkout: async (checkoutData) => {
@@ -255,7 +263,7 @@ export const orderAPI = {
             },
             body: JSON.stringify(checkoutData)
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     }
 };
 
@@ -265,7 +273,7 @@ export const dashboardAPI = {
         const response = await fetch(`${API_URL}/dashboard`, {
             headers: getAuthHeader()
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     }
 };
 
@@ -279,7 +287,7 @@ export const inquiryAPI = {
             },
             body: JSON.stringify(inquiryData)
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     }
 };
 
@@ -289,7 +297,7 @@ export const appointmentAPI = {
         const response = await fetch(`${API_URL}/appointments`, {
             headers: getAuthHeader()
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     updateStatus: async (id, status) => {
@@ -301,7 +309,7 @@ export const appointmentAPI = {
             },
             body: JSON.stringify({ status })
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     }
 };
 
@@ -311,14 +319,14 @@ export const reviewAPI = {
         const response = await fetch(`${API_URL}/reviews`, {
             headers: getAuthHeader()
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     getAllAdmin: async () => {
         const response = await fetch(`${API_URL}/reviews/admin/all`, {
             headers: getAuthHeader()
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     create: async (reviewData) => {
@@ -329,7 +337,7 @@ export const reviewAPI = {
             },
             body: JSON.stringify(reviewData)
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     updateStatus: async (id, status) => {
@@ -341,7 +349,7 @@ export const reviewAPI = {
             },
             body: JSON.stringify({ status })
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     delete: async (id) => {
@@ -349,7 +357,7 @@ export const reviewAPI = {
             method: 'DELETE',
             headers: getAuthHeader()
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     }
 };
 
@@ -358,24 +366,24 @@ export const productAPI = {
     getAll: async (params = {}) => {
         const query = new URLSearchParams(params).toString();
         const response = await fetch(`${API_URL}/products?${query}`);
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     getFeatured: async () => {
         const response = await fetch(`${API_URL}/products/featured`);
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     getStats: async () => {
         const response = await fetch(`${API_URL}/products/stats`, {
             headers: getAuthHeader()
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     getById: async (id) => {
         const response = await fetch(`${API_URL}/products/${id}`);
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     create: async (productData) => {
@@ -384,7 +392,7 @@ export const productAPI = {
             headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
             body: JSON.stringify(productData)
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     update: async (id, productData) => {
@@ -393,7 +401,7 @@ export const productAPI = {
             headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
             body: JSON.stringify(productData)
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     delete: async (id) => {
@@ -401,7 +409,7 @@ export const productAPI = {
             method: 'DELETE',
             headers: getAuthHeader()
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     }
 };
 
@@ -412,7 +420,7 @@ export const riderAPI = {
         const response = await fetch(`${API_URL}/rider/stats`, {
             headers: getAuthHeader()
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     getMyDeliveries: async (params = {}) => {
@@ -420,7 +428,7 @@ export const riderAPI = {
         const response = await fetch(`${API_URL}/rider/deliveries?${query}`, {
             headers: getAuthHeader()
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     updateDeliveryStatus: async (id, data) => {
@@ -429,7 +437,7 @@ export const riderAPI = {
             headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
             body: JSON.stringify(data)
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     // ── Admin-facing ──────────────────────────────────────────
@@ -437,7 +445,7 @@ export const riderAPI = {
         const response = await fetch(`${API_URL}/rider/admin/stats`, {
             headers: getAuthHeader()
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     getAllDeliveries: async (params = {}) => {
@@ -445,7 +453,7 @@ export const riderAPI = {
         const response = await fetch(`${API_URL}/rider/admin/deliveries?${query}`, {
             headers: getAuthHeader()
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
     assignDelivery: async (data) => {
@@ -454,15 +462,29 @@ export const riderAPI = {
             headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
             body: JSON.stringify(data)
         });
-        return handleResponse(response);
+        return await handleResponse(response);
     },
 
-    getAvailableRiders: async () => {
-        const response = await fetch(`${API_URL}/rider/admin/riders`, {
+    // Fetch riders; optionally pass { area: 'Uttara' } to filter by zone
+    getAvailableRiders: async (params = {}) => {
+        const query = new URLSearchParams(params).toString();
+        const response = await fetch(`${API_URL}/rider/admin/riders?${query}`, {
             headers: getAuthHeader()
         });
-        return handleResponse(response);
+        return await handleResponse(response);
+    },
+
+    // Admin updates which areas a rider covers
+    updateRiderAreas: async (riderId, areas) => {
+        const response = await fetch(`${API_URL}/rider/admin/riders/${riderId}/areas`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
+            body: JSON.stringify({ areas })
+        });
+        return await handleResponse(response);
     }
 };
 
-
+// ── Shared currency formatter (BDT ৳) ────────────────────────────
+export const formatBDT = (value) =>
+    `৳${Number(value || 0).toLocaleString('en-BD', { minimumFractionDigits: 0 })}`;

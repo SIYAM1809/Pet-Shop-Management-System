@@ -242,10 +242,48 @@ export const getDeliveryAdminStats = asyncHandler(async (req, res) => {
     res.json({ success: true, data: { total, pending, assigned, inTransit, deliveredToday, totalDelivered, failed } });
 });
 
-// @desc    Get all available riders (staff users)
-// @route   GET /api/rider/admin/riders
+// @desc    Get all available riders (staff users), optionally filtered by area
+// @route   GET /api/rider/admin/riders?area=Uttara
 // @access  Private (admin)
 export const getAvailableRiders = asyncHandler(async (req, res) => {
-    const riders = await User.find({ role: 'staff' }).select('name email avatar');
+    const { area } = req.query;
+
+    const query = { role: 'staff' };
+    // If area is provided, only return riders who have that area assigned
+    if (area) {
+        query.assignedAreas = area;
+    }
+
+    const riders = await User.find(query).select('name email avatar phone assignedAreas');
     res.json({ success: true, count: riders.length, data: riders });
+});
+
+// @desc    Update a rider's assigned delivery areas (admin)
+// @route   PUT /api/rider/admin/riders/:id/areas
+// @access  Private (admin)
+export const updateRiderAreas = asyncHandler(async (req, res) => {
+    const { areas } = req.body;
+
+    if (!Array.isArray(areas)) {
+        return res.status(400).json({ success: false, message: '`areas` must be an array of area names' });
+    }
+
+    const rider = await User.findById(req.params.id);
+    if (!rider || rider.role !== 'staff') {
+        return res.status(404).json({ success: false, message: 'Rider not found' });
+    }
+
+    rider.assignedAreas = areas;
+    await rider.save();
+
+    res.json({
+        success: true,
+        data: {
+            id: rider._id,
+            name: rider.name,
+            email: rider.email,
+            phone: rider.phone,
+            assignedAreas: rider.assignedAreas
+        }
+    });
 });

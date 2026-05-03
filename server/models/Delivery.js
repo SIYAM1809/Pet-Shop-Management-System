@@ -29,7 +29,7 @@ const deliverySchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['Pending', 'Accepted', 'Picked Up', 'In Transit', 'Delivered', 'Failed'],
+        enum: ['Pending', 'Assigned', 'Picked Up', 'In Transit', 'Delivered', 'Failed'],
         default: 'Pending'
     },
     // Denormalised from Order for fast area filtering
@@ -41,7 +41,7 @@ const deliverySchema = new mongoose.Schema({
     notes: { type: String, maxlength: [500, 'Notes cannot exceed 500 characters'], trim: true },
 
     // Timestamps per status change
-    acceptedAt:  { type: Date },
+    assignedAt:  { type: Date },
     pickedUpAt:  { type: Date },
     deliveredAt: { type: Date },
     createdAt:   { type: Date, default: Date.now },
@@ -52,7 +52,7 @@ deliverySchema.pre('save', function (next) {
     this.updatedAt = Date.now();
 
     if (this.isModified('status')) {
-        if (this.status === 'Accepted'   && !this.acceptedAt)  this.acceptedAt  = Date.now();
+        if (this.status === 'Assigned'   && !this.assignedAt)  this.assignedAt  = Date.now();
         if (this.status === 'Picked Up'  && !this.pickedUpAt)  this.pickedUpAt  = Date.now();
         if (this.status === 'Delivered'  && !this.deliveredAt) this.deliveredAt = Date.now();
     }

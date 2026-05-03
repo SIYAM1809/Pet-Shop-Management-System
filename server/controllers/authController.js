@@ -38,14 +38,16 @@ export const customerRegister = asyncHandler(async (req, res) => {
 // @route   POST /api/auth/register
 // @access  Private/Admin
 export const register = asyncHandler(async (req, res) => {
-    const { name, email, password, role } = req.body;
+    const { name, email, password, role, phone, assignedAreas } = req.body;
 
     // Create user
     const user = await User.create({
         name,
         email,
         password,
-        role: role || 'staff'
+        role: role || 'staff',
+        phone: phone || '',
+        assignedAreas: Array.isArray(assignedAreas) ? assignedAreas : []
     });
 
     res.status(201).json({
@@ -54,7 +56,9 @@ export const register = asyncHandler(async (req, res) => {
             id: user._id,
             name: user.name,
             email: user.email,
-            role: user.role
+            role: user.role,
+            phone: user.phone,
+            assignedAreas: user.assignedAreas
         }
     });
 });
@@ -67,8 +71,42 @@ export const getUsers = asyncHandler(async (req, res) => {
     res.json({
         success: true,
         count: users.length,
-        data: users
+        data: users  // includes assignedAreas, phone automatically
     });
+});
+
+// @desc    Delete a user account (Admin only)
+// @route   DELETE /api/auth/users/:id
+// @access  Private/Admin
+export const deleteUser = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+
+    // Prevent admin from deleting themselves
+    if (id === req.user.id) {
+        return res.status(400).json({
+            success: false,
+            message: 'You cannot delete your own account.'
+        });
+    }
+
+    const userToDelete = await User.findById(id);
+    if (!userToDelete) {
+        return res.status(404).json({ success: false, message: 'User not found.' });
+    }
+
+    // Prevent deleting the last admin
+    if (userToDelete.role === 'admin') {
+        const adminCount = await User.countDocuments({ role: 'admin' });
+        if (adminCount <= 1) {
+            return res.status(400).json({
+                success: false,
+                message: 'Cannot delete the last admin account.'
+            });
+        }
+    }
+
+    await userToDelete.deleteOne();
+    res.json({ success: true, message: `Account for "${userToDelete.name}" has been deleted.` });
 });
 
 // @desc    Login user
@@ -132,7 +170,9 @@ export const getMe = asyncHandler(async (req, res) => {
             name: user.name,
             email: user.email,
             role: user.role,
-            avatar: user.avatar
+            avatar: user.avatar,
+            phone: user.phone || '',
+            assignedAreas: user.assignedAreas || []
         }
     });
 });
@@ -144,7 +184,8 @@ export const updateProfile = asyncHandler(async (req, res) => {
     const fieldsToUpdate = {
         name: req.body.name,
         email: req.body.email,
-        avatar: req.body.avatar
+        avatar: req.body.avatar,
+        phone: req.body.phone
     };
 
     // Remove undefined fields
@@ -164,7 +205,9 @@ export const updateProfile = asyncHandler(async (req, res) => {
             name: user.name,
             email: user.email,
             role: user.role,
-            avatar: user.avatar
+            avatar: user.avatar,
+            phone: user.phone || '',
+            assignedAreas: user.assignedAreas || []
         }
     });
 });

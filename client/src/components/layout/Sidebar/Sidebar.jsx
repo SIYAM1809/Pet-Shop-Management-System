@@ -13,7 +13,8 @@ import {
     ChevronRight,
     LogOut,
     Mail,
-    Truck
+    Truck,
+    Bike
 } from 'lucide-react';
 import { useAuth } from '../../../context/AuthContext';
 import './Sidebar.css';
@@ -27,6 +28,7 @@ const navItems = [
     { path: '/dashboard/customers', icon: Users, label: 'Customers' },
     { path: '/dashboard/orders', icon: ShoppingCart, label: 'Orders' },
     { path: '/dashboard/deliveries', icon: Truck, label: 'Deliveries' },
+    { path: '/dashboard/riders', icon: Bike, label: 'Riders' },
     { path: '/dashboard/subscribers', icon: Mail, label: 'Subscribers' },
     { path: '/dashboard/settings', icon: Settings, label: 'Settings' }
 ];

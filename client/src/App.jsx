@@ -29,6 +29,7 @@ import MyDeliveries from './pages/Rider/MyDeliveries';
 import RiderProfile from './pages/Rider/RiderProfile';
 import RiderSettings from './pages/Rider/RiderSettings';
 import AdminDeliveries from './pages/Admin/Deliveries';
+import AdminRiders from './pages/Admin/Riders';
 import './styles/index.css';
 import './styles/components.css';
 
@@ -98,6 +99,7 @@ const AppRoutes = () => {
         <Route path="customers" element={<Customers />} />
         <Route path="orders" element={<Orders />} />
         <Route path="deliveries" element={<AdminDeliveries />} />
+        <Route path="riders" element={<AdminRiders />} />
         <Route path="reviews" element={<Reviews />} />
         <Route path="subscribers" element={<Subscribers />} />
         <Route path="settings" element={<Settings />} />

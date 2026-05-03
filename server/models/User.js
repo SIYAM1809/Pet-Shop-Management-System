@@ -31,6 +31,16 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: ''
     },
+    phone: {
+        type: String,
+        trim: true,
+        default: ''
+    },
+    // For riders (role: 'staff') — list of delivery zones they cover
+    assignedAreas: {
+        type: [String],
+        default: []
+    },
     createdAt: {
         type: Date,
         default: Date.now

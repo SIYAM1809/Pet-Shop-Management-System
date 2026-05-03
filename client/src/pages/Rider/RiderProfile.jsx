@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { User, Mail, Save, Bike } from 'lucide-react';
+import { User, Mail, Phone, Save, Bike, MapPin } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../context/AuthContext';
 import { authAPI } from '../../services/api';
@@ -37,8 +37,9 @@ const labelStyle = {
 const RiderProfile = () => {
     const { user } = useAuth();
     const [formData, setFormData] = useState({
-        name: user?.name || '',
-        email: user?.email || ''
+        name:  user?.name  || '',
+        email: user?.email || '',
+        phone: user?.phone || ''
     });
     const [saving, setSaving] = useState(false);
 
@@ -54,6 +55,8 @@ const RiderProfile = () => {
             setSaving(false);
         }
     };
+
+    const assignedAreas = user?.assignedAreas || [];
 
     return (
         <motion.div
@@ -133,6 +136,21 @@ const RiderProfile = () => {
                             onBlur={(e) => (e.target.style.borderColor = 'var(--border-light)')}
                         />
                     </div>
+                    <div>
+                        <label style={labelStyle}>
+                            <Phone size={13} style={{ display: 'inline', marginRight: '0.375rem' }} />
+                            Phone Number
+                        </label>
+                        <input
+                            type="tel"
+                            style={inputStyle}
+                            value={formData.phone}
+                            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                            placeholder="01XXXXXXXXX"
+                            onFocus={(e) => (e.target.style.borderColor = '#f97316')}
+                            onBlur={(e) => (e.target.style.borderColor = 'var(--border-light)')}
+                        />
+                    </div>
                     <button
                         type="submit"
                         disabled={saving}
@@ -150,6 +168,39 @@ const RiderProfile = () => {
                         {saving ? 'Saving...' : 'Save Changes'}
                     </button>
                 </form>
+            </motion.div>
+
+            {/* Assigned Coverage Areas (read-only) */}
+            <motion.div style={cardStyle} variants={itemVariants}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+                    <MapPin size={16} color="#f97316" />
+                    <h3 style={{ margin: 0, fontWeight: 700, fontSize: '0.95rem' }}>My Delivery Zones</h3>
+                </div>
+                {assignedAreas.length === 0 ? (
+                    <p style={{ fontSize: '0.875rem', color: 'var(--text-tertiary)' }}>
+                        No delivery zones assigned yet. Contact your admin.
+                    </p>
+                ) : (
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                        {assignedAreas.map(area => (
+                            <span
+                                key={area}
+                                style={{
+                                    display: 'inline-flex', alignItems: 'center', gap: '0.3rem',
+                                    background: 'rgba(249,115,22,0.1)', color: '#f97316',
+                                    padding: '0.35rem 0.875rem', borderRadius: 999,
+                                    fontSize: '0.82rem', fontWeight: 700,
+                                    border: '1px solid rgba(249,115,22,0.2)'
+                                }}
+                            >
+                                📍 {area}
+                            </span>
+                        ))}
+                    </div>
+                )}
+                <p style={{ marginTop: '0.75rem', fontSize: '0.78rem', color: 'var(--text-tertiary)' }}>
+                    Zone assignments are managed by your admin.
+                </p>
             </motion.div>
         </motion.div>
     );

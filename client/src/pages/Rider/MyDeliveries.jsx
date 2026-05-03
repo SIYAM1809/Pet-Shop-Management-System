@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Truck, Eye, RefreshCw, ArrowUpRight, X, CheckCircle, AlertCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { riderAPI } from '../../services/api';
+import { riderAPI, formatBDT } from '../../services/api';
 import { containerVariants, itemVariants } from '../../utils/animations';
 import './MyDeliveries.css';
 
@@ -26,8 +26,7 @@ const NEXT_STATUSES = {
     'Failed':     []
 };
 
-const formatCurrency = (v) =>
-    new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(v || 0);
+const formatCurrency = (v) => formatBDT(v);
 
 const formatDate = (d) =>
     new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });

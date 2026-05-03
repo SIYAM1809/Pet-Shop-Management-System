@@ -21,6 +21,7 @@ import appointmentRoutes from './routes/appointmentRoutes.js';
 import reviewRoutes from './routes/reviewRoutes.js';
 import subscriberRoutes from './routes/subscriberRoutes.js';
 import productRoutes from './routes/productRoutes.js';
+import riderRoutes from './routes/riderRoutes.js';
 
 // Connect to database
 connectDB();
@@ -63,6 +64,7 @@ app.use('/api/appointments', appointmentRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/subscribers', subscriberRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/rider', riderRoutes);
 
 // Swagger API Docs
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {

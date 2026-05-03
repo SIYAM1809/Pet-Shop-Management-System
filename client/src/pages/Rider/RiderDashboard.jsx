@@ -12,7 +12,7 @@ import {
     MapPin
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
-import { riderAPI } from '../../services/api';
+import { riderAPI, formatBDT } from '../../services/api';
 import { containerVariants, itemVariants } from '../../utils/animations';
 import './RiderDashboard.css';
 
@@ -90,8 +90,7 @@ const RiderDashboard = () => {
         ]
         : [];
 
-    const formatCurrency = (v) =>
-        new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(v || 0);
+    const formatCurrency = (v) => formatBDT(v);
 
     const hour = new Date().getHours();
     const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
@@ -112,6 +111,16 @@ const RiderDashboard = () => {
                     <p className="rider-page-subtitle">
                         Here's your delivery overview for today.
                     </p>
+                    {user?.assignedAreas?.length > 0 && (
+                        <div style={{ display: 'flex', gap: '0.375rem', flexWrap: 'wrap', marginTop: '0.5rem' }}>
+                            <span style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', fontWeight: 600 }}>Covering:</span>
+                            {user.assignedAreas.map(a => (
+                                <span key={a} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.2rem', background: 'rgba(249,115,22,0.12)', color: '#f97316', padding: '0.15rem 0.55rem', borderRadius: 999, fontSize: '0.73rem', fontWeight: 700 }}>
+                                    📍 {a}
+                                </span>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </div>
 

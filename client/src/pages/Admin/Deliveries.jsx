@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Truck, Plus, Search, Eye, X, RefreshCw } from 'lucide-react';
+import { Truck, Plus, Search, Eye, X, RefreshCw, MapPin } from 'lucide-react';
 import toast from 'react-hot-toast';
 import Card from '../../components/common/Card';
 import Button from '../../components/common/Button';
 import Modal from '../../components/common/Modal';
-import { riderAPI, orderAPI } from '../../services/api';
+import { riderAPI, orderAPI, formatBDT } from '../../services/api';
 import { containerVariants, itemVariants } from '../../utils/animations';
 import './Deliveries.css';
 
@@ -18,29 +18,28 @@ const BADGE = {
     'Failed':     'badge-error'
 };
 
-const formatCurrency = (v) =>
-    new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(v || 0);
-
 const formatDate = (d) =>
     d ? new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '—';
 
 const AdminDeliveries = () => {
-    const [deliveries, setDeliveries]   = useState([]);
-    const [stats, setStats]             = useState(null);
-    const [riders, setRiders]           = useState([]);
-    const [orders, setOrders]           = useState([]);
-    const [loading, setLoading]         = useState(true);
+    const [deliveries, setDeliveries]     = useState([]);
+    const [stats, setStats]               = useState(null);
+    const [allRiders, setAllRiders]       = useState([]);
+    const [orders, setOrders]             = useState([]);
+    const [loading, setLoading]           = useState(true);
     const [filterStatus, setFilterStatus] = useState('');
     const [filterRider, setFilterRider]   = useState('');
     const [search, setSearch]             = useState('');
-    const [page, setPage]               = useState(1);
-    const [totalPages, setTotalPages]   = useState(1);
-    const [total, setTotal]             = useState(0);
+    const [page, setPage]                 = useState(1);
+    const [totalPages, setTotalPages]     = useState(1);
+    const [total, setTotal]               = useState(0);
 
     // Assign modal
-    const [assignOpen, setAssignOpen]   = useState(false);
-    const [assigning, setAssigning]     = useState(false);
-    const [assignForm, setAssignForm]   = useState({
+    const [assignOpen, setAssignOpen]         = useState(false);
+    const [assigning, setAssigning]           = useState(false);
+    const [areaFilteredRiders, setAreaFilteredRiders] = useState([]);
+    const [showAllRiders, setShowAllRiders]   = useState(false);
+    const [assignForm, setAssignForm]         = useState({
         orderId: '', riderId: '', deliveryAddress: '', customerPhone: '', notes: ''
     });
 
@@ -54,7 +53,6 @@ const AdminDeliveries = () => {
             if (filterStatus) params.status = filterStatus;
             if (filterRider)  params.riderId = filterRider;
 
-            // Fetch deliveries and stats independently so one failure doesn't block the other
             const [delivRes, statsRes] = await Promise.allSettled([
                 riderAPI.getAllDeliveries(params),
                 riderAPI.getAdminStats()
@@ -65,16 +63,13 @@ const AdminDeliveries = () => {
                 setTotalPages(delivRes.value.pages || 1);
                 setTotal(delivRes.value.total || 0);
             } else {
-                console.warn('Deliveries fetch failed:', delivRes.reason?.message);
                 setDeliveries([]);
             }
 
             if (statsRes.status === 'fulfilled') {
                 setStats(statsRes.value.data || null);
-            } else {
-                console.warn('Stats fetch failed:', statsRes.reason?.message);
             }
-        } catch (err) {
+        } catch {
             toast.error('Unexpected error loading deliveries');
         } finally {
             setLoading(false);
@@ -83,23 +78,38 @@ const AdminDeliveries = () => {
 
     useEffect(() => { fetchAll(); }, [fetchAll]);
 
-    // Load riders & orders for the assign modal
     useEffect(() => {
         const load = async () => {
             try {
                 const ridersRes = await riderAPI.getAvailableRiders();
-                setRiders(ridersRes.data || []);
+                setAllRiders(ridersRes.data || []);
             } catch (_) {}
 
             try {
                 const ordersRes = await orderAPI.getAll({ limit: 100 });
-                // Handle both { data: [] } and { orders: [] } response shapes
                 const list = ordersRes.data || ordersRes.orders || ordersRes || [];
                 setOrders(Array.isArray(list) ? list : []);
             } catch (_) {}
         };
         load();
     }, []);
+
+    // When order selection changes — filter riders by area
+    const handleOrderSelect = (orderId) => {
+        const selectedOrder = orders.find(o => o._id === orderId);
+        const area = selectedOrder?.deliveryArea;
+        setAssignForm({
+            ...assignForm,
+            orderId,
+            deliveryAddress: selectedOrder?.deliveryAddress || ''
+        });
+        setShowAllRiders(false);
+        if (area) {
+            setAreaFilteredRiders(allRiders.filter(r => r.assignedAreas?.includes(area)));
+        } else {
+            setAreaFilteredRiders([]);
+        }
+    };
 
     const handleAssign = async (e) => {
         e.preventDefault();
@@ -113,6 +123,7 @@ const AdminDeliveries = () => {
             toast.success('Delivery assigned successfully!');
             setAssignOpen(false);
             setAssignForm({ orderId: '', riderId: '', deliveryAddress: '', customerPhone: '', notes: '' });
+            setAreaFilteredRiders([]);
             fetchAll();
         } catch (err) {
             toast.error(err.message || 'Failed to assign delivery');
@@ -121,7 +132,6 @@ const AdminDeliveries = () => {
         }
     };
 
-    // Client-side search
     const filtered = deliveries.filter(d =>
         d.order?.orderNumber?.toLowerCase().includes(search.toLowerCase()) ||
         d.rider?.name?.toLowerCase().includes(search.toLowerCase())
@@ -136,6 +146,12 @@ const AdminDeliveries = () => {
         { label: 'Failed',      value: stats.failed,         color: 'badge-error' }
     ] : [];
 
+    const displayedRiders = showAllRiders || areaFilteredRiders.length === 0
+        ? allRiders
+        : areaFilteredRiders;
+
+    const selectedOrderArea = orders.find(o => o._id === assignForm.orderId)?.deliveryArea;
+
     return (
         <motion.div
             className="admin-deliveries"
@@ -147,7 +163,7 @@ const AdminDeliveries = () => {
             <div className="page-header">
                 <div>
                     <h1 className="page-title">Deliveries</h1>
-                    <p className="page-subtitle">Manage home delivery assignments</p>
+                    <p className="page-subtitle">Manage and track all home deliveries</p>
                 </div>
                 <Button variant="primary" icon={<Plus size={18} />} onClick={() => setAssignOpen(true)}>
                     Assign Delivery
@@ -198,7 +214,7 @@ const AdminDeliveries = () => {
                         onChange={(e) => { setFilterRider(e.target.value); setPage(1); }}
                     >
                         <option value="">All Riders</option>
-                        {riders.map(r => (
+                        {allRiders.map(r => (
                             <option key={r._id} value={r._id}>{r.name}</option>
                         ))}
                     </select>
@@ -233,10 +249,10 @@ const AdminDeliveries = () => {
                                     <th>Order #</th>
                                     <th>Customer</th>
                                     <th>Rider</th>
+                                    <th>Area</th>
                                     <th>Address</th>
                                     <th>Total</th>
                                     <th>Status</th>
-                                    <th>Assigned</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -255,24 +271,30 @@ const AdminDeliveries = () => {
                                         </td>
                                         <td>{d.order?.customer?.name || '—'}</td>
                                         <td>
-                                            <div style={{ fontWeight: 600 }}>{d.rider?.name || '—'}</div>
-                                            <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-                                                {d.rider?.email}
+                                            <div style={{ fontWeight: 600 }}>
+                                                {d.rider?.name || <span style={{ color: 'var(--text-tertiary)' }}>Unassigned</span>}
                                             </div>
+                                            {d.rider?.email && (
+                                                <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{d.rider.email}</div>
+                                            )}
                                         </td>
-                                        <td style={{ maxWidth: 160, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                            {d.deliveryAddress}
+                                        <td>
+                                            {d.deliveryArea ? (
+                                                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', background: 'rgba(249,115,22,0.1)', color: '#f97316', padding: '0.2rem 0.6rem', borderRadius: 999, fontSize: '0.75rem', fontWeight: 700 }}>
+                                                    <MapPin size={11} /> {d.deliveryArea}
+                                                </span>
+                                            ) : '—'}
+                                        </td>
+                                        <td style={{ maxWidth: 140, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                            {d.deliveryAddress || '—'}
                                         </td>
                                         <td style={{ fontWeight: 700 }}>
-                                            {formatCurrency(d.order?.totalAmount)}
+                                            {formatBDT(d.order?.totalAmount)}
                                         </td>
                                         <td>
                                             <span className={`badge ${BADGE[d.status] || 'badge-neutral'}`}>
                                                 {d.status}
                                             </span>
-                                        </td>
-                                        <td style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
-                                            {formatDate(d.assignedAt)}
                                         </td>
                                         <td>
                                             <button
@@ -289,19 +311,14 @@ const AdminDeliveries = () => {
                         </table>
                     </div>
 
-                    {/* Pagination */}
                     {totalPages > 1 && (
                         <div className="delivery-pagination">
                             <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
                                 Page {page} of {totalPages} · {total} total
                             </span>
                             <div style={{ display: 'flex', gap: '0.5rem' }}>
-                                <Button size="sm" variant="secondary" onClick={() => setPage(p => p - 1)} disabled={page <= 1}>
-                                    ← Prev
-                                </Button>
-                                <Button size="sm" variant="secondary" onClick={() => setPage(p => p + 1)} disabled={page >= totalPages}>
-                                    Next →
-                                </Button>
+                                <Button size="sm" variant="secondary" onClick={() => setPage(p => p - 1)} disabled={page <= 1}>← Prev</Button>
+                                <Button size="sm" variant="secondary" onClick={() => setPage(p => p + 1)} disabled={page >= totalPages}>Next →</Button>
                             </div>
                         </div>
                     )}
@@ -311,7 +328,7 @@ const AdminDeliveries = () => {
             {/* ── Assign Delivery Modal ─────────────────────── */}
             <Modal
                 isOpen={assignOpen}
-                onClose={() => setAssignOpen(false)}
+                onClose={() => { setAssignOpen(false); setAreaFilteredRiders([]); setShowAllRiders(false); }}
                 title="Assign Delivery to Rider"
                 size="md"
                 footer={
@@ -325,31 +342,43 @@ const AdminDeliveries = () => {
             >
                 <form onSubmit={handleAssign} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                     <div className="input-group">
-                        <label className="input-label">Order (Processing status)</label>
+                        <label className="input-label">Order</label>
                         <select
                             className="input select"
                             value={assignForm.orderId}
-                            onChange={(e) => {
-                                const selectedOrder = orders.find(o => o._id === e.target.value);
-                                setAssignForm({ 
-                                    ...assignForm, 
-                                    orderId: e.target.value,
-                                    // Pre-fill delivery address if it's already set on the order
-                                    deliveryAddress: selectedOrder?.deliveryAddress || ''
-                                });
-                            }}
+                            onChange={(e) => handleOrderSelect(e.target.value)}
                             required
                         >
                             <option value="">Select an order...</option>
                             {orders.map(o => (
                                 <option key={o._id} value={o._id}>
-                                    {o.orderNumber} — {o.customer?.name} ({formatCurrency(o.totalAmount)})
+                                    {o.orderNumber} — {o.customer?.name} ({formatBDT(o.totalAmount)})
+                                    {o.deliveryArea ? ` · ${o.deliveryArea}` : ''}
                                 </option>
                             ))}
                         </select>
                     </div>
+
                     <div className="input-group">
-                        <label className="input-label">Assign to Rider</label>
+                        <label className="input-label" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <span>
+                                Assign to Rider
+                                {selectedOrderArea && (
+                                    <span style={{ marginLeft: '0.5rem', fontSize: '0.75rem', color: '#f97316', fontWeight: 700 }}>
+                                        ({showAllRiders ? 'All riders' : `Covering ${selectedOrderArea}: ${areaFilteredRiders.length} found`})
+                                    </span>
+                                )}
+                            </span>
+                            {selectedOrderArea && areaFilteredRiders.length > 0 && (
+                                <button
+                                    type="button"
+                                    onClick={() => setShowAllRiders(v => !v)}
+                                    style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.72rem', color: 'var(--text-secondary)', textDecoration: 'underline' }}
+                                >
+                                    {showAllRiders ? 'Show area riders only' : 'Show all riders'}
+                                </button>
+                            )}
+                        </label>
                         <select
                             className="input select"
                             value={assignForm.riderId}
@@ -357,11 +386,19 @@ const AdminDeliveries = () => {
                             required
                         >
                             <option value="">Select a rider...</option>
-                            {riders.map(r => (
-                                <option key={r._id} value={r._id}>{r.name} · {r.email}</option>
+                            {displayedRiders.map(r => (
+                                <option key={r._id} value={r._id}>
+                                    {r.name} · {r.assignedAreas?.length > 0 ? r.assignedAreas.join(', ') : 'No area set'}
+                                </option>
                             ))}
                         </select>
+                        {selectedOrderArea && areaFilteredRiders.length === 0 && !showAllRiders && (
+                            <p style={{ fontSize: '0.78rem', color: 'var(--warning, #f59e0b)', marginTop: '0.35rem' }}>
+                                ⚠️ No riders assigned to {selectedOrderArea}. Showing all riders.
+                            </p>
+                        )}
                     </div>
+
                     <div className="input-group">
                         <label className="input-label">Delivery Address *</label>
                         <input
@@ -397,41 +434,30 @@ const AdminDeliveries = () => {
             {/* ── View Delivery Modal ───────────────────────── */}
             {viewDelivery && (
                 <div
-                    style={{
-                        position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        zIndex: 1000, padding: '1rem'
-                    }}
+                    style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '1rem' }}
                     onClick={() => setViewDelivery(null)}
                 >
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        style={{
-                            background: 'var(--surface)', borderRadius: 16,
-                            padding: '1.5rem', width: '100%', maxWidth: 500,
-                            border: '1px solid var(--border-light)'
-                        }}
+                        style={{ background: 'var(--surface)', borderRadius: 16, padding: '1.5rem', width: '100%', maxWidth: 500, border: '1px solid var(--border-light)' }}
                         onClick={(e) => e.stopPropagation()}
                     >
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
                             <h3 style={{ margin: 0, fontWeight: 700 }}>Delivery Details</h3>
-                            <button
-                                onClick={() => setViewDelivery(null)}
-                                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-tertiary)' }}
-                            >
+                            <button onClick={() => setViewDelivery(null)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-tertiary)' }}>
                                 <X size={20} />
                             </button>
                         </div>
                         {[
                             ['Order #',   <span style={{ fontFamily: 'monospace', fontWeight: 700 }}>{viewDelivery.order?.orderNumber}</span>],
                             ['Customer',  viewDelivery.order?.customer?.name],
-                            ['Rider',     viewDelivery.rider?.name],
+                            ['Rider',     viewDelivery.rider?.name || 'Unassigned'],
+                            ['Area',      viewDelivery.deliveryArea || '—'],
                             ['Address',   viewDelivery.deliveryAddress],
                             ['Phone',     viewDelivery.customerPhone || '—'],
                             ['Status',    <span className={`badge ${BADGE[viewDelivery.status]}`}>{viewDelivery.status}</span>],
-                            ['Total',     formatCurrency(viewDelivery.order?.totalAmount)],
-                            ['Assigned',  formatDate(viewDelivery.assignedAt)],
+                            ['Total',     formatBDT(viewDelivery.order?.totalAmount)],
                             ['Delivered', formatDate(viewDelivery.deliveredAt)],
                             ['Notes',     viewDelivery.notes || '—']
                         ].map(([k, v]) => (

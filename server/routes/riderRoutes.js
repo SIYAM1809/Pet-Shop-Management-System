@@ -6,7 +6,8 @@ import {
     getAllDeliveries,
     assignDelivery,
     getDeliveryAdminStats,
-    getAvailableRiders
+    getAvailableRiders,
+    updateRiderAreas
 } from '../controllers/riderController.js';
 import { protect, authorize } from '../middleware/auth.js';
 
@@ -64,9 +65,16 @@ router.post('/admin/assign', protect, authorize('admin'), assignDelivery);
 
 /**
  * @route   GET /api/rider/admin/riders
- * @desc    Get list of all available riders (staff users)
+ * @desc    Get list of all available riders (staff users), optional ?area= filter
  * @access  Private (admin)
  */
 router.get('/admin/riders', protect, authorize('admin'), getAvailableRiders);
+
+/**
+ * @route   PUT /api/rider/admin/riders/:id/areas
+ * @desc    Update a rider's assigned delivery areas
+ * @access  Private (admin)
+ */
+router.put('/admin/riders/:id/areas', protect, authorize('admin'), updateRiderAreas);
 
 export default router;

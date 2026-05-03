@@ -1,5 +1,5 @@
 import express from 'express';
-import { register, login, getMe, updateProfile, getUsers, customerRegister } from '../controllers/authController.js';
+import { register, login, getMe, updateProfile, getUsers, customerRegister, deleteUser } from '../controllers/authController.js';
 import { protect, authorize } from '../middleware/auth.js';
 
 const router = express.Router();
@@ -155,5 +155,12 @@ router.put('/profile', protect, updateProfile);
  *         description: Admin access required
  */
 router.get('/users', protect, authorize('admin'), getUsers);
+
+/**
+ * @route   DELETE /api/auth/users/:id
+ * @desc    Delete a user account (Admin only)
+ * @access  Private/Admin
+ */
+router.delete('/users/:id', protect, authorize('admin'), deleteUser);
 
 export default router;

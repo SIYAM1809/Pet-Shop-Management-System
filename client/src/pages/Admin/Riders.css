@@ -1,0 +1,305 @@
+/* ── Riders Page ─────────────────────────────────────────── */
+.riders-page {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Toolbar */
+.riders-toolbar {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.riders-search-wrap {
+    position: relative;
+    flex: 1;
+}
+
+.riders-search-icon {
+    position: absolute;
+    left: 0.875rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-tertiary);
+    pointer-events: none;
+}
+
+.riders-search {
+    width: 100%;
+    padding: 0.6rem 0.875rem 0.6rem 2.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.riders-search:focus {
+    border-color: var(--primary-500, #8b5cf6);
+    box-shadow: 0 0 0 3px rgba(139,92,246,0.1);
+}
+
+.riders-refresh-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    border: 1px solid var(--border-light);
+    background: var(--surface);
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    flex-shrink: 0;
+}
+
+.riders-refresh-btn:hover {
+    background: var(--primary-500, #8b5cf6);
+    color: white;
+    border-color: transparent;
+}
+
+/* Rider List */
+.riders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+/* Rider Card */
+.rider-card {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: 14px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.rider-card:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+    border-color: rgba(139,92,246,0.2);
+}
+
+/* Avatar */
+.rider-card-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f97316, #fbbf24);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: white;
+    flex-shrink: 0;
+    box-shadow: 0 3px 10px rgba(249,115,22,0.3);
+}
+
+/* Info */
+.rider-card-left {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    min-width: 220px;
+}
+
+.rider-card-name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.rider-card-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    font-size: 0.76rem;
+    color: var(--text-secondary);
+}
+
+.rider-card-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+/* Zones section */
+.rider-card-zones {
+    flex: 1;
+}
+
+.zone-chips-display {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+}
+
+.zone-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: rgba(249,115,22,0.1);
+    color: #f97316;
+    padding: 0.22rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    border: 1px solid rgba(249,115,22,0.2);
+}
+
+.zone-none {
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+    font-style: italic;
+}
+
+/* Zone editor */
+.zone-editor {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.zone-editor-label {
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.zone-chips-editor {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    margin-top: 0.25rem;
+}
+
+.zone-chip-btn {
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    border: 1.5px solid var(--border-light);
+    background: var(--background);
+    color: var(--text-secondary);
+    font-size: 0.76rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.zone-chip-btn.selected {
+    background: #f97316;
+    border-color: #f97316;
+    color: white;
+}
+
+.zone-chip-btn:hover:not(.selected) {
+    border-color: #f97316;
+    color: #f97316;
+}
+
+/* Action buttons */
+.rider-card-actions {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.rc-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+}
+
+.rc-btn.edit {
+    background: rgba(139,92,246,0.08);
+    color: var(--primary-500, #8b5cf6);
+}
+.rc-btn.edit:hover { background: var(--primary-500, #8b5cf6); color: white; }
+
+.rc-btn.save {
+    background: rgba(34,197,94,0.1);
+    color: #22c55e;
+}
+.rc-btn.save:hover { background: #22c55e; color: white; }
+
+.rc-btn.cancel {
+    background: rgba(239,68,68,0.08);
+    color: #ef4444;
+}
+.rc-btn.cancel:hover { background: #ef4444; color: white; }
+
+.rc-btn.delete {
+    background: rgba(239,68,68,0.08);
+    color: #ef4444;
+}
+.rc-btn.delete:hover { background: #ef4444; color: white; }
+
+/* Mini spinner */
+.mini-spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(0,0,0,0.15);
+    border-top-color: currentColor;
+    border-radius: 50%;
+    animation: spin-r 0.7s linear infinite;
+}
+
+@keyframes spin-r { to { transform: rotate(360deg); } }
+
+/* Loading skeletons */
+.riders-loading {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.skeleton-card {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+}
+
+.skeleton-pulse {
+    background: linear-gradient(90deg, var(--border-light) 25%, var(--surface) 50%, var(--border-light) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+    border-radius: 6px;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Empty state */
+.riders-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 2rem;
+    color: var(--text-tertiary);
+    text-align: center;
+    gap: 0.75rem;
+}
+
+.riders-empty h3 { font-weight: 600; font-size: 1.05rem; color: var(--text-secondary); margin: 0; }
+.riders-empty p { font-size: 0.875rem; margin: 0; }

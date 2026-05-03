@@ -6,7 +6,8 @@ import {
     updateOrder,
     deleteOrder,
     getOrderStats,
-    trackOrder
+    trackOrder,
+    checkout
 } from '../controllers/orderController.js';
 import { protect, authorize } from '../middleware/auth.js';
 
@@ -34,6 +35,20 @@ const router = express.Router();
 router.get('/track/:orderNumber', trackOrder);
 
 router.use(protect);
+
+/**
+ * @swagger
+ * /api/orders/checkout:
+ *   post:
+ *     summary: Checkout accessories (public/customer)
+ *     tags: [Orders]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       201:
+ *         description: Order placed
+ */
+router.post('/checkout', authorize('customer'), checkout);
 
 /**
  * @swagger

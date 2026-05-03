@@ -6,6 +6,7 @@ import { productAPI } from '../../services/api';
 import { useCart } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
 import CustomerAuthModal from '../../components/common/CustomerAuthModal';
+import CheckoutModal from '../../components/common/CheckoutModal/CheckoutModal';
 import toast from 'react-hot-toast';
 import './AccessoryDetail.css';
 
@@ -27,6 +28,7 @@ const AccessoryDetail = () => {
     const [activeImage, setActiveImage] = useState(0);
     const [qty, setQty] = useState(1);
     const [authModalOpen, setAuthModalOpen] = useState(false);
+    const [checkoutModalOpen, setCheckoutModalOpen] = useState(false);
     const [addedToCart, setAddedToCart] = useState(false);
 
     const cartItem = cartItems.find(item => item._id === id);
@@ -75,6 +77,15 @@ const AccessoryDetail = () => {
         setAddedToCart(true);
         toast.success(`${product.name} added to cart! 🛒`);
         setTimeout(() => setAddedToCart(false), 2500);
+    };
+
+    const handleOrderNow = () => {
+        if (!isCustomer) {
+            setAuthModalOpen(true);
+            return;
+        }
+        if (product.status === 'Out of Stock') return;
+        setCheckoutModalOpen(true);
     };
 
     if (loading) {
@@ -200,12 +211,20 @@ const AccessoryDetail = () => {
                                     <span className="qty-display">{qty}</span>
                                     <button className="qty-btn-lg" onClick={() => setQty(q => Math.min(product.stock, q + 1))}><Plus size={16} /></button>
                                 </div>
-                                <button
-                                    className={`detail-cart-btn ${addedToCart ? 'added' : ''}`}
-                                    onClick={handleAddToCart}
-                                >
-                                    {addedToCart ? <><Check size={18} /> Added!</> : <><ShoppingCart size={18} /> Add to Cart</>}
-                                </button>
+                                <div className="action-buttons-row">
+                                    <button
+                                        className={`detail-cart-btn ${addedToCart ? 'added' : ''}`}
+                                        onClick={handleAddToCart}
+                                    >
+                                        {addedToCart ? <><Check size={18} /> Added!</> : <><ShoppingCart size={18} /> Add to Cart</>}
+                                    </button>
+                                    <button
+                                        className="detail-order-btn"
+                                        onClick={handleOrderNow}
+                                    >
+                                        <Truck size={18} /> Order Now
+                                    </button>
+                                </div>
                             </div>
                         )}
 
@@ -253,6 +272,13 @@ const AccessoryDetail = () => {
             </div>
 
             <CustomerAuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
+            {product && (
+                <CheckoutModal 
+                    isOpen={checkoutModalOpen} 
+                    onClose={() => setCheckoutModalOpen(false)} 
+                    product={product} 
+                />
+            )}
         </div>
     );
 };

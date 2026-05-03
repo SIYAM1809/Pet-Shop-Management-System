@@ -4,7 +4,8 @@ import {
     getCustomer,
     createCustomer,
     updateCustomer,
-    deleteCustomer
+    deleteCustomer,
+    getMyCustomerProfile
 } from '../controllers/customerController.js';
 import { protect } from '../middleware/auth.js';
 
@@ -78,6 +79,20 @@ router.use(protect);
 router.route('/')
     .get(getCustomers)
     .post(createCustomer);
+
+/**
+ * @swagger
+ * /api/customers/me:
+ *   get:
+ *     summary: Get logged-in customer profile
+ *     tags: [Customers]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Current customer profile
+ */
+router.get('/me', getMyCustomerProfile);
 
 /**
  * @swagger

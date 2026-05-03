@@ -241,8 +241,11 @@
 
 /* Add to Cart button */
 .accessory-card-action { padding: 0 14px 14px; }
+.acc-card-btn-group {
+    display: flex; gap: 8px;
+}
 .acc-cart-btn {
-    width: 100%; padding: 9px 0;
+    flex: 1; padding: 9px 0;
     background: var(--primary-500); color: white;
     border: none; border-radius: 10px;
     font-size: 0.85rem; font-weight: 700;
@@ -253,6 +256,18 @@
 .acc-cart-btn:hover:not(.disabled) { background: var(--primary-600); transform: translateY(-1px); }
 .acc-cart-btn.in-cart { background: var(--success); }
 .acc-cart-btn.disabled { background: var(--bg-tertiary); color: var(--text-tertiary); cursor: not-allowed; }
+
+.acc-order-btn {
+    flex: 1; padding: 9px 0;
+    background: linear-gradient(135deg, #f97316, #ea580c); color: white;
+    border: none; border-radius: 10px;
+    font-size: 0.85rem; font-weight: 700;
+    cursor: pointer; transition: all 0.2s;
+}
+.acc-order-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(249,115,22,0.3);
+}
 
 /* Empty state */
 .accessories-empty {

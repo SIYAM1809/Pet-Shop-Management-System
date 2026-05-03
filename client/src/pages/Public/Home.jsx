@@ -70,9 +70,9 @@ const Home = () => {
                     >
                         <div className="hero-image-card">
                             <img
-                                src="/Hero image.jpeg"
+                                src="/Hero_image-removebg.png"
                                 alt="Siyam with Cat"
-                                className="hero-img blob-avatar"
+                                className="hero-img hero-nobg"
                             />
                         </div>
                     </motion.div>

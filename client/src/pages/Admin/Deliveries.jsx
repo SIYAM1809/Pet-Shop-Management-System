@@ -10,6 +10,7 @@ import { containerVariants, itemVariants } from '../../utils/animations';
 import './Deliveries.css';
 
 const BADGE = {
+    'Pending':    'badge-neutral',
     'Assigned':   'badge-warning',
     'Picked Up':  'badge-info',
     'In Transit': 'badge-info',
@@ -128,10 +129,10 @@ const AdminDeliveries = () => {
 
     const statCards = stats ? [
         { label: 'Total',       value: stats.total,          color: 'badge-neutral' },
+        { label: 'Pending',     value: stats.pending,        color: 'badge-neutral' },
         { label: 'Assigned',    value: stats.assigned,       color: 'badge-warning' },
         { label: 'In Transit',  value: stats.inTransit,      color: 'badge-info' },
         { label: 'Completed',   value: stats.totalDelivered, color: 'badge-success' },
-        { label: 'Today',       value: stats.deliveredToday, color: 'badge-success' },
         { label: 'Failed',      value: stats.failed,         color: 'badge-error' }
     ] : [];
 
@@ -184,6 +185,7 @@ const AdminDeliveries = () => {
                         onChange={(e) => { setFilterStatus(e.target.value); setPage(1); }}
                     >
                         <option value="">All Statuses</option>
+                        <option value="Pending">Pending (Needs Rider)</option>
                         <option value="Assigned">Assigned</option>
                         <option value="Picked Up">Picked Up</option>
                         <option value="In Transit">In Transit</option>
@@ -327,7 +329,15 @@ const AdminDeliveries = () => {
                         <select
                             className="input select"
                             value={assignForm.orderId}
-                            onChange={(e) => setAssignForm({ ...assignForm, orderId: e.target.value })}
+                            onChange={(e) => {
+                                const selectedOrder = orders.find(o => o._id === e.target.value);
+                                setAssignForm({ 
+                                    ...assignForm, 
+                                    orderId: e.target.value,
+                                    // Pre-fill delivery address if it's already set on the order
+                                    deliveryAddress: selectedOrder?.deliveryAddress || ''
+                                });
+                            }}
                             required
                         >
                             <option value="">Select an order...</option>

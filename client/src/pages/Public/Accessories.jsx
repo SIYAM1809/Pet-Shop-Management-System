@@ -6,6 +6,7 @@ import { productAPI } from '../../services/api';
 import { useCart } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
 import CustomerAuthModal from '../../components/common/CustomerAuthModal';
+import CheckoutModal from '../../components/common/CheckoutModal/CheckoutModal';
 import toast from 'react-hot-toast';
 import './Accessories.css';
 
@@ -45,6 +46,10 @@ const Accessories = () => {
     const [total, setTotal] = useState(0);
     const [authModalOpen, setAuthModalOpen] = useState(false);
     const [showFilters, setShowFilters] = useState(false);
+    
+    // Checkout Modal state for grid
+    const [checkoutModalOpen, setCheckoutModalOpen] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState(null);
 
     const fetchProducts = useCallback(async (reset = false) => {
         setLoading(true);
@@ -111,6 +116,17 @@ const Accessories = () => {
         }
         addToCart({ ...product, itemType: 'accessory' });
         toast.success(`${product.name} added to cart! 🛒`);
+    };
+
+    const handleOrderNow = (e, product) => {
+        e.stopPropagation();
+        e.preventDefault();
+        if (!isCustomer) {
+            setAuthModalOpen(true);
+            return;
+        }
+        setSelectedProduct(product);
+        setCheckoutModalOpen(true);
     };
 
     const isInCart = (productId) => cartItems.some(item => item._id === productId);
@@ -305,19 +321,32 @@ const Accessories = () => {
                                         </div>
                                     </Link>
 
-                                    {/* Add to Cart button */}
+                                    {/* Add to Cart & Order Now buttons */}
                                     <div className="accessory-card-action">
-                                        <button
-                                            className={`acc-cart-btn ${isInCart(product._id) ? 'in-cart' : ''} ${product.status === 'Out of Stock' ? 'disabled' : ''}`}
-                                            onClick={e => {
-                                                if (product.status === 'Out of Stock') return;
-                                                handleAddToCart(e, product);
-                                            }}
-                                            disabled={product.status === 'Out of Stock'}
-                                        >
-                                            <ShoppingCart size={15} />
-                                            {isInCart(product._id) ? 'In Cart' : product.status === 'Out of Stock' ? 'Out of Stock' : 'Add to Cart'}
-                                        </button>
+                                        <div className="acc-card-btn-group">
+                                            <button
+                                                className={`acc-cart-btn ${isInCart(product._id) ? 'in-cart' : ''} ${product.status === 'Out of Stock' ? 'disabled' : ''}`}
+                                                onClick={e => {
+                                                    if (product.status === 'Out of Stock') return;
+                                                    handleAddToCart(e, product);
+                                                }}
+                                                disabled={product.status === 'Out of Stock'}
+                                                title="Add to Cart"
+                                            >
+                                                <ShoppingCart size={15} />
+                                                {isInCart(product._id) ? 'In Cart' : product.status === 'Out of Stock' ? 'Out of Stock' : 'Add to Cart'}
+                                            </button>
+                                            
+                                            {product.status !== 'Out of Stock' && (
+                                                <button
+                                                    className="acc-order-btn"
+                                                    onClick={e => handleOrderNow(e, product)}
+                                                    title="Order Now"
+                                                >
+                                                    Order Now
+                                                </button>
+                                            )}
+                                        </div>
                                     </div>
                                 </motion.div>
                             ))}
@@ -359,6 +388,18 @@ const Accessories = () => {
             </div>
 
             <CustomerAuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
+            
+            {/* Grid Checkout Modal */}
+            {selectedProduct && (
+                <CheckoutModal 
+                    isOpen={checkoutModalOpen} 
+                    onClose={() => {
+                        setCheckoutModalOpen(false);
+                        setTimeout(() => setSelectedProduct(null), 300); // clear after animation
+                    }} 
+                    product={selectedProduct} 
+                />
+            )}
         </div>
     );
 };

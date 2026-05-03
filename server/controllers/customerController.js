@@ -2,6 +2,24 @@ import Customer from '../models/Customer.js';
 import Order from '../models/Order.js';
 import { asyncHandler } from '../middleware/error.js';
 
+// @desc    Get or create the Customer record for the logged-in user
+// @route   GET /api/customers/me
+// @access  Private (customer)
+export const getMyCustomerProfile = asyncHandler(async (req, res) => {
+    let customer = await Customer.findOne({ email: req.user.email });
+
+    if (!customer) {
+        // Auto-create a Customer record linked to this user account
+        customer = await Customer.create({
+            name:  req.user.name,
+            email: req.user.email,
+            phone: '01700000000'   // placeholder — user can update in profile
+        });
+    }
+
+    res.json({ success: true, data: customer });
+});
+
 // @desc    Get all customers
 // @route   GET /api/customers
 // @access  Private

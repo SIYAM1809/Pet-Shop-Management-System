@@ -185,19 +185,31 @@ export const assignDelivery = asyncHandler(async (req, res) => {
         return res.status(404).json({ success: false, message: 'Rider not found or invalid role' });
     }
 
-    // Prevent duplicate assignment for same order
-    const existing = await Delivery.findOne({ order: orderId, status: { $nin: ['Failed'] } });
-    if (existing) {
-        return res.status(400).json({ success: false, message: 'This order already has an active delivery assignment' });
+    // Prevent duplicate assignment for same order, UNLESS it's a Pending auto-created delivery
+    let delivery = await Delivery.findOne({ order: orderId, status: { $nin: ['Failed'] } });
+    
+    if (delivery) {
+        if (delivery.status !== 'Pending') {
+            return res.status(400).json({ success: false, message: 'This order is already assigned to a rider or in progress.' });
+        }
+        // Update existing Pending delivery
+        delivery.rider = riderId;
+        delivery.status = 'Assigned';
+        if (deliveryAddress) delivery.deliveryAddress = deliveryAddress;
+        if (customerPhone) delivery.customerPhone = customerPhone;
+        if (notes) delivery.notes = notes;
+        await delivery.save();
+    } else {
+        // Create new delivery if one didn't exist
+        delivery = await Delivery.create({
+            order: orderId,
+            rider: riderId,
+            deliveryAddress,
+            customerPhone,
+            notes,
+            status: 'Assigned' // manually assigned status
+        });
     }
-
-    const delivery = await Delivery.create({
-        order: orderId,
-        rider: riderId,
-        deliveryAddress,
-        customerPhone,
-        notes
-    });
 
     const populated = await Delivery.findById(delivery._id)
         .populate('rider', 'name email')
@@ -217,8 +229,9 @@ export const getDeliveryAdminStats = asyncHandler(async (req, res) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    const [total, assigned, inTransit, deliveredToday, totalDelivered, failed] = await Promise.all([
+    const [total, pending, assigned, inTransit, deliveredToday, totalDelivered, failed] = await Promise.all([
         Delivery.countDocuments(),
+        Delivery.countDocuments({ status: 'Pending' }),
         Delivery.countDocuments({ status: 'Assigned' }),
         Delivery.countDocuments({ status: { $in: ['Picked Up', 'In Transit'] } }),
         Delivery.countDocuments({ status: 'Delivered', deliveredAt: { $gte: today } }),
@@ -226,7 +239,7 @@ export const getDeliveryAdminStats = asyncHandler(async (req, res) => {
         Delivery.countDocuments({ status: 'Failed' })
     ]);
 
-    res.json({ success: true, data: { total, assigned, inTransit, deliveredToday, totalDelivered, failed } });
+    res.json({ success: true, data: { total, pending, assigned, inTransit, deliveredToday, totalDelivered, failed } });
 });
 
 // @desc    Get all available riders (staff users)

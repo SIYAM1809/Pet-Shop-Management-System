@@ -143,6 +143,13 @@ export const customerAPI = {
         return handleResponse(response);
     },
 
+    getMe: async () => {
+        const response = await fetch(`${API_URL}/customers/me`, {
+            headers: getAuthHeader()
+        });
+        return handleResponse(response);
+    },
+
     create: async (customerData) => {
         const response = await fetch(`${API_URL}/customers`, {
             method: 'POST',
@@ -235,6 +242,18 @@ export const orderAPI = {
     track: async (orderNumber) => {
         const response = await fetch(`${API_URL}/orders/track/${orderNumber}`, {
             headers: { 'Content-Type': 'application/json' }
+        });
+        return handleResponse(response);
+    },
+
+    checkout: async (checkoutData) => {
+        const response = await fetch(`${API_URL}/orders/checkout`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                ...getAuthHeader()
+            },
+            body: JSON.stringify(checkoutData)
         });
         return handleResponse(response);
     }
